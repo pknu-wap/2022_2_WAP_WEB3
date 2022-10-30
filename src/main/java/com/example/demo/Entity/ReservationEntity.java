@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import lombok.Getter;
 
 @Getter
-@Entity
-public class Reservation {
+@Entity(name = "reservation")
+public class ReservationEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer num;
@@ -23,15 +23,7 @@ public class Reservation {
 	private LocalDateTime date;
 
 	@Column(columnDefinition = "TEXT")
-	private String contnet;
+	private String content;
 	
-	public Reservation(String location, LocalDateTime date, String content) {
-		this.location = location;
-		this.date = date;
-		this.contnet = content;
-	}
-	
-	
-	
-	
+		
 }
