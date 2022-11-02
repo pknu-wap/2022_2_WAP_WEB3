@@ -2,13 +2,20 @@ package com.example.demo.model.dto;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.Entity.ReservationEntity;
+
 public class ReservationDTO {
 	private Integer num;
 	private String location;
-	private String contnet;
+	private String content;
 	private LocalDateTime date;
-	private ReservationDTO() {}
-
+	public ReservationDTO() {}
+	public ReservationDTO(String location, String content, LocalDateTime date) {
+		this.location = location;
+		this.content = content;
+		this.date = date;
+	}
+	
 	public static class Builder {
 		private String location;
 		private String content;
@@ -19,7 +26,6 @@ public class ReservationDTO {
 			this.location = location;
 			return this;
 		} 
-		
 		
 		public Builder setContent (String contnet) {
 			this.content = content;
@@ -34,7 +40,7 @@ public class ReservationDTO {
 		public ReservationDTO build() {
 			ReservationDTO rdto = new ReservationDTO();
 			rdto.location = location;
-			rdto.contnet = content;
+			rdto.content = content;
 			rdto.date = date;
 			
 			return rdto;
@@ -54,6 +60,6 @@ public class ReservationDTO {
 	}
 
 	public String getContnet() {
-		return contnet;
+		return content;
 	}
 }

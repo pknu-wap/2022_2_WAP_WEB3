@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <button id="create">new</button>
+  <div></div>
+</body>
+</html>
+
+<script>
+$(document).ready( $("#create").on("click",function() {
+    $.ajax({
+	    url: "/testv",
+	    type: "post",
+	    data: "",
+	    dataType: "json",
+	    contentType:"application/json;charset=UTF-8",
+	    async: false,
+	    success: function(data){
+	    	console.log(data);
+	    },
+	    error: function(xhr, status, error){
+	       alert(xhr.responseText);
+	    },
+	    complete: function(xhr, status){}
+    });
+}));
+</script>

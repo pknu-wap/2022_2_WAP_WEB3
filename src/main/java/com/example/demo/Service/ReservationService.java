@@ -26,8 +26,8 @@ public class ReservationService {
 		List<ReservationEntity> list = reservationRepository.findAll();
 		
 //		for(int i =0; i < list.size(); i++) {
-//			ReservationEntity re = list.get(i);
-////			if(re.getDate().isAfter(LocalDateTime.now())) {
+//			ReservationEntity reservationEntity = list.get(i);
+////			if(ReservationEntity.getDate().isAfter(LocalDateTime.now())) {
 //				ReservationDTO reservationDTO = new ReservationDTO
 //						.Builder()
 //						.setLocation(re.getLocation())
@@ -41,4 +41,15 @@ public class ReservationService {
 //		return rdtoList;
 		return list;
 	}
+//	public void createReservation(ReservationDTO rdto) {
+//		
+//		// 계층간 분리를 위해서 dto를 올려주는 중이었음
+//		ReservationEntity reservationEntity;
+//		reservationRepository.save(rdto);
+//	}?
+//	
+//	public void deleteReservation() {
+//		/* 사용자 정보를 받아오면 */
+//		
+//	}
 }

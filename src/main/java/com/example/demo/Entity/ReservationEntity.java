@@ -8,9 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import groovy.transform.builder.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @Entity(name = "reservation")
 public class ReservationEntity {
 	@Id
@@ -24,6 +26,4 @@ public class ReservationEntity {
 
 	@Column(columnDefinition = "TEXT")
 	private String content;
-	
-		
 }
