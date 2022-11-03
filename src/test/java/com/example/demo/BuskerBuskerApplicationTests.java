@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.demo.Entity.ReservationEntity;
 import com.example.demo.Repository.ReservationRepository;
 import com.example.demo.Service.ReservationService;
 
@@ -20,9 +21,6 @@ class BuskerBuskerApplicationTests {
 
 	@Test
 	void test() {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@");
-		System.out.println(rs.getList());
-		
 		
 	}
 

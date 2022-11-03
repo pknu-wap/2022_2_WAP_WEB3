@@ -8,11 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.example.demo.model.dto.ReservationDTO;
+
 import groovy.transform.builder.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 @Entity(name = "reservation")
 public class ReservationEntity {
 	@Id
@@ -26,4 +27,19 @@ public class ReservationEntity {
 
 	@Column(columnDefinition = "TEXT")
 	private String content;
+
+	@Builder
+	public ReservationEntity(String location, LocalDateTime date, String content) {
+		super();
+		this.location = location;
+		this.date = date;
+		this.content = content;
+	}
+	
+	public ReservationEntity(ReservationDTO dto) {
+		super();
+		this.location = dto.getLocation();
+		this.date = dto.getDate();
+		this.content = dto.getContnet();
+	}
 }

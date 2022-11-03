@@ -41,15 +41,12 @@ public class ReservationService {
 //		return rdtoList;
 		return list;
 	}
-//	public void createReservation(ReservationDTO rdto) {
-//		
-//		// 계층간 분리를 위해서 dto를 올려주는 중이었음
-//		ReservationEntity reservationEntity;
-//		reservationRepository.save(rdto);
-//	}?
-//	
-//	public void deleteReservation() {
-//		/* 사용자 정보를 받아오면 */
-//		
-//	}
+	public void createReservation(ReservationDTO rdto) {
+		reservationRepository.save(new ReservationEntity(rdto));
+	}
+	
+	public void deleteReservation() {
+		/* 사용자 정보를 받아오면 */
+		reservationRepository.deleteById(null);
+	}
 }
