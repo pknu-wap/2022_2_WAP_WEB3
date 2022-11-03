@@ -8,13 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.example.demo.model.dto.ReservationDTO;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import groovy.transform.builder.Builder;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity(name = "reservation")
+@NoArgsConstructor
 public class ReservationEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -23,23 +26,16 @@ public class ReservationEntity {
 	@Column(nullable=false, length = 50)
 	private String location;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime date;
 
 	@Column(columnDefinition = "TEXT")
 	private String content;
 
-	@Builder
-	public ReservationEntity(String location, LocalDateTime date, String content) {
+	public ReservationEntity(String location, String content, LocalDateTime date) {
 		super();
 		this.location = location;
-		this.date = date;
 		this.content = content;
-	}
-	
-	public ReservationEntity(ReservationDTO dto) {
-		super();
-		this.location = dto.getLocation();
-		this.date = dto.getDate();
-		this.content = dto.getContnet();
+		this.date = date;
 	}
 }

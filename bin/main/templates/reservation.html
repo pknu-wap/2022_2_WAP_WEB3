@@ -1,13 +1,66 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
+
 <body>
 	page reservation
-	
-	<div th:text="${list.get(0).getDate()}"></div>
-	<div th:text="${list.get(0).getLocation()}"></div>
+
+	<form action="/reservation" accept-charset="utf-8" method="post">
+		<input type="hidden" name="_method" value="put" />
+		<fieldset style="width:150">
+			<legend>개인 정보 입력</legend>
+			위치 : <input type="text" name="location" /><br><br>
+			내용 : <input type="text" name="content" /><br><br>
+			시간 : <input type="datetime-local" name="date" /><br><br>
+		</fieldset>
+		<br>
+		<input type="submit" value="submit" />
+		<input type="reset" value="reset" /><br><br>
+	</form>
+
+	<br>
+	---------------------------------------------------------------
+	<br>
+
+	<div id="list"></div>
+
+	<form action="/reservation" accept-charset="utf-8" method="post">
+		<input type="hidden" name="_method" value="delete" />
+		<fieldset style="width:150">
+			<legend>개인 정보 입력</legend>
+			삭제할 예약 번호 : <input type="text" name="num" /><br><br>
+		</fieldset>
+		<input type="submit" value="delete" />
+	</form>
+
+	<html>
 </body>
+
 </html>
+
+<script>$(document).ready(function () {
+		$.ajax({
+			url: "/reservation",
+			type: "GET",
+			data: "",
+			dataType: "json",
+			contentType: "application/json;charset=UTF-8",
+			async: false,
+			success: function (data) {
+				console.log(data[0]);
+				console.log(data[1]);
+				console.log(data[2]);
+			},
+			error: function (xhr, status, error) {
+				alert(xhr.responseText);
+			},
+			complete: function (xhr, status) { }
+		});
+	});
+
+</script>

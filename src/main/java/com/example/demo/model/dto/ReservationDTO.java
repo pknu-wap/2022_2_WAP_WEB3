@@ -10,24 +10,24 @@ public class ReservationDTO {
 	private String content;
 	private LocalDateTime date;
 	public ReservationDTO() {}
-	public ReservationDTO(String location, String content, LocalDateTime date) {
-		this.location = location;
-		this.content = content;
-		this.date = date;
-	}
 	
 	public static class Builder {
 		private String location;
 		private String content;
 		private LocalDateTime date;
+		private Integer num;
 		public Builder() {}
 		
+		public Builder setNum(Integer num) {
+			this.num = num;
+			return this;
+		}
 		public Builder setLocation (String location) {
 			this.location = location;
 			return this;
 		} 
 		
-		public Builder setContent (String contnet) {
+		public Builder setContent (String content) {
 			this.content = content;
 			return this;
 		} 
@@ -39,6 +39,7 @@ public class ReservationDTO {
 		
 		public ReservationDTO build() {
 			ReservationDTO rdto = new ReservationDTO();
+			rdto.num = num;
 			rdto.location = location;
 			rdto.content = content;
 			rdto.date = date;
@@ -59,7 +60,7 @@ public class ReservationDTO {
 		return date;
 	}
 
-	public String getContnet() {
+	public String getContent() {
 		return content;
 	}
 }

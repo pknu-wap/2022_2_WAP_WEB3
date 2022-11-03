@@ -3,13 +3,19 @@ package com.example.demo.Controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.print.attribute.standard.MediaSize.ISO;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.Entity.ReservationEntity;
 import com.example.demo.Service.ReservationService;
 import com.example.demo.model.dto.ReservationDTO;
 
@@ -18,23 +24,48 @@ public class webController {
 	@Autowired
 	private ReservationService reservationService;
 	
-	
 	@RequestMapping("/")
 	public String root() {	// 메인 페이지
 		return "root";
 	}
 	
-	@RequestMapping("/test")
-	public String rootest() {	// 메인 페이지
-		return "test";
+	@GetMapping(value = "/page/reservation")
+	public String pageRreservation() {	
+		return "reservation";
 	}
 	
-	@RequestMapping("/testv")
+	@GetMapping(value = "/reservation")
 	@ResponseBody
-	public List<ReservationEntity> test() {	// 메인 페이지
-		List<ReservationEntity> list = reservationService.getList();
+	public List<ReservationDTO> getList() {	
+		List<ReservationDTO> list = reservationService.getList();
 		return list;
 	}
+	
+	@PutMapping(value = "/reservation")
+	public String createReservation(
+			@RequestParam String content, 
+			@RequestParam String location, 
+			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date)
+	{
+		reservationService.createReservation(new ReservationDTO
+				.Builder()
+				.setLocation(location)
+				.setContent(content)
+				.setDate(date)
+				.build()
+		);
+		return "redirect:/";
+	}
+	
+	@DeleteMapping(value = "/reservation")
+	public void deleteReservation(@RequestParam Integer num) {
+		reservationService.deleteReservation(num);
+	}
+	
+//	@RequestMapping("/test")
+//	public String rootest() {	
+//		return "test";
+//	}
 	
 //	@RequestMapping("/page/club/infomation")
 //	public String pageInfomation(Model model) {	// 동아리 소개 페이지
@@ -43,25 +74,4 @@ public class webController {
 //		model.addAttribute("date", "시간");
 //		return "club-info";
 //	}
-	
-	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
-	public String pageRreservation() {	// 메인 페이지
-		List<ReservationEntity> list = reservationService.getList();
-		return "reservation";
-	}
-	
-	//put
-	@RequestMapping(value = "/reservation", method = RequestMethod.PUT)
-	public String createReservation(String location, String content, LocalDateTime date) {
-		System.out.println(location + " " + content);
-		ReservationDTO reservationDTO = new ReservationDTO(location, content, date);
-		reservationService.createReservation(reservationDTO);
-		return "redirect:/";
-	}
-	
-	//delete
-	@RequestMapping(value = "/reservation", method = RequestMethod.DELETE)
-	public void deleteReservation(/* 유저정보 */) {
-		reservationService.deleteReservation(/* 유저정보 */);
-	}
 }
