@@ -17,17 +17,27 @@ import javax.transaction.Transactional;
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
+    /**
+     * 중복 검사 후, 멤버를 DB에 저장
+     * @param member 멤버 객체
+     * @return 저장된 멤버 객체, Exception
+     */
     public Member saveMember(Member member) {
-        validateDuplicateMember(member);
-
-        return memberRepository.save(member);
-    }
-
-    private void validateDuplicateMember(Member member) { // 중복 검사
         Member findMember = memberRepository.findByEmail(member.getEmail());
         if(findMember != null) {
             throw new IllegalStateException("이미 가입된 상태입니다");
         }
+        else return memberRepository.save(member);
+    }
+
+    /**
+     * 이메일을 받아 중복을 확인
+     * @param email 이메일
+     * @return 중복여부
+     */
+    public boolean validateEmail(String email) {
+        Member findMember = memberRepository.findByEmail(email);
+        return findMember == null;
     }
 
     @Override

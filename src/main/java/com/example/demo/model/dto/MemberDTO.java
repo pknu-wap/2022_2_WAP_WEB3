@@ -20,7 +20,7 @@ public class MemberDTO {
 
     @NotBlank(message = "공백이 없어야 합니다.")
     @Length(message = "비밀번호는 8글자 이상 16글자 이하여야 합니다.", min = 8, max = 16)
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$") // 8글자 이상 16글자 이하 영어, 숫자 하나 이상 포함.
     private String password;
 
     @Builder

@@ -25,14 +25,20 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping(value = "/join")
+    // 회원가입 페이지 리턴
+    @GetMapping(value = "/sign_up")
     public String memberForm() {
         return "member/sign_up";
     }
 
-    // 회원가입
-    @PostMapping(value = "/join")
-    public String memberForm(@ModelAttribute("memberDto") @Valid MemberDTO memberDto, BindingResult bindingResult, Model model) { // @Valid를 사용하면 DTO에 명시한 validation을 사용할 수 있음.
+    /**
+     * 회원가입 요청 처리
+     * @param memberDto email, password가 전달
+     * @param bindingResult error 캐치
+     * @return 회원가입 성공 또는 실패 시 지정된 페이지 리턴.
+     */
+    @PostMapping(value = "/sign_up")
+    public String memberForm(@ModelAttribute("memberDto") @Valid MemberDTO memberDto, BindingResult bindingResult) { // @Valid를 사용하면 DTO에 명시한 validation을 사용할 수 있음.
         if (bindingResult.hasErrors()) {
             List<ObjectError> list = bindingResult.getAllErrors();
             for(ObjectError error : list) {
@@ -44,26 +50,34 @@ public class MemberController {
             Member member = Member.createMember(memberDto, passwordEncoder);
             memberService.saveMember(member);
         } catch (IllegalStateException e) {
-            model.addAttribute("errorMessage", e.getMessage());
+            logger.info(e.getMessage());
             return "member/sign_up";
         }
         return "redirect:/members/login";
     }
 
-    /* 이메일 중복 체크
+    /**
+    회원가입 하기 전 이메일 중복검사
+     @param hashMap 이메일 값 받아옴
+     @return 중복검사 결과 리턴.
+     */
     @ResponseBody
     @PostMapping(value = "/emailCheck")
-    public HashMap<String, String> emailCheck(@RequestBody HashMap<String, String> hashMap, Error error) {
-
+    public HashMap<String, Boolean> emailCheck(@RequestBody HashMap<String, String> hashMap, Error error) {
+        String email = hashMap.get("email");
+        boolean check = memberService.validateEmail(email);
+        HashMap<String, Boolean> res = new HashMap<String, Boolean>();
+        res.put("email", check);
+        return res;
     }
-    */
 
+    // 로그인 페이지 리턴
     @GetMapping(value = "/login")
     public String loginMember() {
         return "/member/login";
     }
 
-    // 로그인 에러 핸들링
+    // 로그인 에러 났을 때
     @GetMapping(value = "/login/error")
     public String loginError(Model model) {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
