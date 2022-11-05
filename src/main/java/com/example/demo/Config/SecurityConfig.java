@@ -1,5 +1,6 @@
 package com.example.demo.Config;
 
+import com.example.demo.Config.SecurityHandler.CustomAuthenticationEntryPoint;
 import com.example.demo.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -22,6 +23,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .formLogin()
                 .loginPage("/members/login")
                 .defaultSuccessUrl("/")
@@ -30,8 +32,11 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                .logoutSuccessUrl("/")
-                ;
+                .logoutSuccessUrl("/");
+        http
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true);
         http
             .authorizeHttpRequests()
                 .mvcMatchers("/", "/members/**").permitAll()
@@ -41,7 +46,6 @@ public class SecurityConfig {
         http
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-        http.csrf().disable();
 
         return http.build();
     }
