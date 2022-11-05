@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="/css/sign_up.css" rel="stylesheet" type="text/css" />
+        <title>sign up page</title>
+    </head>
+    <body>
+
+        <div class="login-wrapper">
+            <h2>회원가입</h2>
+            <form method="post" action="join" id="login-form" name="sign-up">
+            
+                <h5 class="form-text">이메일</h5>
+                <input type="text" name="email" placeholder="busker@example.com" required>
+                
+                <h5 class="form-text">비밀번호</h5>
+                <input type="password" name="password" id="password" placeholder="Password" required maxlength="16">
+
+                <h5 class="form-text">비밀번호 확인</h5>
+                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required maxlength="16" onchange="psReCheck()">
+                
+                
+                <input type="submit" value="Sign up">
+            </form>
+        </div>
+
+        <script type="text/javascript" src="/js/sign_up.js"></script>
+    </body>
+
+</html>

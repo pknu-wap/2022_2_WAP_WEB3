@@ -21,8 +21,6 @@ public class Member {
 	@Column(name = "member_id")
 	private Long id;
 
-	private String name;
-
 	@Column(unique = true)
 	private String email;
 
@@ -32,8 +30,7 @@ public class Member {
 	private MemberRole role;
 
 	@Builder
-	public Member(String name, String email, String password, MemberRole role) {
-		this.name = name;
+	public Member(String email, String password, MemberRole role) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
@@ -41,7 +38,6 @@ public class Member {
 
 	public static Member createMember(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {
 		Member member = Member.builder()
-				.name(memberDTO.getName())
 				.email(memberDTO.getEmail())
 				.password(passwordEncoder.encode(memberDTO.getPassword()))
 				.role(MemberRole.USER)

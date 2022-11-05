@@ -27,7 +27,6 @@ public class ServiceTest {
     public Member createMember() {
         MemberDTO memberDTO = MemberDTO.builder()
                 .email("test@pknu.ac.kr")
-                .name("테스트")
                 .password("1234")
                 .build();
         return Member.createMember(memberDTO, passwordEncoder);
