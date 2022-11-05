@@ -34,7 +34,13 @@ public class SecurityConfig {
                 ;
         http
             .authorizeHttpRequests()
-                .antMatchers("/", "/members/**").permitAll();
+                .mvcMatchers("/", "/members/**").permitAll()
+                .mvcMatchers("/post/**").hasRole("USER")
+                .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated();
+        http
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
         http.csrf().disable();
 
         return http.build();
