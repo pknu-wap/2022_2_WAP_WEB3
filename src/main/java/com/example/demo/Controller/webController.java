@@ -3,8 +3,6 @@ package com.example.demo.Controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.print.attribute.standard.MediaSize.ISO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -12,54 +10,57 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.Service.ReservationService;
-import com.example.demo.model.dto.ReservationDTO;
+import com.example.demo.Service.PostService;
+import com.example.demo.model.dto.PostDTO;
 
 @Controller
 public class webController {
 	@Autowired
-	private ReservationService reservationService;
+	private PostService PostService;
 	
 	@RequestMapping("/")
 	public String root() {	// 메인 페이지
 		return "root";
 	}
 	
-	@GetMapping(value = "/page/reservation")
-	public String pageRreservation() {	
-		return "reservation";
+	@GetMapping(value = "/page/Post")
+	public String pageRPost() {	
+		return "Post";
 	}
 	
-	@GetMapping(value = "/reservation")
+	@GetMapping(value = "/Post")
 	@ResponseBody
-	public List<ReservationDTO> getList() {	
-		List<ReservationDTO> list = reservationService.getList();
+	public List<PostDTO> getList() {	
+		List<PostDTO> list = PostService.getList();
 		return list;
 	}
 	
-	@PutMapping(value = "/reservation")
-	public String createReservation(
-			@RequestParam String content, 
+	@PutMapping(value = "/Post")
+	public String createPost(
+			@RequestParam String member_email, 
+			@RequestParam String theme, 
 			@RequestParam String location, 
+			@RequestParam String infoamtion, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date)
 	{
-		reservationService.createReservation(new ReservationDTO
+		PostService.createPost(new PostDTO
 				.Builder()
+				.setMemberEmail(member_email)
+				.setTheme(theme)
 				.setLocation(location)
-				.setContent(content)
+				.setContent(infoamtion)
 				.setDate(date)
 				.build()
 		);
 		return "redirect:/";
 	}
 	
-	@DeleteMapping(value = "/reservation")
-	public void deleteReservation(@RequestParam Integer num) {
-		reservationService.deleteReservation(num);
+	@DeleteMapping(value = "/Post")
+	public void deletePost(@RequestParam Integer num) {	
+		PostService.deletePost(num);
 	}
 	
 //	@RequestMapping("/test")
