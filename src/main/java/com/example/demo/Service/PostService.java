@@ -3,6 +3,7 @@ package com.example.demo.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +45,31 @@ public class PostService {
 }
 
 	public void putPost(PostDTO rdto) {
-		postRepository.save(new PostEntity(
-						//rdto.getMemberEmail(),
-						"test@naver.com",
-						//rdto.getTheme(), 
-						"test theme",
-						rdto.getLocation(), 
-						rdto.getInfomation(), 
-						rdto.getDate())
-		);
+//		if(rdto.getPostNum() == null) {		//put
+			postRepository.save(new PostEntity(
+					//rdto.getMemberEmail(),
+					"test@naver.com",
+					//rdto.getTheme(), 
+					"test theme",
+					rdto.getLocation(), 
+					rdto.getInfomation(), 
+					rdto.getDate()));
+//		} else {		//update
+//		Optional<PostEntity> entity = postRepository.findById(rdto.getPostNum());
+//		postRepository.save(
+//					new PostEntity(
+//							rdto.get
+//					//rdto.getMemberEmail(),
+//					"test@naver.com",
+//					//rdto.getTheme(), 
+//					"test theme",
+//					rdto.getLocation(), 
+//					rdto.getInfomation(), 
+//					rdto.getDate()));
+//		}
+		
+		
+		
 		
 	}
 
