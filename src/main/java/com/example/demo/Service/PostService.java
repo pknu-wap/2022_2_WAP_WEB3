@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,47 +18,49 @@ import lombok.AllArgsConstructor;
 @Service
 public class PostService {
 	@Autowired
-	private PostRepository PostRepository;
+	private PostRepository postRepository;
 	private List<PostDTO> rdtoList = new ArrayList<>();
 
 	public List<PostDTO> getList() {
-		List<PostEntity> rlist = PostRepository.findAll().stream()
-			.filter(e -> e.getDate().isAfter(LocalDateTime.now()))
-			.sorted()
-			.collect(Collectors.toList());
+		List<PostEntity> list = postRepository.findAll();
 		
-		for (int i = 0; i < rlist.size(); i++) {
-			PostEntity list = rlist.get(i);
-			PostDTO PostDTO = new PostDTO
+		for (int i = 0; i < list.size(); i++) {
+			PostEntity entity = list.get(i);
+			if(entity.getDate().isAfter(LocalDateTime.now())) {
+				PostDTO PostDTO = new PostDTO
 					.Builder()
-					.setPostNum(list.getPost_num())
-					.setTheme(list.getTheme())
-					.setLocation(list.getLocation())
-					.setContent(list.getInfomation())
-					.setDate(list.getDate())
+					.setPostNum(entity.getPost_num())
+					.setTheme(entity.getTheme())
+					.setLocation(entity.getLocation())
+					.setContent(entity.getInfomation())
+					.setDate(entity.getDate())
 					.build();
-			rdtoList.add(PostDTO);
+			
+				rdtoList.add(PostDTO);
 			}
+		}
 		
 		return rdtoList;
 }
 
-	public void createPost(PostDTO rdto) {
-		PostRepository.save(new PostEntity(
-						rdto.getMemberEmail(),
-						rdto.getTheme(), 
+	public void putPost(PostDTO rdto) {
+		postRepository.save(new PostEntity(
+						//rdto.getMemberEmail(),
+						"test@naver.com",
+						//rdto.getTheme(), 
+						"test theme",
 						rdto.getLocation(), 
-						rdto.getInfoamtion(), 
+						rdto.getInfomation(), 
 						rdto.getDate())
 		);
 		
 	}
 
 	public void deletePost(int num) {
-//		try {
-			PostRepository.deleteById(num);
-//		} catch (Exception e) {
-//			return "deleteErr";
-//		}
+		try {
+			postRepository.deleteById(num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

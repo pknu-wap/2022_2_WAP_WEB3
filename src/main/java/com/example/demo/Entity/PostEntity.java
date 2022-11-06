@@ -48,4 +48,8 @@ public class PostEntity {
 		this.infomation = infomation;
 		this.date = date;
 	}
+	
+//	public update() {
+//		
+//	}
 }

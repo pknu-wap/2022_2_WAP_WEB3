@@ -18,49 +18,9 @@ import com.example.demo.model.dto.PostDTO;
 
 @Controller
 public class webController {
-	@Autowired
-	private PostService PostService;
-	
 	@RequestMapping("/")
 	public String root() {	// 메인 페이지
 		return "root";
-	}
-	
-	@GetMapping(value = "/page/Post")
-	public String pageRPost() {	
-		return "Post";
-	}
-	
-	@GetMapping(value = "/Post")
-	@ResponseBody
-	public List<PostDTO> getList() {	
-		List<PostDTO> list = PostService.getList();
-		return list;
-	}
-	
-	@PutMapping(value = "/Post")
-	public String createPost(
-			@RequestParam String member_email, 
-			@RequestParam String theme, 
-			@RequestParam String location, 
-			@RequestParam String infoamtion, 
-			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date)
-	{
-		PostService.createPost(new PostDTO
-				.Builder()
-				.setMemberEmail(member_email)
-				.setTheme(theme)
-				.setLocation(location)
-				.setContent(infoamtion)
-				.setDate(date)
-				.build()
-		);
-		return "redirect:/";
-	}
-	
-	@DeleteMapping(value = "/Post")
-	public void deletePost(@RequestParam Integer num) {	
-		PostService.deletePost(num);
 	}
 	
 //	@RequestMapping("/test")
