@@ -40,6 +40,7 @@ public class MemberService implements UserDetailsService {
         return findMember == null;
     }
 
+    // 스프링 시큐리티가 username 받아 user 찾을 때 사용하는 함수
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email);

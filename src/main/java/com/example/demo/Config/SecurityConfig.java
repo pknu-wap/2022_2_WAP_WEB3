@@ -35,8 +35,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/");
         http
                 .sessionManagement()
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(true);
+                .maximumSessions(1);
         http
             .authorizeHttpRequests()
                 .mvcMatchers("/", "/members/**").permitAll()

@@ -6,6 +6,8 @@ import com.example.demo.model.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,7 +36,7 @@ public class MemberController {
 
     /**
      * 회원가입 요청 처리
-     * @param memberDto email, password가 전달
+     * @param memberDto email, password
      * @param bindingResult error 캐치
      * @return 회원가입 성공 또는 실패 시 지정된 페이지 리턴.
      */
@@ -82,5 +85,23 @@ public class MemberController {
     public String loginError(Model model) {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
         return "/member/login";
+    }
+
+    /**
+     * 사용자로부터 스프링 시큐리티 토큰을 받아 key:isLogin, value:username 리턴
+     * 토큰이 없을 경우 value:null
+     * @param principal 스프링 시큐리티 토큰
+     * @return key:isLogin, value:username
+     */
+    @ResponseBody
+    @GetMapping(value = "/loginCheck")
+    public HashMap<String, String> loginMember(Principal principal) {
+        HashMap<String, String> map = new HashMap<>();
+        try {
+            map.put("isLogin", principal.getName());
+        } catch(NullPointerException e) {
+            map.put("isLogin", null);
+        }
+        return map;
     }
 }
