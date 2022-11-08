@@ -22,5 +22,12 @@
             
         </div>
     </body>
-
+<script>
+    window.onload = function() {
+        let url = window.location.href;
+        if(url.lastIndexOf("error") !== -1) {
+            alert("아이디 또는 비밀번호를 확인해 주세요");
+        }
+    }
+</script>
 </html>

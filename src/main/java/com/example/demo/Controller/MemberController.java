@@ -22,7 +22,7 @@ import java.util.List;
  * /members/sign_up 회원가입 -> /members/login
  * /members/logout 로그아웃 -> /
  * /members/login/error 로그인 실패 시 주소
- * /members/emailCheck 이메일 보내면 가용 여부 json 리턴 {"isValid" : true|false}
+ * /members/emailCheck?email="" 주소창으로 이메일 받아 가용 여부 json 리턴 {"isValid" : true|false}
  * /members/loginCheck 로그인 여부 json 리턴 {"isLogin" : "email"|null}
  */
 @RequiredArgsConstructor
@@ -65,21 +65,13 @@ public class MemberController {
     }
 
     /**
-    이메일 중복검사로 가용 여부
-     @param hashMap 이메일 json
-     @param bindingResult 바인딩 error
-     @return 성공 시 key:"isValid", value:true|false
+     * RequestParam 주소창으로 이메일을 받아 중복 확인 후 가용 여부 리턴
+     * @param email 이메일
+     * @return key:"isValid", value:true|false
      */
     @ResponseBody
-    @PostMapping(value = "/emailCheck")
-    public HashMap<String, Boolean> emailCheck(@RequestBody HashMap<String, String> hashMap, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            List<ObjectError> list = bindingResult.getAllErrors();
-            for(ObjectError error : list) {
-                logger.info(error.toString());
-            }
-        }
-        String email = hashMap.get("email");
+    @GetMapping(value = "/emailCheck")
+    public HashMap<String, Boolean> emailCheck(@RequestParam(required = false) String email) {
         boolean check = memberService.validateEmail(email);
         HashMap<String, Boolean> map = new HashMap<>();
         map.put("isValid", check);
@@ -100,7 +92,7 @@ public class MemberController {
 
     /**
      * 사용자의 토큰 보유 여부를 통해 로그인 확인
-     * 토큰이 있을 경우 email, 없을 경우 null
+     * 토큰이 있을 경우 username, 없을 경우 null
      * @param principal 스프링 시큐리티 토큰
      * @return key:"isLogin", value:"username"|null
      */
