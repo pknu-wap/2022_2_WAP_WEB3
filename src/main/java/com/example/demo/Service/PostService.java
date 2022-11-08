@@ -45,7 +45,7 @@ public class PostService {
 }
 
 	public void putPost(PostDTO rdto) {
-//		if(rdto.getPostNum() == null) {		//put
+		if(rdto.getPostNum() == null) {		//put
 			postRepository.save(new PostEntity(
 					//rdto.getMemberEmail(),
 					"test@naver.com",
@@ -54,19 +54,17 @@ public class PostService {
 					rdto.getLocation(), 
 					rdto.getInfomation(), 
 					rdto.getDate()));
-//		} else {		//update
-//		Optional<PostEntity> entity = postRepository.findById(rdto.getPostNum());
-//		postRepository.save(
-//					new PostEntity(
-//							rdto.get
-//					//rdto.getMemberEmail(),
-//					"test@naver.com",
-//					//rdto.getTheme(), 
-//					"test theme",
-//					rdto.getLocation(), 
-//					rdto.getInfomation(), 
-//					rdto.getDate()));
-//		}
+		} else {		//update
+		postRepository.save(new PostEntity(
+					rdto.getPostNum(),
+					//rdto.getMemberEmail(),
+					"test@naver.com",
+					//rdto.getTheme(), 
+					"test theme",
+					rdto.getLocation(), 
+					rdto.getInfomation(), 
+					rdto.getDate()));
+		}
 		
 		
 		
