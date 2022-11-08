@@ -8,20 +8,31 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<body>
-	page reservation
-
+<body></body>
 	<form action="/post" accept-charset="utf-8" method="post">
 		<input type="hidden" name="_method" value="put" />
 		
+		<div class="">
+			<input type="file" accept="image/*" > 
+		</div>
 		
-		<input type="file" accept="image/*" > 
+		<div class="">
 		<label type="text" name="location" /> 
 			<select name="location">
 				<option value="">장소를 선택</option>
-				<option value="Seoㅡyeon">서면</option>
-				<option value="das">정문</option>
+				<option value="서며">서면</option>
+				<option value="s2">정문</option>
+			</select> 
+		</div>
+
+		<div class="">
+		시간 : <input type="datetime-local" name="date" /><br>
+		</div>
+		
+		<div class="">
 		<br> 내용 : <input type="text" name="content" /><br>
+		</div>
+		
 		<br> <br> <input type="submit" value="작성" />
 	</form>
 
