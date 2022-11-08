@@ -13,11 +13,6 @@ import com.example.demo.Service.ReservationService;
 @AutoConfiguration
 class BuskerBuskerApplicationTests {
 
-	@Autowired
-	private ReservationRepository rr;
-	
-	@Autowired
-	private ReservationService rs;
 
 	@Test
 	void test() {

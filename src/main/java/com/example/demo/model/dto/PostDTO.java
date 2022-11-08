@@ -9,7 +9,7 @@ public class PostDTO {
 	private String member_email;
 	private String theme;
 	private String location;
-	private String Infomation;
+	private String content;
 	private LocalDateTime date;
 	public PostDTO() {}
 	
@@ -18,7 +18,7 @@ public class PostDTO {
 		private String member_email;
 		private String theme;
 		private String location;
-		private String Infomation;
+		private String content;
 		private LocalDateTime date;
 		public Builder() {}
 		
@@ -39,8 +39,8 @@ public class PostDTO {
 			return this;
 		} 
 		
-		public Builder setContent (String Infomation) {
-			this.Infomation = Infomation;
+		public Builder setContent (String content) {
+			this.content = content;
 			return this;
 		} 
 		
@@ -55,7 +55,7 @@ public class PostDTO {
 			rdto.member_email = member_email;
 			rdto.theme = theme;
 			rdto.location = location;
-			rdto.Infomation = Infomation;
+			rdto.content = content;
 			rdto.date = date;
 			
 			return rdto;
@@ -78,8 +78,8 @@ public class PostDTO {
 		return location;
 	}
 
-	public String getInfomation() {
-		return Infomation;
+	public String getContent() {
+		return content;
 	}
 
 	public LocalDateTime getDate() {

@@ -33,29 +33,29 @@ public class PostEntity {
 	private String location;
 	
 	@Column(columnDefinition = "TEXT")
-	private String infomation;
+	private String content;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime date;
 
 
 	public PostEntity(
-			String member_email, String theme,String location, String infomation, LocalDateTime date) {
+			String member_email, String theme,String location, String content, LocalDateTime date) {
 		super();
 		this.member_email = member_email;
 		this.theme = theme;
 		this.location = location;
-		this.infomation = infomation;
+		this.content = content;
 		this.date = date;
 	}
 	public PostEntity(
-			Integer post_num, String member_email, String theme,String location, String infomation, LocalDateTime date) {
+			Integer post_num, String member_email, String theme,String location, String content, LocalDateTime date) {
 		super();
 		this.post_num = post_num;
 		this.member_email = member_email;
 		this.theme = theme;
 		this.location = location;
-		this.infomation = infomation;
+		this.content = content;
 		this.date = date;
 	}
 }

@@ -36,7 +36,7 @@ public class PostController {
 	public String createPost(@RequestParam(required=false) Integer number, 
 			@RequestParam(required=false) String member_email, 
 			@RequestParam(required=false) String theme, @RequestParam String location, 
-			@RequestParam String infomation, 
+			@RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
 			@RequestParam LocalDateTime date) {
 		PostDTO pdto = new PostDTO
@@ -45,7 +45,7 @@ public class PostController {
 				.setMemberEmail(member_email)
 				.setTheme(theme)
 				.setLocation(location)
-				.setContent(infomation)
+				.setContent(content)
 				.setDate(date)
 				.build();
 		

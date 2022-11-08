@@ -33,7 +33,7 @@ public class PostService {
 					.setPostNum(entity.getPost_num())
 					.setTheme(entity.getTheme())
 					.setLocation(entity.getLocation())
-					.setContent(entity.getInfomation())
+					.setContent(entity.getContent())
 					.setDate(entity.getDate())
 					.build();
 			
@@ -52,7 +52,7 @@ public class PostService {
 					//rdto.getTheme(), 
 					"test theme",
 					rdto.getLocation(), 
-					rdto.getInfomation(), 
+					rdto.getContent(), 
 					rdto.getDate()));
 		} else {		//update
 		postRepository.save(new PostEntity(
@@ -62,13 +62,9 @@ public class PostService {
 					//rdto.getTheme(), 
 					"test theme",
 					rdto.getLocation(), 
-					rdto.getInfomation(), 
+					rdto.getContent(), 
 					rdto.getDate()));
 		}
-		
-		
-		
-		
 	}
 
 	public void deletePost(int num) {
