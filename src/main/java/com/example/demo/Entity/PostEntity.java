@@ -48,8 +48,14 @@ public class PostEntity {
 		this.infomation = infomation;
 		this.date = date;
 	}
-	
-//	public update() {
-//		
-//	}
+	public PostEntity(
+			Integer post_num, String member_email, String theme,String location, String infomation, LocalDateTime date) {
+		super();
+		this.post_num = post_num;
+		this.member_email = member_email;
+		this.theme = theme;
+		this.location = location;
+		this.infomation = infomation;
+		this.date = date;
+	}
 }
