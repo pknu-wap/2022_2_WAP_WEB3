@@ -10,12 +10,12 @@
 <body>
 	page reservation
 
-	<form action="/reservation" accept-charset="utf-8" method="post">
+	<form action="/post" accept-charset="utf-8" method="post">
 		<input type="hidden" name="_method" value="put" />
 		<fieldset style="width:150">
 			<legend>개인 정보 입력</legend>
 			위치 : <input type="text" name="location" /><br><br>
-			내용 : <input type="text" name="content" /><br><br>
+			내용 : <input type="text" name="infomation" /><br><br>
 			시간 : <input type="datetime-local" name="date" /><br><br>
 		</fieldset>
 		<br>
@@ -29,7 +29,7 @@
 
 	<div id="list"></div>
 
-	<form action="/reservation" accept-charset="utf-8" method="post">
+	<form action="/post" accept-charset="utf-8" method="post">
 		<input type="hidden" name="_method" value="delete" />
 		<fieldset style="width:150">
 			<legend>개인 정보 입력</legend>
@@ -45,7 +45,7 @@
 
 <script>$(document).ready(function () {
 		$.ajax({
-			url: "/reservation",
+			url: "/post",
 			type: "GET",
 			data: "",
 			dataType: "json",
