@@ -11,6 +11,7 @@ public class PostDTO {
 	private String location;
 	private String content;
 	private LocalDateTime date;
+	private String image_id;
 	public PostDTO() {}
 	
 	public static class Builder {
@@ -20,6 +21,7 @@ public class PostDTO {
 		private String location;
 		private String content;
 		private LocalDateTime date;
+		private String image_id;
 		public Builder() {}
 		
 		public Builder setPostNum(Integer post_num) {
@@ -49,6 +51,11 @@ public class PostDTO {
 			return this;
 		} 
 		
+		public Builder setImageId (String image_id) {
+			this.image_id = image_id;
+			return this;
+		} 
+		
 		public PostDTO build() {
 			PostDTO rdto = new PostDTO();
 			rdto.post_num = post_num;
@@ -57,6 +64,7 @@ public class PostDTO {
 			rdto.location = location;
 			rdto.content = content;
 			rdto.date = date;
+			rdto.image_id = image_id;
 			
 			return rdto;
 		}
@@ -84,5 +92,9 @@ public class PostDTO {
 
 	public LocalDateTime getDate() {
 		return date;
+	}
+	
+	public String getImageId() {
+		return image_id;
 	}
 }

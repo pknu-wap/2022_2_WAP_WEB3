@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Service.PostService;
+import com.example.demo.model.dto.ImageDTO;
 import com.example.demo.model.dto.PostDTO;
+import com.example.demo.ServerPath;
 
 @Controller
 public class PostController {
@@ -38,7 +41,8 @@ public class PostController {
 			@RequestParam(required=false) String theme, @RequestParam String location, 
 			@RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
-			@RequestParam LocalDateTime date) {
+			@RequestParam LocalDateTime date,
+			@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
 		PostDTO pdto = new PostDTO
 				.Builder()
 				.setPostNum(number)
@@ -49,7 +53,8 @@ public class PostController {
 				.setDate(date)
 				.build();
 		
-		postService.putPost(pdto);
+		ImageDTO idto = new ImageDTO(file.getOriginalFilename());
+		postService.putPost(pdto, idto);
 			
 		return "redirect:/page/post";
 	}

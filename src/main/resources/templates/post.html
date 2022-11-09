@@ -2,59 +2,75 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body></body>
-	<form action="/post" accept-charset="utf-8" method="post">
-		<input type="hidden" name="_method" value="put" />
-		
-		<div class="">
-			<input type="file" accept="image/*" > 
-		</div>
-		
-		<div class="">
-		<label type="text" name="location" /> 
-			<select name="location">
-				<option value="">장소를 선택</option>
-				<option value="서며">서면</option>
-				<option value="s2">정문</option>
-			</select> 
-		</div>
+<form action="/post" accept-charset="utf-8" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="_method" value="put" />
 
-		<div class="">
+	<div class="image_area">
+		<input type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
+		<!-- 이미지가 들어갈 div -->
+		<div class="show_img"><img src=""/></div>
+		
+		<!-- 이미지 선택하면 보여주는 부분 -->
+		<script>
+			$("#file").change(function () {
+				if (this.files && this.files[0]) {
+					var reader = new FileReader;
+					reader.onload = function (data) {
+						$(".show_img img").attr("src", data.target.result).width(500);
+					}
+					reader.readAsDataURL(this.files[0]);
+				}
+			});
+		</script>
+	</div>
+
+	<div class="">
+		<label type="text" name="location" />
+		<select name="location">
+			<option value="">장소를 선택</option>
+			<option value="su">서면</option>
+			<option value="s2">정문</option>
+		</select>
+	</div>
+
+	<div class="">
 		시간 : <input type="datetime-local" name="date" /><br>
-		</div>
-		
-		<div class="">
+	</div>
+
+	<div class="">
 		<br> 내용 : <input type="text" name="content" /><br>
-		</div>
-		
-		<br> <br> <input type="submit" value="작성" />
-	</form>
+	</div>
 
-	<br>
-	---------------------------------------------------------------
-	<br>
+	<br> <br> <input type="submit" value="작성" />
+</form>
 
-	<div id="list"></div>
+<br>
+---------------------------------------------------------------
+<br>
 
-	<form action="/post" accept-charset="utf-8" method="post">
-		<input type="hidden" name="_method" value="delete" />
-		<fieldset style="width: 150">
-			<legend>개인 정보 입력</legend>
-			삭제할 예약 번호 : <input type="text" name="num" /><br>
-			<br>
-		</fieldset>
-		<input type="submit" value="delete" />
-	</form>
+<div id="list"></div>
+
+<form action="/post" accept-charset="utf-8" method="post">
+	<input type="hidden" name="_method" value="delete" />
+	<fieldset style="width: 150">
+		<legend>개인 정보 입력</legend>
+		삭제할 예약 번호 : <input type="text" name="num" /><br>
+		<br>
+	</fieldset>
+	<input type="submit" value="delete" />
+</form>
 <html>
 </body>
 
 </html>
+
+
 <!-- 
 <script>$(document).ready(function () {
 		$.ajax({
