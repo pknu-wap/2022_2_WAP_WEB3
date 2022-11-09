@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.Service.PostService;
 import com.example.demo.model.dto.ImageDTO;
 import com.example.demo.model.dto.PostDTO;
-import com.example.demo.ServerPath;
 
 @Controller
 public class PostController {

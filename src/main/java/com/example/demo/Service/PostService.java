@@ -3,13 +3,14 @@ package com.example.demo.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.PostEntity;
+import com.example.demo.Entity.ImageEntity;
 import com.example.demo.Repository.PostRepository;
+import com.example.demo.Repository.ImageRepository;
 import com.example.demo.model.dto.ImageDTO;
 import com.example.demo.model.dto.PostDTO;
 
@@ -20,6 +21,8 @@ import lombok.AllArgsConstructor;
 public class PostService {
 	@Autowired
 	private PostRepository postRepository;
+	@Autowired 
+	private ImageRepository imageRepository;
 	private List<PostDTO> rdtoList = new ArrayList<>();
 
 	public List<PostDTO> getList() {
@@ -66,6 +69,9 @@ public class PostService {
 					.image_id(image_id)
 					.build());
 			
+			imageRepository.save(ImageEntity.builder()
+					.image_id(idto.getImage_id())
+					.image_name(image_id));
 			
 		} else {	// update
 			postRepository.save(PostEntity.builder()
