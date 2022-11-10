@@ -1,8 +1,9 @@
 package com.example.demo.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import com.example.demo.Entity.PostEntity;
+import com.example.demo.Entity.ImageEntity;
 
 public class PostDTO {
 	private Integer post_num;
@@ -11,7 +12,7 @@ public class PostDTO {
 	private String location;
 	private String content;
 	private LocalDateTime date;
-	private String image_id;
+	private List<ImageEntity> image;
 	public PostDTO() {}
 	
 	public static class Builder {
@@ -21,7 +22,7 @@ public class PostDTO {
 		private String location;
 		private String content;
 		private LocalDateTime date;
-		private String image_id;
+		private List<ImageEntity> image;
 		public Builder() {}
 		
 		public Builder setPostNum(Integer post_num) {
@@ -51,8 +52,8 @@ public class PostDTO {
 			return this;
 		} 
 		
-		public Builder setImageId (String image_id) {
-			this.image_id = image_id;
+		public Builder setImageId (List<ImageEntity> list) {
+			this.image = list;
 			return this;
 		} 
 		
@@ -64,7 +65,7 @@ public class PostDTO {
 			rdto.location = location;
 			rdto.content = content;
 			rdto.date = date;
-			rdto.image_id = image_id;
+			rdto.image = image;
 			
 			return rdto;
 		}
@@ -94,7 +95,7 @@ public class PostDTO {
 		return date;
 	}
 	
-	public String getImageId() {
-		return image_id;
+	public List<ImageEntity> getImageId() {
+		return image;
 	}
 }

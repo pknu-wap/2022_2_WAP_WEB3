@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,14 +41,14 @@ public class PostEntity {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime date;
 	
-	@JoinColumn(name="image_id") 
-	@Column(nullable=true, length = 36)
-	private String image_id;
+	@ManyToOne
+	@JoinColumn(name="imageId") 
+	private List<ImageEntity> image;
 
 	@Builder
 	public PostEntity(
 			Integer post_num, String member_email, String theme, String location, 
-			String content, LocalDateTime date, String image_id) {
+			String content, LocalDateTime date, List<ImageEntity> image) {
 		super();
 		this.post_num = post_num;
 		this.member_email = member_email;
@@ -53,6 +56,6 @@ public class PostEntity {
 		this.location = location;
 		this.content = content;
 		this.date = date;
-		this.image_id = image_id;
+		this.image = image;
 	}
 }
