@@ -23,6 +23,15 @@ public class webController {
 		return "root";
 	}
 	
+	@RequestMapping("/login")
+	public String login() {	// 로그인 페이지
+		return "login";
+	}
+	
+	@RequestMapping("/join")
+	public String join() {	// 회원가입 페이지
+		return "join";
+	}
 //	@RequestMapping("/test")
 //	public String rootest() {	
 //		return "test";

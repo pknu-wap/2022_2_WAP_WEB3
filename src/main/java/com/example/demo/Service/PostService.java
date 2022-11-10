@@ -3,8 +3,6 @@ package com.example.demo.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,27 +20,20 @@ public class PostService {
 	private PostRepository postRepository;
 	private List<PostDTO> rdtoList = new ArrayList<>();
 
-	public List<PostDTO> getList() {
-		List<PostEntity> list = postRepository.findAll();
-		
-		for (int i = 0; i < list.size(); i++) {
-			PostEntity entity = list.get(i);
-			if(entity.getDate().isAfter(LocalDateTime.now())) {
-				PostDTO PostDTO = new PostDTO
-					.Builder()
-					.setPostNum(entity.getPost_num())
-					.setTheme(entity.getTheme())
-					.setLocation(entity.getLocation())
-					.setContent(entity.getInfomation())
-					.setDate(entity.getDate())
-					.build();
-			
-				rdtoList.add(PostDTO);
-			}
-		}
-		
-		return rdtoList;
-}
+	/*
+	 * public List<PostDTO> getList() { List<PostEntity> list =
+	 * postRepository.findAll();
+	 * 
+	 * for (int i = 0; i < list.size(); i++) { PostEntity entity = list.get(i);
+	 * if(entity.getDate().isAfter(LocalDateTime.now())) { PostDTO PostDTO = new
+	 * PostDTO .Builder() .setPostNum(entity.getPost_num())
+	 * .setTheme(entity.getTheme()) .setLocation(entity.getLocation())
+	 * .setContent(entity.getInfomation()) .setDate(entity.getDate()) .build();
+	 * 
+	 * rdtoList.add(PostDTO); } }
+	 * 
+	 * return rdtoList; }
+	 */
 
 	public void putPost(PostDTO rdto) {
 		if(rdto.getPostNum() == null) {		//put
