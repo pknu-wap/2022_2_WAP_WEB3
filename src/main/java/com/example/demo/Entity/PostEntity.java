@@ -43,12 +43,12 @@ public class PostEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="imageId") 
-	private List<ImageEntity> image;
+	private ImageEntity image;
 
 	@Builder
 	public PostEntity(
 			Integer post_num, String member_email, String theme, String location, 
-			String content, LocalDateTime date, List<ImageEntity> image) {
+			String content, LocalDateTime date, ImageEntity image) {
 		super();
 		this.post_num = post_num;
 		this.member_email = member_email;

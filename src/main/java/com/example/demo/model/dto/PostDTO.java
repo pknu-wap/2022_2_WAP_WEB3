@@ -12,7 +12,7 @@ public class PostDTO {
 	private String location;
 	private String content;
 	private LocalDateTime date;
-	private List<ImageEntity> image;
+	private ImageEntity image;
 	public PostDTO() {}
 	
 	public static class Builder {
@@ -22,7 +22,7 @@ public class PostDTO {
 		private String location;
 		private String content;
 		private LocalDateTime date;
-		private List<ImageEntity> image;
+		private ImageEntity image;
 		public Builder() {}
 		
 		public Builder setPostNum(Integer post_num) {
@@ -52,7 +52,7 @@ public class PostDTO {
 			return this;
 		} 
 		
-		public Builder setImageId (List<ImageEntity> list) {
+		public Builder setImageId (ImageEntity list) {
 			this.image = list;
 			return this;
 		} 
@@ -95,7 +95,7 @@ public class PostDTO {
 		return date;
 	}
 	
-	public List<ImageEntity> getImageId() {
+	public ImageEntity getImageId() {
 		return image;
 	}
 }

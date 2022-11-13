@@ -1,7 +1,5 @@
 package com.example.demo.model.dto;
 
-import java.awt.Image;
-
 public class ImageDTO {
 	private String image;
 	private String imageName;
