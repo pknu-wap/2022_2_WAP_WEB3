@@ -83,10 +83,10 @@ public class PostService {
 						.location(rdto.getLocation())
 						.content(rdto.getContent())
 						.date(rdto.getDate())
-						.image(ImageEntity.builder()
-								.imageId(post_entity.get().getImage().getImageId())
-								.imageName(image_id)
-								.build())
+//						.image(ImageEntity.builder()
+//								.imageId(post_entity.get().getImage().getImageId())
+//								.imageName(image_id)
+//								.build())
 						.build());
 			}
 		}
