@@ -48,7 +48,7 @@ public class PostService {
 		return rdtoList;
 }
 
-	public void putPost(PostDTO rdto, ImageDTO idto) {
+	public void putPost(String email, PostDTO rdto, ImageDTO idto) {
 		Optional<PostEntity> post_entity;
 		String image_id = idto.getImage();
 		if(image_id != null)
@@ -56,16 +56,16 @@ public class PostService {
 		else {
 			if(rdto.getPostNum()==null && image_id==null) { //put & 이미지 없음
 				postRepository.save(PostEntity.builder()
-						// 이메일
-						// 테마
+						.member_email(email)
+						.theme(rdto.getTheme())
 						.location(rdto.getLocation())
 						.content(rdto.getContent())
 						.date(rdto.getDate())
 						.build());
 			} else if(rdto.getPostNum()!=null) {	// put & 이미지 있음
 				postRepository.save(PostEntity.builder()
-						// 이메일
-						// 테마
+						.member_email(email)
+						.theme(rdto.getTheme())
 						.location(rdto.getLocation())
 						.content(rdto.getContent())
 						.date(rdto.getDate())
@@ -78,8 +78,8 @@ public class PostService {
 			} else {	// update
 				postRepository.save(PostEntity.builder()
 						.post_num(rdto.getPostNum())
-						// 이메일
-						// 테마
+						.member_email(email)
+						.theme(rdto.getTheme())
 						.location(rdto.getLocation())
 						.content(rdto.getContent())
 						.date(rdto.getDate())

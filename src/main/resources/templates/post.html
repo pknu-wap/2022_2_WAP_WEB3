@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,9 +9,25 @@
 </head>
 
 <body></body>
+<div sec:authorize="isAuthenticated()">
+          <p th:text="|${principal}님 환영합니다.|"></p>
+          <ul>
+              <li th:text="|session.getId = ${#session.getId().toString()}|"></li>
+              <li th:text="|session.getAttributeNames = ${#session.getAttributeNames()}|"></li>
+              <li th:text="|session.getCreationTime = ${#session}|"></li>
+          </ul>
+      </div>
 <form action="/post" accept-charset="utf-8" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="_method" value="put" />
-
+	
+	<div class="form-group row">
+            <label for="Auth" class="col-sm-2 col-form-label"><strong>작성자</strong></label>
+            <div class="col-sm-10">
+                <p class="" th:text="${username}" id = "Auth"></p>
+                <input type="hidden" name="Auth" class="form-control" id="inputAuthor" th:value="${Auth}">
+            </div>
+        </div>
+        
 	<div class="image_area">
 		<input type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
 		<!-- 이미지가 들어갈 div -->
