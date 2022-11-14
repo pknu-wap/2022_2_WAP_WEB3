@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.Service.PostService;
 import com.example.demo.model.dto.PostDTO;
 
-@Controller
-public class webController {
-	@RequestMapping("/")
-	public String root() {	// 메인 페이지
-		return "root";
-	}
-	
+//@Controller
+//public class webController {
+//	@RequestMapping("/")
+//	public String root() {	// 메인 페이지
+//		return "root";
+//	}
+//	
 //	@RequestMapping("/test")
 //	public String rootest() {	
 //		return "test";
@@ -35,4 +35,4 @@ public class webController {
 //		model.addAttribute("date", "시간");
 //		return "club-info";
 //	}
-}
+//}
