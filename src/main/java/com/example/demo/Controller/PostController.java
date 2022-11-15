@@ -1,20 +1,22 @@
 package com.example.demo.Controller;
 
+import java.nio.file.Files;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.validation.Valid;
+import java.nio.file.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.ServerPath;
 import com.example.demo.Service.PostService;
 import com.example.demo.model.dto.ImageDTO;
 import com.example.demo.model.dto.PostDTO;
@@ -37,16 +39,19 @@ public class PostController {
 	}
 	
 	@PutMapping(value = "/post")
-	public String createPost(@RequestBody @Valid PostDTO postdto, Principal principal,
+	public String createPost(@RequestParam String location, @RequestParam String content, 
+			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
+			@RequestParam LocalDateTime date, Principal principal,
 			@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
-		if (principal != null) {
-			System.out.println("dto : " + postdto.getDate());
-			System.out.println("dto : " + postdto.getContent());
-			System.out.println("dto : " + postdto.getLocation());
-			System.out.println("ID정보 : " + principal.getName());
-		} else {
-			System.out.println("#########");
-		}
+		
+//		Files.copy(file.getInputStream(), ServerPath.getImagePath(), StandardCopyOption.REPLACE_EXISTING);
+		
+		PostDTO postdto = new PostDTO.Builder()
+				.setLocation(location)
+				.setDate(date)
+				.setContent(content)
+				.build();
+		
 		postService.putPost(principal.getName(), postdto, new ImageDTO(file.getOriginalFilename()));
 			
 		return "redirect:/page/post";

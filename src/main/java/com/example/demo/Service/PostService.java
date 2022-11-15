@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.nio.file.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,6 @@ public class PostService {
 				PostDTO PostDTO = new PostDTO
 					.Builder()
 					.setPostNum(entity.getPost_num())
-					.setTheme(entity.getTheme())
 					.setLocation(entity.getLocation())
 					.setContent(entity.getContent())
 					.setDate(entity.getDate())
@@ -49,46 +49,45 @@ public class PostService {
 }
 
 	public void putPost(String email, PostDTO rdto, ImageDTO idto) {
-		Optional<PostEntity> post_entity;
-		String image_id = idto.getImage();
-		if(image_id != null)
-			post_entity = postRepository.findById(rdto.getPostNum());
-		else {
-			if(rdto.getPostNum()==null && image_id==null) { //put & 이미지 없음
-				postRepository.save(PostEntity.builder()
-						.member_email(email)
-						.theme(rdto.getTheme())
-						.location(rdto.getLocation())
-						.content(rdto.getContent())
-						.date(rdto.getDate())
-						.build());
-			} else if(rdto.getPostNum()!=null) {	// put & 이미지 있음
-				postRepository.save(PostEntity.builder()
-						.member_email(email)
-						.theme(rdto.getTheme())
-						.location(rdto.getLocation())
-						.content(rdto.getContent())
-						.date(rdto.getDate())
-						.image(ImageEntity.builder()
-								.imageId(image_id)
-								.imageName(UUID.randomUUID().toString())
-								.build())
-						.build());
+//		Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
+		String image_name = idto.getImagName();
+		
+		if(rdto.getPostNum()==null && image_name==null) { //put & 이미지 없음
+			postRepository.save(PostEntity.builder()
+					.member_email(email)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.build());
+			
+		} else if(rdto.getPostNum()==null && image_name != null) {	// put & 이미지 있음
+			postRepository.save(PostEntity.builder()
+					.member_email(email)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.image(ImageEntity.builder()
+							.imageId(UUID.randomUUID().toString())
+							.imageName(image_name)
+							.build())
+					.build());
 				
-			} else {	// update
-				postRepository.save(PostEntity.builder()
-						.post_num(rdto.getPostNum())
-						.member_email(email)
-						.theme(rdto.getTheme())
-						.location(rdto.getLocation())
-						.content(rdto.getContent())
-						.date(rdto.getDate())
-//						.image(ImageEntity.builder()
-//								.imageId(post_entity.get().getImage().getImageId())
-//								.imageName(image_id)
-//								.build())
-						.build());
-			}
+		} else {	// update
+			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
+			postRepository.save(PostEntity.builder()
+					.post_num(rdto.getPostNum())
+					.member_email(email)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.image(ImageEntity.builder()
+							.imageId(post_entity.get().getImage().getImageId())
+							.imageName(image_name)
+							.build())
+					.build());
 		}
 	}
 	

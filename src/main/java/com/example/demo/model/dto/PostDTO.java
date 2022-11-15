@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.example.demo.Entity.ImageEntity;
 
+import lombok.AllArgsConstructor;
 public class PostDTO {
 	private Integer post_num;
 	private String member_email;
