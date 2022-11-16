@@ -26,12 +26,12 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-	@GetMapping(value = "/post")
+	@GetMapping(value = "/page/post")
 	public String pageRPost() {	
 		return "post";
 	}
 	
-	/* @GetMapping(value = "/post") */
+	@GetMapping(value = "/post") 
 	@ResponseBody
 	public List<PostDTO> getList() {	
 		List<PostDTO> list = postService.getList();
@@ -45,6 +45,7 @@ public class PostController {
 			@RequestParam(required=false) MultipartFile file) throws Exception {
 		
 //		Files.copy(file.getInputStream(), ServerPath.getImagePath(), StandardCopyOption.REPLACE_EXISTING);
+		
 		System.out.println("####@ " + location);
 		System.out.println("#### " + content);
 		System.out.println("####@ " + date);
