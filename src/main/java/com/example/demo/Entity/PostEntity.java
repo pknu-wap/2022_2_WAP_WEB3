@@ -27,10 +27,10 @@ public class PostEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer post_num;
 	
-	@Column(nullable=true, length = 30)		//나중에 nullable=false로 바꿔야함 + 테이블 삭제 했다가 다시
+	@Column(nullable=false, length = 30)		//나중에 nullable=false로 바꿔야함 + 테이블 삭제 했다가 다시
 	private String member_email;
 	
-	@Column(nullable=true, length = 20) 	//나중에 nullable=false로 바꿔야함
+	@Column(nullable=false, length = 20) 	//나중에 nullable=false로 바꿔야함
 	private String theme;
 	
 	@Column(nullable=false, length = 50)
