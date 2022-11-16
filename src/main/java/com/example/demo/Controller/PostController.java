@@ -42,9 +42,14 @@ public class PostController {
 	public String createPost(@RequestParam String location, @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
 			@RequestParam LocalDateTime date, Principal principal,
-			@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
+			@RequestParam(required=false) MultipartFile file) throws Exception {
 		
 //		Files.copy(file.getInputStream(), ServerPath.getImagePath(), StandardCopyOption.REPLACE_EXISTING);
+		System.out.println("####@ " + location);
+		System.out.println("#### " + content);
+		System.out.println("####@ " + date);
+		System.out.println("####@ " + principal.getName());
+		System.out.println("#### " + file);
 		
 		PostDTO postdto = new PostDTO.Builder()
 				.setLocation(location)

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.nio.file.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +26,12 @@ public class PostService {
 	private List<PostDTO> rdtoList = new ArrayList<>();
 
 	public List<PostDTO> getList() {
+		System.out.println("########################");
 		List<PostEntity> list = postRepository.findAll();
 		
 		for (int i = 0; i < list.size(); i++) {
 			PostEntity entity = list.get(i);
-			if(entity.getDate().isAfter(LocalDateTime.now())) {
+//			if(entity.getDate().isAfter(LocalDateTime.now())) {
 				PostDTO PostDTO = new PostDTO
 					.Builder()
 					.setPostNum(entity.getPost_num())
@@ -42,7 +42,7 @@ public class PostService {
 					.build();
 			
 				rdtoList.add(PostDTO);
-			}
+//			}
 		}
 		
 		return rdtoList;

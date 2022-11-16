@@ -17,6 +17,10 @@ public class ImageEntity {
 	@Column(length = 50)
 	private String imageName;
 	
+	public ImageEntity() {
+		super();
+	}
+	
 	@Builder
 	public ImageEntity(String imageId, String imageName) {
 		this.imageId = imageId;
