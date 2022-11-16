@@ -23,12 +23,12 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-	@GetMapping(value = "/page/post")
+	@GetMapping(value = "/post")
 	public String pageRPost() {	
 		return "post";
 	}
 	
-	@GetMapping(value = "/post")
+	/* @GetMapping(value = "/post") */
 	@ResponseBody
 	public List<PostDTO> getList() {	
 		List<PostDTO> list = postService.getList();

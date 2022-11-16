@@ -23,6 +23,24 @@ public class webController {
 		return "root";
 	}
 	
+	@RequestMapping("/login")
+	public String login() {	// 로그인 페이지
+		return "login";
+	}
+	
+	@RequestMapping("/join")
+	public String join() {	// 회원가입 페이지
+		return "join";
+	}
+	
+	@RequestMapping("/post")
+	public String post() {	// 공연등록 페이지
+		return "post";
+	}
+	@RequestMapping("/mypage")
+	public String mypage() {	// 마이페이지
+		return "mypage";
+	}
 //	@RequestMapping("/test")
 //	public String rootest() {	
 //		return "test";
