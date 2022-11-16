@@ -19,90 +19,29 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
-<<<<<<< HEAD
-<body></body>
-<form action="/post" accept-charset="utf-8" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="_method" value="put" />
-
-	<div class="image_area">
-		<input type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
-		<!-- 이미지가 들어갈 div -->
-		<div class="show_img"><img src=""/></div>
-		
-		<!-- 이미지 선택하면 보여주는 부분 -->
-		<script>
-			$("#file").change(function () {
-				if (this.files && this.files[0]) {
-					var reader = new FileReader;
-					reader.onload = function (data) {
-						$(".show_img img").attr("src", data.target.result).width(500);
-					}
-					reader.readAsDataURL(this.files[0]);
-				}
-			});
-		</script>
-	</div>
-
-	<div class="">
-		<label type="text" name="location" />
-		<select name="location">
-			<option value="">장소를 선택</option>
-			<option value="su">서면</option>
-			<option value="s2">정문</option>
-		</select>
-	</div>
-
-	<div class="">
-		시간 : <input type="datetime-local" name="date" /><br>
-	</div>
-
-	<div class="">
-		<br> 내용 : <input type="text" name="content" /><br>
-	</div>
-
-	<br> <br> <input type="submit" value="작성" />
-</form>
-
-<br>
----------------------------------------------------------------
-<br>
-
-<div id="list"></div>
-
-<form action="/post" accept-charset="utf-8" method="post">
-	<input type="hidden" name="_method" value="delete" />
-	<fieldset style="width: 150">
-		<legend>개인 정보 입력</legend>
-		삭제할 예약 번호 : <input type="text" name="num" /><br>
-		<br>
-	</fieldset>
-	<input type="submit" value="delete" />
-</form>
-<html>
-=======
 <body id="page-top">
 	<!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="/"><img src="assets/img/logo_2.png" alt="..." /></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+          <a class="navbar-brand" href="/"><img src="assets/img/logo_2.png" alt="..." /></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               Menu
-                <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="post">공연등록</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
-                    <li class="nav-item"><a class="nav-link" href="join">회원가입</a></li>
-            	    <li class="nav-item"><a class="nav-link" href="mypage">마이페이지</a></li>
-             	    <li class="nav-item"><a class="nav-link" href="information">공연정보</a></li>
-                </ul>
-            </div>
-  	    </div>
-    </nav>
-	<header class="masthead_post">
-	<h1 style="text-align:center;">공연 등록 페이지</h1>
-	</header>
+              <i class="fas fa-bars ms-1"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="post">공연등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="join">회원가입</a></li>
+                <li class="nav-item"><a class="nav-link" href="mypage">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link" href="information">공연정보</a></li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <header class="masthead_post">
+      <h1 style="text-align:center;">공연 등록 페이지</h1>
+  </header>
  <div class="board_wrap">
 	<form action="/post" accept-charset="utf-8" method="post" class="board_form" enctype="multipart/form-data">
 		<input type="hidden" name="_method" value="put" />
@@ -136,35 +75,19 @@
 			시간 : <input type="datetime-local" name="date" /><br><br> -->
 			<div class="board_item1">
 				<label class="board_label">포스터</label>
-				<label class="btn btn-outline-secondary" for="file" style="margin-left: 1.5rem;">포스터 업로드</label>
-				<input style="visibility:hidden;" type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
+				<label class="btn btn-outline-secondary" for="chooseFile" style="margin-left: 1.5rem;">포스터 업로드</label>
+				<input style="visibility:hidden;" type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 				<p id = "fileName" style="visibility:hidden;"></p>
-				<!-- <div class="image-show" id="image-show"></div> -->
-				<div class="show_img">
-					<img src=""/>
-				</div>
-				<script>
-					$("#file").change(function () {
-						if (this.files && this.files[0]) {
-							var reader = new FileReader;
-							reader.onload = function (data) {
-								$(".show_img img").attr("src", data.target.result).width(500);
-							}
-							reader.readAsDataURL(this.files[0]);
-						}
-					});
-				</script>
+				<div class="image-show" id="image-show"></div>
 			</div>
 			
 		
-		<!-- <div class="action_button">
+		<div class="action_button">
 			<button class="btn btn-outline-secondary" type="submit" value="submit">등록</button>
 			<button class="btn btn-outline-secondary" type="reset" value="reset">초기화</button>
-		</div> -->
-		<div class="action_button">
-			<input class="btn btn-outline-secondary" type="submit" value="등록"/>
-			<input class="btn btn-outline-secondary" type="reset" value="초기화"/>
 		</div>
+		<!-- <input type="submit" value="submit"/><br><br>
+		<input type="reset" value="reset"/><br><br> -->
 	</form>
 	<br>
 
@@ -191,20 +114,11 @@
   <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
->>>>>>> branch 'develop' of https://github.com/pknu-wap/2022_2_WAP_WEB3.git
 </body>
 
 </html>
-<<<<<<< HEAD
-
-
 <!-- 
 <script>$(document).ready(function () {
-=======
-<!-- 
-<script>
-	$(document).ready(function () {
->>>>>>> branch 'develop' of https://github.com/pknu-wap/2022_2_WAP_WEB3.git
 		$.ajax({
 			url: "/post",
 			type: "GET",
@@ -223,9 +137,5 @@
 			complete: function (xhr, status) { }
 		});
 	});
-<<<<<<< HEAD
-</script>
- -->
-=======
+
 </script> -->
->>>>>>> branch 'develop' of https://github.com/pknu-wap/2022_2_WAP_WEB3.git

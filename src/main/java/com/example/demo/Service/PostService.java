@@ -26,15 +26,15 @@ public class PostService {
 	private List<PostDTO> rdtoList = new ArrayList<>();
 
 	public List<PostDTO> getList() {
+		System.out.println("########################");
 		List<PostEntity> list = postRepository.findAll();
 		
 		for (int i = 0; i < list.size(); i++) {
 			PostEntity entity = list.get(i);
-			if(entity.getDate().isAfter(LocalDateTime.now())) {
+//			if(entity.getDate().isAfter(LocalDateTime.now())) {
 				PostDTO PostDTO = new PostDTO
 					.Builder()
 					.setPostNum(entity.getPost_num())
-					.setTheme(entity.getTheme())
 					.setLocation(entity.getLocation())
 					.setContent(entity.getContent())
 					.setDate(entity.getDate())
@@ -42,51 +42,51 @@ public class PostService {
 					.build();
 			
 				rdtoList.add(PostDTO);
-			}
+//			}
 		}
 		
 		return rdtoList;
 }
 
-	public void putPost(PostDTO rdto, ImageDTO idto) {
-		String image_id = idto.getImage();
+	public void putPost(String email, PostDTO rdto, ImageDTO idto) {
+//		Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
+		String image_name = idto.getImagName();
 		
-		Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
-		
-		if(rdto.getPostNum()==null && image_id==null) { //put & 이미지 없음
+		if(rdto.getPostNum()==null && image_name==null) { //put & 이미지 없음
 			postRepository.save(PostEntity.builder()
-					// 이메일
-					// 테마
+					.member_email(email)
+					.theme(rdto.getTheme())
 					.location(rdto.getLocation())
 					.content(rdto.getContent())
 					.date(rdto.getDate())
-					.build());
-		} else if(rdto.getPostNum()!=null) {	// put & 이미지 있음
-			postRepository.save(PostEntity.builder()
-					// 이메일
-					// 테마
-					.location(rdto.getLocation())
-					.content(rdto.getContent())
-					.date(rdto.getDate())
-					.image(ImageEntity.builder()
-							.imageId(image_id)
-							.imageName(UUID.randomUUID().toString())
-							.build())
 					.build());
 			
-		} else {	// update
+		} else if(rdto.getPostNum()==null && image_name != null) {	// put & 이미지 있음
 			postRepository.save(PostEntity.builder()
-					.post_num(rdto.getPostNum())
-					// 이메일
-					// 테마
+					.member_email(email)
+					.theme(rdto.getTheme())
 					.location(rdto.getLocation())
 					.content(rdto.getContent())
 					.date(rdto.getDate())
 					.image(ImageEntity.builder()
-							.imageId(post_entity.get().getImage().get(0).getImageId())
-							.imageName(image_id)
-							.build()
-							.get())
+							.imageId(UUID.randomUUID().toString())
+							.imageName(image_name)
+							.build())
+					.build());
+				
+		} else {	// update
+			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
+			postRepository.save(PostEntity.builder()
+					.post_num(rdto.getPostNum())
+					.member_email(email)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.image(ImageEntity.builder()
+							.imageId(post_entity.get().getImage().getImageId())
+							.imageName(image_name)
+							.build())
 					.build());
 		}
 	}

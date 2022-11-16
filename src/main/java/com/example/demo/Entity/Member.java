@@ -1,46 +1,47 @@
 package com.example.demo.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
+import com.example.demo.model.dto.MemberDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Getter
-@Builder
-@AllArgsConstructor
+
 @NoArgsConstructor
+@Getter
+@Table(name = "member")
 @Entity
 public class Member {
-	@Id
-	private Integer idx;
-	
-//	@OneToMany(fetch=FetchType.LAZY)
-//	@JoinColumn(name="Board_id")
-	@Column(nullable=false, length=50 )
-	private String id;	
-	
-	@Column(length=12)
-	private String pw;
-	
-	@Column(length=12)
-	private String pw2;
-	
-	@Column(length=5)
-	private String name;
-	
-	private String club;
 
-	public void setId(String id) {
-		this.id = id;
-		
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "member_id")
+	private Long id;
+
+	@Column(unique = true)
+	private String email;
+
+	private String password;
+
+	@Enumerated(EnumType.STRING)
+	private MemberRole role;
+
+	@Builder
+	public Member(String email, String password, MemberRole role) {
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+
+	public static Member createMember(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {
+		Member member = Member.builder()
+				.email(memberDTO.getEmail())
+				.password(passwordEncoder.encode(memberDTO.getPassword()))
+				.role(MemberRole.USER)
+				.build();
+		return member;
 	}
 }

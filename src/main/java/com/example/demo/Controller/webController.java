@@ -16,31 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.Service.PostService;
 import com.example.demo.model.dto.PostDTO;
 
-@Controller
-public class webController {
-	@RequestMapping("/")
-	public String root() {	// 메인 페이지
-		return "root";
-	}
-	
-	@RequestMapping("/login")
-	public String login() {	// 로그인 페이지
-		return "login";
-	}
-	
-	@RequestMapping("/join")
-	public String join() {	// 회원가입 페이지
-		return "join";
-	}
-	
-	@RequestMapping("/post")
-	public String post() {	// 공연등록 페이지
-		return "post";
-	}
-	@RequestMapping("/mypage")
-	public String mypage() {	// 마이페이지
-		return "mypage";
-	}
+//@Controller
+//public class webController {
+//	@RequestMapping("/")
+//	public String root() {	// 메인 페이지
+//		return "root";
+//	}
+//	
 //	@RequestMapping("/test")
 //	public String rootest() {	
 //		return "test";
@@ -53,4 +35,4 @@ public class webController {
 //		model.addAttribute("date", "시간");
 //		return "club-info";
 //	}
-}
+//}

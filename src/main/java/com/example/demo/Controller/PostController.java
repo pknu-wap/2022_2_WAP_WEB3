@@ -1,8 +1,10 @@
 package com.example.demo.Controller;
 
+import java.nio.file.Files;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+import java.nio.file.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.ServerPath;
 import com.example.demo.Service.PostService;
 import com.example.demo.model.dto.ImageDTO;
 import com.example.demo.model.dto.PostDTO;
@@ -36,26 +39,25 @@ public class PostController {
 	}
 	
 	@PutMapping(value = "/post")
-	public String createPost(@RequestParam(required=false) Integer number, 
-			@RequestParam(required=false) String member_email, 
-			@RequestParam(required=false) String theme, @RequestParam String location, 
-			@RequestParam String content, 
+	public String createPost(@RequestParam String location, @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
-			@RequestParam LocalDateTime date,
-			@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
+			@RequestParam LocalDateTime date, Principal principal,
+			@RequestParam(required=false) MultipartFile file) throws Exception {
 		
-		PostDTO pdto = new PostDTO
-				.Builder()
-				.setPostNum(number)
-				.setMemberEmail(member_email)
-				.setTheme(theme)
+//		Files.copy(file.getInputStream(), ServerPath.getImagePath(), StandardCopyOption.REPLACE_EXISTING);
+		System.out.println("####@ " + location);
+		System.out.println("#### " + content);
+		System.out.println("####@ " + date);
+		System.out.println("####@ " + principal.getName());
+		System.out.println("#### " + file);
+		
+		PostDTO postdto = new PostDTO.Builder()
 				.setLocation(location)
-				.setContent(content)
 				.setDate(date)
+				.setContent(content)
 				.build();
 		
-		ImageDTO idto = new ImageDTO(file.getOriginalFilename());
-		postService.putPost(pdto, idto);
+		postService.putPost(principal.getName(), postdto, new ImageDTO(file.getOriginalFilename()));
 			
 		return "redirect:/page/post";
 	}
