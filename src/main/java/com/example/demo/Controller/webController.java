@@ -37,6 +37,10 @@ public class webController {
 	public String post() {	// 공연등록 페이지
 		return "post";
 	}
+	@RequestMapping("/mypage")
+	public String mypage() {	// 마이페이지
+		return "mypage";
+	}
 //	@RequestMapping("/test")
 //	public String rootest() {	
 //		return "test";
