@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+body{
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.profile {
+    width:1000px;
+    padding: 40px;
+    margin:auto;
+    box-sizing: border-box;
+}
+
+.profileImg {
+    width:80px;
+    height:80px;
+    border-radius: 40px;
+}
+
+.line1 {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.profileName {
+    margin-left: 40px;
+    padding-top: 20px;
+}
+
