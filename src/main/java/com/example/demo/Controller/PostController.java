@@ -45,20 +45,19 @@ public class PostController {
 			@RequestParam(required=false) MultipartFile file) throws Exception {
 		
 //		Files.copy(file.getInputStream(), ServerPath.getImagePath(), StandardCopyOption.REPLACE_EXISTING);
-		
-		System.out.println("####@ " + location);
-		System.out.println("#### " + content);
-		System.out.println("####@ " + date);
-		System.out.println("####@ " + principal.getName());
-		System.out.println("#### " + file);
-		
+//		System.out.println(location);
+//		System.out.println(content);
+//		System.out.println(date);
+//		System.out.println(principal.getName());
+//		System.out.println(file.getOriginalFilename());
+//		
 		PostDTO postdto = new PostDTO.Builder()
 				.setLocation(location)
 				.setDate(date)
 				.setContent(content)
 				.build();
 		
-		postService.putPost(principal.getName(), postdto, new ImageDTO(file.getOriginalFilename()));
+		postService.putPost(principal.getName(), postdto, file);
 			
 		return "redirect:/page/post";
 	}
