@@ -27,9 +27,6 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	@Autowired
-	private ImageRepository imageRepository;
-	
 	private List<PostDTO> rdtoList = new ArrayList<>();
 
 	public List<PostDTO> getList() {
@@ -44,7 +41,7 @@ public class PostService {
 					.setLocation(entity.getLocation())
 					.setContent(entity.getContent())
 					.setDate(entity.getDate())
-					.setImageId(entity.getImage())
+					.setImageId(entity.getImageId())
 					.build();
 			
 				rdtoList.add(PostDTO);
@@ -59,44 +56,59 @@ public class PostService {
 		String image_name = file.getOriginalFilename();
 		String path = ServerPath.getImagePath() + image_name;
 		
-		try {
+		try {	// 같은 이름 파일 처리도 해야함
 			file.transferTo(new File(path));
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		PostEntity postEntity = PostEntity.builder()
-				.member_email(email)
-				.theme(rdto.getTheme())
-				.location(rdto.getLocation())
-				.content(rdto.getContent())
-				.date(rdto.getDate())
-				.build();
-		
 		if(rdto.getPostNum()==null && image_name==null) { //put & 이미지 없음
+			PostEntity postEntity = PostEntity.builder()
+					.member_email(email)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.build();
+			
 			postRepository.save(postEntity);
 			
 		} else if(rdto.getPostNum()==null && image_name != null) {	// put & 이미지 있음
-			postEntity.builder()
-			.image(ImageEntity.builder()
+			ImageEntity imageEntity = ImageEntity.builder()
 					.ImageId(UUID.randomUUID().toString())
 					.FileOriginName(image_name)
 					.FilePath(path)
-					.build())
-			.build();
+					.build();
+			
+			PostEntity postEntity = PostEntity.builder()
+					.member_email(email)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.ImageId(imageEntity)
+					.build();
 			
 			postRepository.save(postEntity); 	
 				
 		} else {	// update
 			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
-			postEntity.builder()
-			.post_num(rdto.getPostNum())
-			.image(ImageEntity.builder()
-					.ImageId(post_entity.get().getImage().getImageId())
+			ImageEntity imageEntity = ImageEntity.builder()
+					.ImageId(post_entity.get().getImageId().getImageId())
 					.FileOriginName(image_name)
-					.build())
-			.build();
+					.build();
+			
+			PostEntity postEntity = PostEntity.builder()
+					.post_num(rdto.getPostNum())
+					.member_email(email)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.ImageId(imageEntity)
+					.build();
+			
 			postRepository.save(postEntity);
 		}
 	}

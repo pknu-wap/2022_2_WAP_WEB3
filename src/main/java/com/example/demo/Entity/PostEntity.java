@@ -1,7 +1,6 @@
 package com.example.demo.Entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,13 +41,13 @@ public class PostEntity {
 	private LocalDateTime date;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(nullable=true, name="imageId") 
-	private ImageEntity image;
+	@JoinColumn(nullable=true, name="ImageId") 
+	private ImageEntity ImageId;
 
 	@Builder
 	public PostEntity(
 			Integer post_num, String member_email, String theme, String location, 
-			String content, LocalDateTime date, ImageEntity image) {
+			String content, LocalDateTime date, ImageEntity ImageId) {
 		super();
 		this.post_num = post_num;
 		this.member_email = member_email;
@@ -57,6 +55,6 @@ public class PostEntity {
 		this.location = location;
 		this.content = content;
 		this.date = date;
-		this.image = image;
+		this.ImageId = ImageId;
 	}
 }
