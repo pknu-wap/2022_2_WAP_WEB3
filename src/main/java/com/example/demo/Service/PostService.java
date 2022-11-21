@@ -28,6 +28,8 @@ public class PostService {
 	
 	private List<PostDTO> rdtoList = new ArrayList<>();
 
+	/*
+	 * */
 	public List<PostDTO> getList() {
 		List<PostEntity> list = postRepository.findAll();
 		
@@ -46,7 +48,6 @@ public class PostService {
 				rdtoList.add(PostDTO);
 			}
 		}
-		
 		return rdtoList;
 }
 
