@@ -12,19 +12,23 @@ import lombok.Getter;
 public class ImageEntity {
 	@Id
 	@Column(length = 36)
-	private String imageId;
+	private String ImageId;
 	
 	@Column(length = 50)
-	private String imageName;
+	private String FileOriginName;
+	
+	@Column(length = 50)
+	private String FilePath;
 	
 	public ImageEntity() {
 		super();
 	}
 	
 	@Builder
-	public ImageEntity(String imageId, String imageName) {
-		this.imageId = imageId;
-		this.imageName = imageName;
+	public ImageEntity(String ImageId, String FileOriginName, String FilePath) {
+		this.ImageId = ImageId;
+		this.FileOriginName = FileOriginName;
+		this.FilePath = FilePath;
 	}
 	
 }

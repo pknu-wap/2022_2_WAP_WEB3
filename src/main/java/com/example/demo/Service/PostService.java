@@ -80,19 +80,19 @@ public class PostService {
 		} else if(rdto.getPostNum()==null && image_name != null) {	// put & 이미지 있음
 			postRepository.save(postEntity.builder()
 					.image(ImageEntity.builder()
-							.imageId(UUID.randomUUID().toString())
-							.imageName(image_name)
+							.ImageId(UUID.randomUUID().toString())
+							.FileOriginName(image_name)
+							.FilePath(path)
 							.build())
-					.build());
+					.build()); 	
 				
 		} else {	// update
-			
 			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
 			postRepository.save(postEntity.builder()
 					.post_num(rdto.getPostNum())
 					.image(ImageEntity.builder()
-							.imageId(post_entity.get().getImage().getImageId())
-							.imageName(image_name)
+							.ImageId(post_entity.get().getImage().getImageId())
+							.FileOriginName(image_name)
 							.build())
 					.build());
 		}
