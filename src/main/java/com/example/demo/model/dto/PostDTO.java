@@ -6,13 +6,13 @@ import com.example.demo.Entity.ImageEntity;
 
 import lombok.AllArgsConstructor;
 public class PostDTO {
-	private Integer post_num;
-	private String member_email;
-	private String theme;
-	private String location;
-	private String content;
-	private LocalDateTime date;
-	private ImageEntity image;
+	public Integer post_num;
+	public String member_email;
+	public String theme;
+	public String location;
+	public String content;
+	public LocalDateTime date;
+	public ImageEntity image;
 	public PostDTO() {}
 	
 	public static class Builder {

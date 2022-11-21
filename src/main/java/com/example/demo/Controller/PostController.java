@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,15 +23,11 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-	@GetMapping(value = "/page/post")
-	public String pageRPost() {	
-		return "post";
-	}
-	
 	@GetMapping(value = "/post") 
 	@ResponseBody
 	public List<PostDTO> getList() {	
 		List<PostDTO> list = postService.getList();
+		
 		return list;
 	}
 	
@@ -51,9 +48,13 @@ public class PostController {
 		return "redirect:/page/post";
 	}
 
-	
 	@DeleteMapping(value = "/post")
 	public void deletePost(@RequestParam Integer num) {	
 		postService.deletePost(num);
+	}
+	
+	@GetMapping(value = "/page/post/{post_num}")
+	public String pagePost() {	
+		return "post";
 	}
 }

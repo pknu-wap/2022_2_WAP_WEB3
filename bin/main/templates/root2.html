@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>BuskerBusker</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.png" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+          <a class="navbar-brand" href="/"><img src="/assets/img/logo_2.png" alt="..." /></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              Menu
+              <i class="fas fa-bars ms-1"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/login">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/sign_up">회원가입</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/page/mypage">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link" href="information">공연정보</a></li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <!-- Masthead-->
+  <header class="masthead">
+    <div class="container">
+      <div class="masthead-heading text-uppercase">Welcome to Busker Busker!</div>
+      <h2 class="text-uppercase" style="margin-bottom:2rem;">부산 버스킹 공연 소개사이트 <br>Busekr Busker에 오신 것을 환영합니다!</h2>
+      <a class="btn btn-primary btn-xl text-uppercase" href="/page/enroll">공연 등록하기!</a>
+    </div>
+  </header>
+  <section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center">
+          <h2 class="section-heading text-uppercase">test2공연소개</h2>
+          	<tr th:each="list : ${postlist}">
+          		<td><span th:text="${list.post_num}"></span></td>
+          		<td>
+          			<a th:href="@{/page/post/{post_num}(post_num=${list.post_num})}">
+          				<span th:text="${list.content}"></span>
+          			</a>
+          		</td>
+          		<td><span th:text="${list.location}"></span></td>
+          		<td><span th:text="${list.date}"></span></td>
+          		<br/>
+          	</tr>
+          <br/>
+        </div>
+        <!-- 공연소개 -->
+        
+    </div>
+</section>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="js/scripts.js"></script>
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+  <!-- * *                               SB Forms JS                               * *-->
+  <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+  <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>  
+ <!--
+<script>$(document).ready(function () {
+		$.ajax({
+			url: "/test1",
+			type: "GET",
+			data: "",
+			dataType: "json",
+			contentType: "application/json;charset=UTF-8",
+			async: false,
+			success: function (data) {
+				
+			},
+			error: function (xhr, status, error) {
+				alert(xhr.responseText);
+			},
+			complete: function (xhr, status) { }
+		});
+	});
+</script>-->
+</html>
