@@ -27,23 +27,23 @@ public class PostEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer post_num;
 	
-	@Column(nullable=false, length = 30)		//나중에 nullable=false로 바꿔야함 + 테이블 삭제 했다가 다시
+	@Column(nullable=false, length = 30)		
 	private String member_email;
 	
-	@Column(nullable=false, length = 20) 	//나중에 nullable=false로 바꿔야함
+	@Column(nullable=true, length = 20) 
 	private String theme;
 	
 	@Column(nullable=false, length = 50)
 	private String location;
 	
-	@Column(columnDefinition = "TEXT")
+	@Column(nullable=false, columnDefinition = "TEXT")
 	private String content;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime date;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="imageId") 
+	@JoinColumn(nullable=true, name="imageId") 
 	private ImageEntity image;
 
 	@Builder

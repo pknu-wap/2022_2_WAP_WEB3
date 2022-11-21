@@ -74,10 +74,9 @@ public class PostService {
 				.date(rdto.getDate())
 				.build();
 		
-		
 		if(rdto.getPostNum()==null && image_name==null) { //put & 이미지 없음
 			postRepository.save(postEntity);
-			System.out.println(postEntity.getLocation());
+			
 		} else if(rdto.getPostNum()==null && image_name != null) {	// put & 이미지 있음
 			postRepository.save(postEntity.builder()
 					.image(ImageEntity.builder()
@@ -85,9 +84,9 @@ public class PostService {
 							.imageName(image_name)
 							.build())
 					.build());
-			System.out.println(postEntity.getLocation());
 				
 		} else {	// update
+			
 			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
 			postRepository.save(postEntity.builder()
 					.post_num(rdto.getPostNum())
@@ -96,7 +95,6 @@ public class PostService {
 							.imageName(image_name)
 							.build())
 					.build());
-			System.out.println(postEntity.getLocation());
 		}
 	}
 	
