@@ -25,4 +25,7 @@ public class ImageEntity {
         this.imageName = imageName;
     }
 
+    public void updateImage(String imageName) {
+        this.imageName = imageName;
+    }
 }

@@ -8,19 +8,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 public class MemberProfileDTO {
-    private String team;
+    private String artistName;
 
-    private String showType;
+    private String genre;
 
-    private String imageId;
-
-    private String introduce;
+    private String message;
 
     @Builder
-    public MemberProfileDTO(String team, String showType, String imageId, String introduce) {
-        this.team = team;
-        this.showType = showType;
-        this.imageId = imageId;
-        this.introduce = introduce;
+    public MemberProfileDTO(String artistName, String genre, String message) {
+        this.artistName = artistName;
+        this.genre = genre;
+        this.message = message;
     }
 }

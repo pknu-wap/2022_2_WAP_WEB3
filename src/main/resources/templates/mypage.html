@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form enctype="multipart/form-data", id="test">
+    <input id="artistName" type="text" name="artistName">
+    <input id="genre" type="text" name="genre">
+    <input id="message" type="text" name="message">
+    <input id="file" type="file" name="file">
+    <input id="save" type="button">
+</form>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script>
+    document.getElementById('save').onclick = function() {
+        let form = document.getElementById('test');
+        let data= new FormData(form);
+        $.ajax({
+            url: "post",
+            enctype: 'multipart/form-data',
+            data: data,
+            method: "POST",
+            processData: false,
+            contentType: false
+        })
+            .done(function() {
+                console.log("Sended!");
+            })
+            .fail(function(xhr, status, errorThrown) {
+                console.log("failed!");
+            })
+    }
+</script>

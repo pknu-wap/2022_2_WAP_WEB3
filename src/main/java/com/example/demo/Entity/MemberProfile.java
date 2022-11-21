@@ -18,21 +18,27 @@ public class MemberProfile {
     @Column(name = "profile_id")
     private Long id;
 
-    private String team;
+    private String artistName;
 
-    private String showType;
+    private String genre;
 
-    private String introduce;
+    private String message;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     private ImageEntity imageEntity;
 
     @Builder
-    public MemberProfile(String team, String showType, String introduce, String email) {
-        this.team = team;
-        this.showType = showType;
+    public MemberProfile(String artistName, String genre, String message) {
+        this.artistName = artistName;
+        this.genre = genre;
         this.imageEntity = ImageEntity.builder().imageId(UUID.randomUUID().toString()).build();
-        this.introduce = introduce;
+        this.message = message;
+    }
+
+    public void updateProfile(String artistName, String genre, String message) {
+        this.artistName = artistName;
+        this.genre = genre;
+        this.message = message;
     }
 }
