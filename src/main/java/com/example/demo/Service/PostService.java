@@ -78,23 +78,26 @@ public class PostService {
 			postRepository.save(postEntity);
 			
 		} else if(rdto.getPostNum()==null && image_name != null) {	// put & 이미지 있음
-			postRepository.save(postEntity.builder()
-					.image(ImageEntity.builder()
-							.ImageId(UUID.randomUUID().toString())
-							.FileOriginName(image_name)
-							.FilePath(path)
-							.build())
-					.build()); 	
+			postEntity.builder()
+			.image(ImageEntity.builder()
+					.ImageId(UUID.randomUUID().toString())
+					.FileOriginName(image_name)
+					.FilePath(path)
+					.build())
+			.build();
+			
+			postRepository.save(postEntity); 	
 				
 		} else {	// update
 			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
-			postRepository.save(postEntity.builder()
-					.post_num(rdto.getPostNum())
-					.image(ImageEntity.builder()
-							.ImageId(post_entity.get().getImage().getImageId())
-							.FileOriginName(image_name)
-							.build())
-					.build());
+			postEntity.builder()
+			.post_num(rdto.getPostNum())
+			.image(ImageEntity.builder()
+					.ImageId(post_entity.get().getImage().getImageId())
+					.FileOriginName(image_name)
+					.build())
+			.build();
+			postRepository.save(postEntity);
 		}
 	}
 	
