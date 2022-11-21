@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.ServerPath;
 import com.example.demo.Entity.ImageEntity;
 import com.example.demo.Entity.PostEntity;
-import com.example.demo.Repository.ImageRepository;
 import com.example.demo.Repository.PostRepository;
 import com.example.demo.model.dto.PostDTO;
 
@@ -52,7 +51,6 @@ public class PostService {
 }
 
 	public void putPost(String email, PostDTO rdto, MultipartFile file) {
-//		Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
 		String image_name = file.getOriginalFilename();
 		String path = ServerPath.getImagePath() + image_name;
 		
@@ -63,7 +61,7 @@ public class PostService {
 			e.printStackTrace();
 		}
 		
-		if(rdto.getPostNum()==null && image_name==null) { //put & 이미지 없음
+		if(rdto.getPostNum()==null && file.isEmpty()) { //put & 이미지 없음
 			PostEntity postEntity = PostEntity.builder()
 					.member_email(email)
 					.theme(rdto.getTheme())
@@ -74,7 +72,7 @@ public class PostService {
 			
 			postRepository.save(postEntity);
 			
-		} else if(rdto.getPostNum()==null && image_name != null) {	// put & 이미지 있음
+		} else if(rdto.getPostNum()==null && !file.isEmpty()) {	// put & 이미지 있음
 			ImageEntity imageEntity = ImageEntity.builder()
 					.ImageId(UUID.randomUUID().toString())
 					.FileOriginName(image_name)
@@ -113,10 +111,6 @@ public class PostService {
 		}
 	}
 	
-//	public void put() {
-//		
-//	}
-//	
 	public void deletePost(int num) {
 		try {
 			postRepository.deleteById(num);
