@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * /members/login 로그인 -> /
- * /members/sign_up 회원가입 -> /members/login
+ * /members/join 회원가입 -> /members/login
  * /members/logout 로그아웃 -> /
  * /members/login/error 로그인 실패 시 주소
  * /members/emailCheck?email="" 주소창으로 이메일 받아 가용 여부 json 리턴 {"isValid" : true|false}
@@ -34,32 +34,32 @@ public class MemberController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     // 회원가입 페이지 리턴
-    @GetMapping(value = "/sign_up")
+    @GetMapping(value = "/join")
     public String memberForm() {
-        return "member/sign_up";
+        return "member/join";
     }
 
     /**
      * 회원가입 요청 처리
      * @param memberDto email, password
      * @param bindingResult 바인딩 error
-     * @return 성공 시 /members/login, 비정상적 가입 시도 시 /members/sign_up
+     * @return 성공 시 /members/login, 비정상적 가입 시도 시 /members/join
      */
-    @PostMapping(value = "/sign_up")
+    @PostMapping(value = "/join")
     public String memberForm(@ModelAttribute("memberDto") @Valid MemberDTO memberDto, BindingResult bindingResult) { // @Valid를 사용하면 DTO에 명시한 validation을 사용할 수 있음.
         if (bindingResult.hasErrors()) {
             List<ObjectError> list = bindingResult.getAllErrors();
             for(ObjectError error : list) {
                 logger.info(error.toString());
             }
-            return "member/sign_up";
+            return "member/join";
         }
         try {
             Member member = Member.createMember(memberDto, passwordEncoder);
             memberService.saveMember(member);
         } catch (IllegalStateException e) {
             logger.info(e.getMessage());
-            return "member/sign_up";
+            return "member/join";
         }
         return "redirect:/members/login";
     }
