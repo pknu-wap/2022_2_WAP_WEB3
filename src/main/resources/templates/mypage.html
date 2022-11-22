@@ -12,6 +12,7 @@
     <input id="file" type="file" name="file">
     <input id="save" type="button">
 </form>
+<img id="profileImage"></img>
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
@@ -27,11 +28,19 @@
             processData: false,
             contentType: false
         })
-            .done(function() {
+            .done(function(data) {
                 console.log("Sended!");
             })
             .fail(function(xhr, status, errorThrown) {
                 console.log("failed!");
             })
     }
+    const profileImage = document.getElementById('profileImage');
+    $.ajax({
+        url: "/page/mypage/info",
+        method: "GET"
+    })
+    .done(function (data) {
+        profileImage.src = "/image/?imageName="+data.imageName;
+    })
 </script>

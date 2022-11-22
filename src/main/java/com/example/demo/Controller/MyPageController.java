@@ -34,7 +34,7 @@ public class MyPageController {
         profile.put("artistName", memberProfileDTO.getArtistName());
         profile.put("genre", memberProfileDTO.getGenre());
         profile.put("message", memberProfileDTO.getMessage());
-        profile.put("image", myPageService.findImageName(imageId));
+        profile.put("imageName", myPageService.findImageName(imageId));
         return profile;
     }
 
