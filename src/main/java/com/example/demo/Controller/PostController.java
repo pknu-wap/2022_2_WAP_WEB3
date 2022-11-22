@@ -42,6 +42,7 @@ public class PostController {
 				.setContent(content)
 				.build();
 		
+		
 		postService.putPost(principal.getName(), postdto, file);
 			
 		return "redirect:/page/post";
@@ -54,6 +55,7 @@ public class PostController {
 	
 	@GetMapping(value = "/page/post/{post_num}")
 	public String pagePost() {	
+		
 		return "post";
 	}
 }

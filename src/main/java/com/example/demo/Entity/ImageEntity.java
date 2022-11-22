@@ -18,6 +18,9 @@ public class ImageEntity {
 	private String FileOriginName;
 	
 	@Column(length = 50)
+	private String FileServerName;
+	
+	@Column(length = 50)
 	private String FilePath;
 	
 	public ImageEntity() {
@@ -25,9 +28,10 @@ public class ImageEntity {
 	}
 	
 	@Builder
-	public ImageEntity(String ImageId, String FileOriginName, String FilePath) {
+	public ImageEntity(String ImageId, String FileOriginName, String FileServerName, String FilePath) {
 		this.ImageId = ImageId;
 		this.FileOriginName = FileOriginName;
+		this.FileServerName = FileServerName;
 		this.FilePath = FilePath;
 	}
 	

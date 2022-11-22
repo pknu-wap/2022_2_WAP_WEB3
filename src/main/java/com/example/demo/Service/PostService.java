@@ -1,20 +1,28 @@
 package com.example.demo.Service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.ServerPath;
 import com.example.demo.Entity.ImageEntity;
 import com.example.demo.Entity.PostEntity;
+import com.example.demo.Repository.ImageRepository;
 import com.example.demo.Repository.PostRepository;
 import com.example.demo.model.dto.PostDTO;
 
@@ -26,11 +34,19 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	private List<PostDTO> rdtoList = new ArrayList<>();
-
+		public ImageEntity getPost(Integer post_num) throws IOException {
+			ImageEntity imageEntity = postRepository.findById(post_num).orElseGet(null).getImageId();
+			InputStream imageStream = new FileInputStream(ServerPath.getImagePath() + imageEntity.getFileServerName());
+			byte[] imageByteArray = IOUtils.
+					(imageStream);
+			imageStream.close();
+			return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+			
+		}
 	/*
 	 * */
 	public List<PostDTO> getList() {
+		List<PostDTO> rdtoList = new ArrayList<>();
 		List<PostEntity> list = postRepository.findAll();
 		
 		for (int i = 0; i < list.size(); i++) {
@@ -52,7 +68,7 @@ public class PostService {
 }
 
 	public void putPost(String email, PostDTO rdto, MultipartFile file) {
-		String image_name = file.getOriginalFilename();
+		String image_name = file.getOriginalFilename() ;
 		String path = ServerPath.getImagePath() + image_name;
 		
 		try {	// 같은 이름 파일 처리도 해야함
@@ -77,6 +93,7 @@ public class PostService {
 			ImageEntity imageEntity = ImageEntity.builder()
 					.ImageId(UUID.randomUUID().toString())
 					.FileOriginName(image_name)
+					.FileServerName(image_name + new SimpleDateFormat("mmddhhmmss").toString())
 					.FilePath(path)
 					.build();
 			
