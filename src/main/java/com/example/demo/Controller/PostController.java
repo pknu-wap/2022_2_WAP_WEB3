@@ -61,7 +61,7 @@ public class PostController {
 		try {
 			Resource resource = postService.getPost(post_num);
 //			model.addAttribute("path", Path.getPath() + resource.getFilename());
-			model.addAttribute("path", "/springboot/image/짐.png_20224023_014029");
+			model.addAttribute("path", "/images/짐.png");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
