@@ -2,21 +2,27 @@ package com.example.demo.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.ServerPath;
+import com.example.demo.Path;
 import com.example.demo.Entity.ImageEntity;
 import com.example.demo.Entity.PostEntity;
 import com.example.demo.Repository.PostRepository;
 import com.example.demo.model.dto.PostDTO;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import lombok.AllArgsConstructor;
 
@@ -26,11 +32,21 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	private List<PostDTO> rdtoList = new ArrayList<>();
-
-	/*
-	 * */
+	public Resource getPost(Integer post_num) {
+		try {
+			ImageEntity imageEntity = postRepository.findById(post_num).get().getImageId();
+			
+			Resource resource = new FileSystemResource(Path.getPath() + imageEntity.getFileSavedName());
+			
+			return resource;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public List<PostDTO> getList() {
+		List<PostDTO> dtoList = new ArrayList<>();
 		List<PostEntity> list = postRepository.findAll();
 		
 		for (int i = 0; i < list.size(); i++) {
@@ -42,18 +58,18 @@ public class PostService {
 					.setLocation(entity.getLocation())
 					.setContent(entity.getContent())
 					.setDate(entity.getDate())
-					.setImageId(entity.getImageId())
 					.build();
 			
-				rdtoList.add(PostDTO);
+				dtoList.add(PostDTO);
 			}
 		}
-		return rdtoList;
+		return dtoList;
 }
 
 	public void putPost(String email, PostDTO rdto, MultipartFile file) {
-		String image_name = file.getOriginalFilename();
-		String path = ServerPath.getImagePath() + image_name;
+		String image_name = file.getOriginalFilename() 
+				+ "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyymmdd_hhmmss"));
+		String path =  Path.getPath() + image_name;
 		
 		try {	// 같은 이름 파일 처리도 해야함
 			file.transferTo(new File(path));
@@ -74,9 +90,10 @@ public class PostService {
 			postRepository.save(postEntity);
 			
 		} else if(rdto.getPostNum()==null && !file.isEmpty()) {	// put & 이미지 있음
+			System.out.println(path + " " + path.length());
 			ImageEntity imageEntity = ImageEntity.builder()
 					.ImageId(UUID.randomUUID().toString())
-					.FileOriginName(image_name)
+					.FileSavedName(image_name)
 					.FilePath(path)
 					.build();
 			
@@ -95,7 +112,7 @@ public class PostService {
 			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
 			ImageEntity imageEntity = ImageEntity.builder()
 					.ImageId(post_entity.get().getImageId().getImageId())
-					.FileOriginName(image_name)
+					.FileSavedName(image_name)
 					.build();
 			
 			PostEntity postEntity = PostEntity.builder()

@@ -5,15 +5,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.Path;
 import com.example.demo.Service.PostService;
 import com.example.demo.model.dto.PostDTO;
 
@@ -44,7 +48,7 @@ public class PostController {
 		
 		postService.putPost(principal.getName(), postdto, file);
 			
-		return "redirect:/page/post";
+		return "redirect:/page/enroll";
 	}
 
 	@DeleteMapping(value = "/post")
@@ -53,7 +57,14 @@ public class PostController {
 	}
 	
 	@GetMapping(value = "/page/post/{post_num}")
-	public String pagePost() {	
+	public String pagePost(@PathVariable("post_num") Integer post_num, Model model) {
+		try {
+			Resource resource = postService.getPost(post_num);
+//			model.addAttribute("path", Path.getPath() + resource.getFilename());
+			model.addAttribute("path", "/springboot/image/짐.png_20224023_014029");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "post";
 	}
 }
