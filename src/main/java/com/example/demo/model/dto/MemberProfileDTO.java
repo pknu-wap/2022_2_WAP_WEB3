@@ -1,5 +1,6 @@
 package com.example.demo.model.dto;
 
+import com.example.demo.Entity.ImageEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,13 @@ public class MemberProfileDTO {
 
     private String message;
 
+    private ImageEntity imageEntity;
+
     @Builder
-    public MemberProfileDTO(String artistName, String genre, String message) {
+    public MemberProfileDTO(String artistName, String genre, String message, ImageEntity imageEntity) {
         this.artistName = artistName;
         this.genre = genre;
         this.message = message;
+        this.imageEntity = imageEntity;
     }
 }

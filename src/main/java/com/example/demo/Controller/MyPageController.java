@@ -6,14 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/page")
@@ -30,11 +27,14 @@ public class MyPageController {
     public HashMap<String, String> mypage(Principal principal) {
         String email = principal.getName();
         MemberProfileDTO memberProfileDTO = myPageService.getMemberProfileDTO(email);
+        String imageId = memberProfileDTO.getImageEntity().getImageId();
+
         HashMap<String, String> profile = new HashMap<>();
         profile.put("name", email);
         profile.put("artistName", memberProfileDTO.getArtistName());
         profile.put("genre", memberProfileDTO.getGenre());
         profile.put("message", memberProfileDTO.getMessage());
+        profile.put("image", myPageService.findImageName(imageId));
         return profile;
     }
 

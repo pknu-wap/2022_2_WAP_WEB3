@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -32,7 +34,11 @@ public class MyPageService {
 
     public ImageEntity saveImageEntity(MultipartFile file, String email) {
         ImageEntity imageEntity = memberRepository.findByEmail(email).getMemberProfile().getImageEntity();
-        String image_name = file.getOriginalFilename();
+        long time = System.currentTimeMillis();
+        System.out.println(time);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss_");
+        String formattedTime = simpleDateFormat.format(time);
+        String image_name = formattedTime + file.getOriginalFilename();
         String path = ServerPath.getImagePath() + image_name;
 
         try {
@@ -52,6 +58,17 @@ public class MyPageService {
                 .artistName(memberProfile.getArtistName())
                 .genre(memberProfile.getGenre())
                 .message(memberProfile.getMessage())
+                .imageEntity(memberProfile.getImageEntity())
                 .build();
+    }
+
+    public String findImageName(String id) {
+        Optional<ImageEntity> optionalImageEntity= imageRepository.findById(id);
+        if(optionalImageEntity.isPresent()) {
+            return optionalImageEntity.get().getImageName();
+        }
+        else {
+            throw new NullPointerException("There is no such imageId");
+        }
     }
 }
