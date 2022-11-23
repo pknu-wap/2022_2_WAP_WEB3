@@ -30,18 +30,18 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	public Resource getPost(Principal principal) {
-		try {
-			ImageEntity imageEntity = postRepository.findById(post_num).get().getImageId();
-			
-			Resource resource = new FileSystemResource(Path.getPath() + imageEntity.getFileSavedName());
-			
-			return resource;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	} 
+//	public Resource getPost(Principal principal) {
+//		try {
+//			ImageEntity imageEntity = postRepository.findById(post_num).get().getImageId();
+//			
+//			Resource resource = new FileSystemResource(Path.getPath() + imageEntity.getFileSavedName());
+//			
+//			return resource;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	} 
 	
 	public List<PostDTO> getList() {
 		List<PostDTO> dtoList = new ArrayList<>();
@@ -89,9 +89,9 @@ public class PostService {
 			
 		} else if(rdto.getPostNum()==null && !file.isEmpty()) {	// put & 이미지 있음
 			ImageEntity imageEntity = ImageEntity.builder()
-					.ImageId(UUID.randomUUID().toString())
-					.FileSavedName(image_name)
-					.FilePath(path)
+					.imageId(UUID.randomUUID().toString())
+					.imageName(image_name)
+					.imagePath(path)
 					.build();
 			
 			PostEntity postEntity = PostEntity.builder()
@@ -108,8 +108,8 @@ public class PostService {
 		} else {	// update
 			Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
 			ImageEntity imageEntity = ImageEntity.builder()
-					.ImageId(post_entity.get().getImageId().getImageId())
-					.FileSavedName(image_name)
+					.imageId(post_entity.get().getImageId().getImageId())
+					.imageName(image_name)
 					.build();
 			
 			PostEntity postEntity = PostEntity.builder()

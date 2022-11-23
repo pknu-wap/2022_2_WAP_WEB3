@@ -1,36 +1,36 @@
+
 package com.example.demo.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 @Entity(name = "image")
 public class ImageEntity {
-	@Id
-	@Column(length = 36)
-	@JoinColumn(name="Member") 
-	private String ImageId;
-	
-	@Column(length = 100)
-	private String FileSavedName;
-	
-	@Column(length = 100)
-	private String FilePath;
-	
-	public ImageEntity() {
-		super();
-	}
-	
-	@Builder
-	public ImageEntity(String ImageId, String FileSavedName, String FilePath) {
-		this.ImageId = ImageId;
-		this.FileSavedName = FileSavedName;
-		this.FilePath = FilePath;
-	}
-	
+    @Id
+    @Column(length = 36)
+    private String imageId;
+
+    @Column(length = 50)
+    private String imageName;
+    
+    @Column(length = 100)
+    private String imagePath;
+
+    @Builder
+    public ImageEntity(String imageId, String imageName, String imagePath) {
+        this.imageId = imageId;
+        this.imageName = imageName;
+        this.imagePath = imageName;
+    }
+
+    public void updateImage(String imageName) {
+        this.imageName = imageName;
+    }
 }

@@ -39,7 +39,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests()
                 .mvcMatchers("/", "/members/**").permitAll()
-                .mvcMatchers("/page/post/**").hasRole("USER")
+                .mvcMatchers("/mypage/**").hasRole("USER")
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
         http
