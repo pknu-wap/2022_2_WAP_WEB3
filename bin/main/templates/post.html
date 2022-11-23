@@ -13,8 +13,8 @@
 <script>
 var str = $(location).attr('pathname');
 var post_num = str.substring(str.lastIndexOf('/') + 1);
-var path = "/post/info?post_num=" + post_num;
-$("#image").attr("src", "http://locathost:8181" + path);
+//var path = "/post/info?post_num=" + post_num;
+//$("#image").attr("src", "http://locathost:8181" + path);
 $(document).ready(function () {
 		$.ajax({
 			url: "/post/info",
@@ -28,7 +28,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				//alert("err: " + xhr + " " + status + " " + error)
-				alert("no"+xhr.responseText);
+				//alert("no"+xhr.responseText);
 			},
 			complete: function (xhr, status) { }
 		});

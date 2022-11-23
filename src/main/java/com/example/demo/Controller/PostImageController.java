@@ -35,7 +35,7 @@ public class PostImageController {
                     FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK); 
         } catch(Exception e) {    
             e.getMessage();  
-        }
+        }  
         System.out.println(result); 
         return result;   
     }
