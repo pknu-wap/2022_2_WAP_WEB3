@@ -8,7 +8,7 @@
   <meta name="author" content="" />
   <title>mypage</title>
   <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="../static/assets/img/icon.png" />
+  <link rel="icon" type="image/x-icon" href="../static/assets/img/logo_2.png" />
   <!-- Font Awesome icons (free version)-->
   <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -40,7 +40,6 @@
           <li class="nav-item"><a class="nav-link" href="login.html">로그인</a></li>
           <li class="nav-item"><a class="nav-link" href="join.html">회원가입</a></li>
           <li class="nav-item"><a class="nav-link" href="mypage.html">마이페이지</a></li>
-          <li class="nav-item"><a class="nav-link" href="information.html">공연정보</a></li>
         </ul>
       </div>
     </div>
@@ -51,10 +50,10 @@
       <div class="mypage">
         <div class="profile">
           <div class="line1">
-            <img class="profileImg"
+            <img class="profileImg" name="profileImg"
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
             <h2 class="profileName" id="topName">Artist Name</h2>
-            <h2 class="profileMsg">님,  반갑습니다!</h2>
+            <h2 class="profileMsg">님, 반갑습니다!</h2>
           </div>
         </div>
 
@@ -92,22 +91,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form>
+                <form id="mypageForm">
                   <div class="mb-3 text-start">
                     <label for="recipient-name" class="col-form-label text-dark">활동명 : </label>
-                    <input type="text" class="form-control" id="artistName" required>
+                    <input type="text" class="form-control" id="artistName" required name="artistName">
                   </div>
                   <div class="mb-3 text-start">
                     <label for="message-text" class="col-form-label text-dark">장르 : </label>
-                    <input type="text" class="form-control" id="genre" required>
+                    <input type="text" class="form-control" id="genre" required name="genre">
                   </div>
                   <div class="mb-3 text-start">
                     <label for="message-text" class="col-form-label text-dark">소개 : </label>
-                    <textarea class="form-control" id="message"></textarea>
+                    <textarea class="form-control" id="message" name="message"></textarea>
                   </div>
                   <div class="mb-3 text-start">
                     <label for="formFile" class="form-label text-dark">프로필 이미지 등록</label>
-                    <input class="form-control" type="file" id="imgUpload" accept="image/*">
+                    <input class="form-control" type="file" id="imgUpload" accept="image/*" name="file">
                   </div>
                 </form>
               </div>
