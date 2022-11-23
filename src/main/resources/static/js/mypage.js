@@ -1,35 +1,16 @@
 
+// 모달창에서 입력받은 input값들
 const artistName = document.getElementById('artistName');
 const genre = document.getElementById('genre');
 const message = document.getElementById('message');
 const changeBtn = document.getElementById('changeBtn');
 const topName = document.getElementById('topName');
 
+var uploadImg = document.getElementById('imgUpload');  // 모달창에서 업로드한 이미지 객체
+var printImg = document.querySelector('.profileImg');  // 이미지 출력되는 프로필 부분 객체
 
-var uploadImg = document.getElementById('imgUpload');
-var printImg = document.querySelector('.profileImg');
+//const mypageForm = document.getElementById('mypageForm');
 
-
-$.ajax({
-    url: "/mypage/info",
-    type: "GET",
-    async: true,
-
-    success: function (data) {
-        data.name
-        data.artistName
-        data.genre
-        data.message
-        data.imageName
-        console.log(data.artistName);
-    },
-    error: function (xhr, status, error) {
-        console.log("Error");
-    },
-    complete: function (xhr, status) {
-        console.log("Complete");
-    }
-})
 function print_profile(event) {
 
     // 모달창에서 입력받은 내용 전달하기
@@ -75,5 +56,34 @@ function print_profile(event) {
             console.log("Complete");
         }
     });
+
+
 }
 changeBtn.addEventListener('click', print_profile);
+
+
+
+window.onload = function () {
+
+    $.ajax({
+        url: "/mypage/info",
+        type: "GET",
+        async: true,
+
+        success: function (data) {
+            // mypage 디폴트 값에 서버에서 받은 값 넣어주기
+            document.getElementById('resultName').value = data.artistName;
+            document.getElementById('resultGenre').value = data.genre;
+            document.getElementById('resultMsg').value = data.message;
+            printImg.src = "/image/?imageName=" + data.imageName;
+
+        },
+        error: function (xhr, status, error) {
+            console.log("Error");
+        },
+        complete: function (xhr, status) {
+            console.log("Complete");
+        }
+    });
+
+};
