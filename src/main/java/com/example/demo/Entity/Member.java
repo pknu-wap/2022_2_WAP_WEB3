@@ -43,10 +43,6 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private MemberRole role;
 	
-	@OneToMany
-    @JoinColumn(name = "post_num")
-	private List<PostEntity> list; 
-
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "profile_id")
 	private MemberProfile memberProfile;

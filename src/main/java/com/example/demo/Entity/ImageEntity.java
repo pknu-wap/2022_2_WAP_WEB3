@@ -19,15 +19,11 @@ public class ImageEntity {
 
     @Column(length = 50)
     private String imageName;
-    
-    @Column(length = 100)
-    private String imagePath;
 
     @Builder
-    public ImageEntity(String imageId, String imageName, String imagePath) {
+    public ImageEntity(String imageId, String imageName) {
         this.imageId = imageId;
         this.imageName = imageName;
-        this.imagePath = imageName;
     }
 
     public void updateImage(String imageName) {

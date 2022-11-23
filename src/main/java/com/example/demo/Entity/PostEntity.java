@@ -24,11 +24,14 @@ import lombok.NoArgsConstructor;
 public class PostEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@OneToMany(mappedBy = "Member")
 	private Integer post_num;
 	
-	@Column(nullable=false, length = 30)		
-	private String member_email;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(nullable=false, name="email") 
+//	private Member email;
+	
+	@Column(nullable=false)
+	private String email;
 	
 	@Column(nullable=true, length = 20) 
 	private String theme;
@@ -48,11 +51,11 @@ public class PostEntity {
 
 	@Builder
 	public PostEntity(
-			Integer post_num, String member_email, String theme, String location, 
+			Integer post_num, String email, String theme, String location, 
 			String content, LocalDateTime date, ImageEntity ImageId) {
 		super();
 		this.post_num = post_num;
-		this.member_email = member_email;
+		this.email = email;
 		this.theme = theme;
 		this.location = location;
 		this.content = content;

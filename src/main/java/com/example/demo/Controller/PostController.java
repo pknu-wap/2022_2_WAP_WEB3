@@ -1,14 +1,19 @@
 package com.example.demo.Controller;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.Path;
 import com.example.demo.Service.PostService;
 import com.example.demo.model.dto.PostDTO;
 
@@ -56,15 +60,27 @@ public class PostController {
 		postService.deletePost(num);
 	}
 	
-//	@GetMapping(value = "/page/post/{post_num}")
-//	public String pagePost(@PathVariable("post_num") Integer post_num, Model model) {
-//		try {
-//			Resource resource = postService.getPost(post_num);
-//			model.addAttribute("name", resource.getFilename());
-////			model.addAttribute("path", "/20220923_120921 KakaoTalk_20221013_165551160.png");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return "post";
-//	}
+	@GetMapping(value = "/page/post/{post_num}")
+	public String pagePost(@PathVariable(name="post_num") Integer post_num, Model model) {
+		model.addAttribute("post_num", post_num);
+		return "post";
+	}
+	
+	@ResponseBody
+    @GetMapping(value = "/post/info")
+    public ResponseEntity<byte[]> image(@RequestParam(name="post_num", required=false) Integer post_num, Principal principal, Model model) {
+    	String imageName = postService.getPost(principal.getName(), post_num);
+        ResponseEntity<byte[]> result = null;
+        File file = new File("C:\\springboot\\image\\" + imageName);
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", Files.probeContentType(file.toPath()));
+            result = new ResponseEntity<>(
+                    FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK); 
+            System.out.println("#############t" + result);
+        } catch(Exception e) {
+            e.getMessage();
+        }
+        return result;
+    }
 }

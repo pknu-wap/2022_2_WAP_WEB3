@@ -7,11 +7,31 @@
 <body>
 
 <h1> postpage</h1>  
-  <img th:src="@{/images/} + ${name}"/><br>
-  <img th:src="@{/images/20220923_120921 KakaoTalk_20221013_165551160}"/><br>
-  <img src="/images/20220923_120921 KakaoTalk_20221013_165551160.png"/><br>
-  <img id="imgId" th:src="@{${path}}" alt="첨부이미지"  />
-	<input type="file" th:id="imgFile" th:name="imgFile" accept=".jpg, .png">
+<input type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg">
   
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+var str = $(location).attr('pathname');
+var post_num = str.substring(str.lastIndexOf('/') + 1);
+$(document).ready(function () {
+		$.ajax({
+			url: "/post/info",
+			type: "GET",
+			data: {"post_num" : post_num},
+			dataType: "json",
+			contentType: "application/json;charset=UTF-8",
+			async: false,
+			success: function (data) {
+				console.log("ok")
+			},
+			error: function (xhr, status, error) {
+				alert("no"+xhr.responseText);
+			},
+			complete: function (xhr, status) { }
+		});
+	});
+</script>
 </html>
