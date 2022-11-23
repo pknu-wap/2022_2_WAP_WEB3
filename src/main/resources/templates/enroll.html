@@ -82,25 +82,27 @@
 			</div>
 			-->
 			
-			<div class="image_area">
-		<input type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
-		<!-- 이미지가 들어갈 div -->
-		<div class="show_img"><img src=""/></div>
-		
-		<!-- 이미지 선택하면 보여주는 부분 -->
-		<script>
-			$("#file").change(function () {
-				if (this.files && this.files[0]) {
-					var reader = new FileReader;
-					reader.onload = function (data) {
-						$(".show_img img").attr("src", data.target.result).width(500);
+		<div class="board_item1">
+			<label class="board_label">포스터</label>
+			<label class="btn btn-outline-secondary" for="file" style="margin-left: 1.5rem;">포스터 업로드</label>
+			<input style="visibility:hidden;" type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
+			<p id = "fileName" style="visibility:hidden;"></p>
+			<!-- <div class="image-show" id="image-show"></div> -->
+			<div class="show_img">
+				<img src=""/>
+			</div>
+			<script>
+				$("#file").change(function () {
+					if (this.files && this.files[0]) {
+						var reader = new FileReader;
+						reader.onload = function (data) {
+							$(".show_img img").attr("src", data.target.result).width(500);
+						}
+						reader.readAsDataURL(this.files[0]);
 					}
-					reader.readAsDataURL(this.files[0]);
-				}
-			});
-		</script>
-	</div>
-		 
+				});
+			</script>
+		</div>
 		<div class="action_button">
 			<button class="btn btn-outline-secondary" type="submit" value="submit">등록</button>
 			<button class="btn btn-outline-secondary" type="reset" value="reset">초기화</button>
