@@ -7,15 +7,14 @@
 <body>
 
 <h1> postpage</h1>  
-<input type="file"
-       id="avatar" name="avatar"
-       accept="image/png, image/jpeg">
-  
+  <img id="image" src=/>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 var str = $(location).attr('pathname');
 var post_num = str.substring(str.lastIndexOf('/') + 1);
+var path = "/post/info?post_num=" + post_num;
+$("#image").attr("src", "http://locathost:8181" + path);
 $(document).ready(function () {
 		$.ajax({
 			url: "/post/info",
@@ -25,9 +24,10 @@ $(document).ready(function () {
 			contentType: "application/json;charset=UTF-8",
 			async: false,
 			success: function (data) {
-				console.log("ok")
+				alert(data)
 			},
 			error: function (xhr, status, error) {
+				//alert("err: " + xhr + " " + status + " " + error)
 				alert("no"+xhr.responseText);
 			},
 			complete: function (xhr, status) { }

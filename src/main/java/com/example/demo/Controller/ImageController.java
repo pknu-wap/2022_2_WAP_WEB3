@@ -43,6 +43,6 @@ public class ImageController {
         } catch(Exception e) {
             logger.info(e.getMessage());
         }
-        return result;
+        return result; 
     }
-}
+} 

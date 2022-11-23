@@ -61,26 +61,8 @@ public class PostController {
 	}
 	
 	@GetMapping(value = "/page/post/{post_num}")
-	public String pagePost(@PathVariable(name="post_num") Integer post_num, Model model) {
-		model.addAttribute("post_num", post_num);
+	public String pagePost() {
 		return "post";
 	}
 	
-	@ResponseBody
-    @GetMapping(value = "/post/info")
-    public ResponseEntity<byte[]> image(@RequestParam(name="post_num", required=false) Integer post_num, Principal principal, Model model) {
-    	String imageName = postService.getPost(principal.getName(), post_num);
-        ResponseEntity<byte[]> result = null;
-        File file = new File("C:\\springboot\\image\\" + imageName);
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", Files.probeContentType(file.toPath()));
-            result = new ResponseEntity<>(
-                    FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK); 
-            System.out.println("#############t" + result);
-        } catch(Exception e) {
-            e.getMessage();
-        }
-        return result;
-    }
 }

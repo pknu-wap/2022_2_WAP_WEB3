@@ -32,7 +32,6 @@ public class PostService {
 			List<PostEntity> list = postRepository.findAll();
 			PostEntity post = new PostEntity(); 
 			
-			System.out.println(email + " " +post_num);
 			for(int i = 0; i<list.size(); i++) {
 				if(list.get(i).getEmail().equals(email) && list.get(i).getPost_num().equals(post_num)) {
 					post = list.get(i);
