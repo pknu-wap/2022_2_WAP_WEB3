@@ -33,11 +33,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-          <li class="nav-item"><a class="nav-link" href="post">공연등록</a></li>
-          <li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
-          <li class="nav-item"><a class="nav-link" href="join">회원가입</a></li>
-          <li class="nav-item"><a class="nav-link" href="mypage">마이페이지</a></li>
-          <li class="nav-item"><a class="nav-link" href="information">공연정보</a></li>
+          <li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/login" id="login_tab">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/sign_up" id="sign_up_tab">회원가입</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/page/mypage">마이페이지</a></li>
         </ul>
       </div>
     </div>
@@ -128,3 +127,26 @@
 </body>
 
 </html>
+<script>
+$.ajax({
+	url: "/members/loginCheck",
+	type: "GET",
+	
+	success: function (data) {
+		console.log(data.isLogin);
+		if (data.isLogin == null){
+			document.getElementById('login_tab').style.display='block';
+			document.getElementById('sign_up_tab').style.display='block';
+
+		}
+		else{
+			document.getElementById('login_tab').style.display='none';
+			document.getElementById('sign_up_tab').style.display='none';
+		}
+	},
+	error: function (xhr, status, error) {
+		alert(xhr.responseText);
+	},
+	complete: function (xhr, status) { }
+});
+</script>
