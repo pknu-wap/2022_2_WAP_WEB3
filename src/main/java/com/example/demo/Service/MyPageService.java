@@ -15,13 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class MyPageService {
+public class    MyPageService {
     private final MemberRepository memberRepository;
     private final MemberProfileRepository memberProfileRepository;
     private final ImageRepository imageRepository;
@@ -34,6 +37,12 @@ public class MyPageService {
 
     public ImageEntity saveImageEntity(MultipartFile file, String email) {
         ImageEntity imageEntity = memberRepository.findByEmail(email).getMemberProfile().getImageEntity();
+        Path exPath = Paths.get(ServerPath.getImagePath() + imageEntity.getImageName());
+        try {
+            Files.delete(exPath);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         long time = System.currentTimeMillis();
         System.out.println(time);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss_");

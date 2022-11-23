@@ -13,17 +13,17 @@ import java.security.Principal;
 import java.util.HashMap;
 
 @RequiredArgsConstructor
-@RequestMapping("/page")
+@RequestMapping("/mypage")
 @Controller
 public class MyPageController {
     private final MyPageService myPageService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping("/mypage")
+    @GetMapping
     public String mypageForm() { return "/mypage"; }
 
     @ResponseBody
-    @GetMapping("/mypage/info")
+    @GetMapping("/info")
     public HashMap<String, String> mypage(Principal principal) {
         String email = principal.getName();
         MemberProfileDTO memberProfileDTO = myPageService.getMemberProfileDTO(email);
@@ -38,9 +38,9 @@ public class MyPageController {
         return profile;
     }
 
-    @PostMapping("/mypage/post")
-    public String mypage(@RequestParam String artistName, @RequestParam String genre,
-                         @RequestParam String message,
+    @PostMapping("/post")
+    public String mypage(@RequestParam(required = false) String artistName, @RequestParam(required = false) String genre,
+                         @RequestParam(required = false) String message,
                          @RequestParam(required = false) MultipartFile file, Principal principal) {
 
         String email = principal.getName();
@@ -52,12 +52,12 @@ public class MyPageController {
                 .build();
         try {
             myPageService.saveMemberProfile(memberProfileDTO, email);
-            if(file != null) { myPageService.saveImageEntity(file, email); }
-        } catch(IllegalStateException e) {
+            if(!file.isEmpty() && file != null) { myPageService.saveImageEntity(file, email); }
+        } catch(Exception e) {
             logger.info(e.getMessage());
             return "/mypage";
         }
 
-        return "redirect:/page/mypage";
+        return "redirect:/mypage";
     }
 }
