@@ -2,8 +2,7 @@ package com.example.demo.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import com.example.demo.Entity.ImageEntity;
 import com.example.demo.Entity.PostEntity;
 import com.example.demo.Repository.PostRepository;
 import com.example.demo.model.dto.PostDTO;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import lombok.AllArgsConstructor;
 
@@ -32,7 +30,7 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	public Resource getPost(Integer post_num) {
+	public Resource getPost(Principal principal) {
 		try {
 			ImageEntity imageEntity = postRepository.findById(post_num).get().getImageId();
 			
@@ -43,7 +41,7 @@ public class PostService {
 			e.printStackTrace();
 			return null;
 		}
-	}
+	} 
 	
 	public List<PostDTO> getList() {
 		List<PostDTO> dtoList = new ArrayList<>();
@@ -67,8 +65,8 @@ public class PostService {
 }
 
 	public void putPost(String email, PostDTO rdto, MultipartFile file) {
-		String image_name = file.getOriginalFilename() 
-				+ "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyymmdd_hhmmss"));
+		String image_name = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyymmdd_hhmmss")) 
+				+ "_" + file.getOriginalFilename() ;
 		String path =  Path.getPath() + image_name;
 		
 		try {	// 같은 이름 파일 처리도 해야함
@@ -90,7 +88,6 @@ public class PostService {
 			postRepository.save(postEntity);
 			
 		} else if(rdto.getPostNum()==null && !file.isEmpty()) {	// put & 이미지 있음
-			System.out.println(path + " " + path.length());
 			ImageEntity imageEntity = ImageEntity.builder()
 					.ImageId(UUID.randomUUID().toString())
 					.FileSavedName(image_name)

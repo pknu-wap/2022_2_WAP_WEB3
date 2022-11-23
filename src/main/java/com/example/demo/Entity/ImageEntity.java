@@ -3,6 +3,7 @@ package com.example.demo.Entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,12 +13,13 @@ import lombok.Getter;
 public class ImageEntity {
 	@Id
 	@Column(length = 36)
+	@JoinColumn(name="Member") 
 	private String ImageId;
 	
 	@Column(length = 100)
 	private String FileSavedName;
 	
-	@Column(length = 50)
+	@Column(length = 100)
 	private String FilePath;
 	
 	public ImageEntity() {

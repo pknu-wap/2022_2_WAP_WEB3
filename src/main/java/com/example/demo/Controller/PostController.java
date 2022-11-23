@@ -42,7 +42,7 @@ public class PostController {
 		
 		PostDTO postdto = new PostDTO.Builder()
 				.setLocation(location)
-				.setDate(date)
+				.setDate(date) 
 				.setContent(content)
 				.build();
 		
@@ -56,15 +56,15 @@ public class PostController {
 		postService.deletePost(num);
 	}
 	
-	@GetMapping(value = "/page/post/{post_num}")
-	public String pagePost(@PathVariable("post_num") Integer post_num, Model model) {
-		try {
-			Resource resource = postService.getPost(post_num);
-//			model.addAttribute("path", Path.getPath() + resource.getFilename());
-			model.addAttribute("path", "/images/짐.png");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "post";
-	}
+//	@GetMapping(value = "/page/post/{post_num}")
+//	public String pagePost(@PathVariable("post_num") Integer post_num, Model model) {
+//		try {
+//			Resource resource = postService.getPost(post_num);
+//			model.addAttribute("name", resource.getFilename());
+////			model.addAttribute("path", "/20220923_120921 KakaoTalk_20221013_165551160.png");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return "post";
+//	}
 }

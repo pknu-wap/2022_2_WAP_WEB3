@@ -8,12 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.example.demo.Path;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class Config implements WebMvcConfigurer {
 	    @Override
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	    	registry
-	      	 .addResourceHandler("/images/**")
-	         .addResourceLocations("file:///C:/images/");
+	      	 .addResourceHandler("/page/post/**", "/images/**")
+	         .addResourceLocations("file:///C:/images/")
+	         .setCachePeriod(20);
 	 }
 }
