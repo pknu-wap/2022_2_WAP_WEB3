@@ -1,19 +1,13 @@
 package com.example.demo.Controller;
 
-import java.io.File;
-import java.nio.file.Files;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,14 +26,13 @@ public class PostController {
 	
 	@GetMapping(value = "/post") 
 	@ResponseBody
-	public List<PostDTO> getList() {	
-		List<PostDTO> list = postService.getList();
-		
+	public List<PostDTO> get() {	
+		List<PostDTO> list = postService.get();
 		return list;
 	}
 	
 	@PutMapping(value = "/post")
-	public String createPost(@RequestParam String location, @RequestParam String content, 
+	public String put(@RequestParam String location, @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
 			@RequestParam LocalDateTime date, Principal principal,
 			@RequestParam(required=false) MultipartFile file) throws Exception {
@@ -50,18 +43,36 @@ public class PostController {
 				.setContent(content)
 				.build();
 		
-		postService.putPost(principal.getName(), postdto, file);
+		postService.create(principal.getName(), postdto, file);
 			
 		return "redirect:/page/enroll";
 	}
+	
+	@PutMapping(value = "/post/{post_num}")
+	public String update(@RequestParam String location, @RequestParam String content, 
+			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date, Principal principal,
+			@PathVariable(name="post_num") Integer post_num,
+			@RequestParam(required=false) MultipartFile file) {
+		
+		PostDTO postdto = new PostDTO.Builder()
+				.setPostNum(post_num)
+				.setLocation(location)
+				.setDate(date) 
+				.setContent(content)
+				.build();
+		
+		postService.update(postdto, file);
+		return "redirect:/page/"+post_num;
+	}
 
 	@DeleteMapping(value = "/post")
-	public void deletePost(@RequestParam Integer num) {	
-		postService.deletePost(num);
+	public void delete(@RequestParam Integer post_num) {	
+		postService.delete(post_num);
 	}
 	
 	@GetMapping(value = "/page/post/{post_num}")
-	public String pagePost() {
+	public String page(@PathVariable(name="post_num") Integer post_num, Model model) {
+		model.addAttribute("post_num", post_num);
 		return "post"; 
 	}
 	

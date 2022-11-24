@@ -17,7 +17,7 @@ public class MainController {
 	
     @GetMapping(value = "/")
     public String main(Model model) {
-    	List<PostDTO> list = postService.getList();
+    	List<PostDTO> list = postService.get();
 		model.addAttribute("postlist", list);
         return "root2";
     }
