@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "spring.http.incoding",
+  "type": "java.lang.String",
+  "description": "A description for 'spring.http.incoding'"
+}]}

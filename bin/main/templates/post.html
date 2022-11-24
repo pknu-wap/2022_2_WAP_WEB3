@@ -20,13 +20,15 @@ $(document).ready(function () {
 			url: "/post/info",
 			type: "GET",
 			data: {"post_num" : post_num},
-			dataType: "json",
 			contentType: "application/json;charset=UTF-8",
 			async: false,
 			success: function (data) {
-				alert(data)
+				console.log(data)
 			},
 			error: function (xhr, status, error) {
+				console.log(xhr)
+				console.log(status)
+				console.log(error)
 				//alert("err: " + xhr + " " + status + " " + error)
 				//alert("no"+xhr.responseText);
 			},

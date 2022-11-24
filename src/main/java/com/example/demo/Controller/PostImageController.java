@@ -36,7 +36,7 @@ public class PostImageController {
         } catch(Exception e) {    
             e.getMessage();  
         }  
-        System.out.println(result); 
+        System.out.println(result);  
         return result;   
     }
 }
