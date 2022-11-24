@@ -28,7 +28,7 @@ public class MyPageController {
         String email = principal.getName();
         MemberProfileDTO memberProfileDTO = myPageService.getMemberProfileDTO(email);
         String imageId = memberProfileDTO.getImageEntity().getImageId();
-
+ 
         HashMap<String, String> profile = new HashMap<>();
         profile.put("name", email);
         profile.put("artistName", memberProfileDTO.getArtistName());

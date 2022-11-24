@@ -62,7 +62,7 @@ public class PostController {
 	
 	@GetMapping(value = "/page/post/{post_num}")
 	public String pagePost() {
-		return "post";
+		return "post"; 
 	}
 	
 }

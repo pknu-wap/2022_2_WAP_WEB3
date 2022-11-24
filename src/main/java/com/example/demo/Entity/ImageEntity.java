@@ -17,7 +17,7 @@ public class ImageEntity {
     @Column(length = 36)
     private String imageId;
 
-    @Column(length = 50)
+    @Column(length = 100)
     private String imageName;
 
     @Builder

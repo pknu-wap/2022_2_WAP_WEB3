@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import java.io.File;
 import java.nio.file.Files;
 import java.security.Principal;
+import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,19 +25,19 @@ public class PostImageController {
 	
 	@ResponseBody
     @GetMapping(value = "/post/info")
-    public ResponseEntity<byte[]> image(@RequestParam(name="post_num", required=false) Integer post_num, Principal principal, Model model) {
+    public ResponseEntity<String> image(@RequestParam(name="post_num", required=false) Integer post_num, Principal principal, Model model) {
     	String imageName = postService.getPost(principal.getName(), post_num);
-        ResponseEntity<byte[]> result = null;
+        ResponseEntity<String> result = null;
         File file = new File("C:\\springboot\\image\\" + imageName);
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", Files.probeContentType(file.toPath()));
+            byte data[] = FileCopyUtils.copyToByteArray(file);
             result = new ResponseEntity<>(
-                    FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK); 
-        } catch(Exception e) {    
-            e.getMessage();  
+            		Base64.getEncoder().encodeToString(data), headers, HttpStatus.OK); 
+        } catch(Exception e) {      
+            e.getMessage();   
         }  
-        System.out.println(result);  
-        return result;   
+        return result;     
     }
 }

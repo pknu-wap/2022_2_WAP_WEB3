@@ -33,8 +33,8 @@ public class    MyPageService {
         MemberProfile memberProfile = memberRepository.findByEmail(email).getMemberProfile();
         memberProfile.updateProfile(memberProfileDTO.getArtistName(), memberProfileDTO.getGenre(), memberProfileDTO.getMessage());
         return memberProfileRepository.save(memberProfile);
-    }
-
+    } 
+ 
     public ImageEntity saveImageEntity(MultipartFile file, String email) {
         ImageEntity imageEntity = memberRepository.findByEmail(email).getMemberProfile().getImageEntity();
         Path exPath = Paths.get(ServerPath.getImagePath() + imageEntity.getImageName());

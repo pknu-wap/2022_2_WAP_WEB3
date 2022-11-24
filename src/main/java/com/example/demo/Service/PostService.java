@@ -42,23 +42,23 @@ public class PostService {
 			e.printStackTrace();
 			return null;
 		}
-	} 
-	
-	public List<PostDTO> getList() {
+	}   
+	  
+	public List<PostDTO> getList() { 
 		List<PostDTO> dtoList = new ArrayList<>();
 		List<PostEntity> list = postRepository.findAll();
-		
+		 
 		for (int i = 0; i < list.size(); i++) {
 			PostEntity entity = list.get(i);
 			if(entity.getDate().isAfter(LocalDateTime.now())) {
 				PostDTO PostDTO = new PostDTO
-					.Builder()
+					.Builder()   
 					.setMemberEmail(entity.getEmail())
 					.setPostNum(entity.getPost_num())
 					.setLocation(entity.getLocation())
 					.setContent(entity.getContent())
 					.setDate(entity.getDate())
-					.build();
+					.build(); 
 			
 				dtoList.add(PostDTO);
 			}

@@ -22,7 +22,7 @@ public class MemberService implements UserDetailsService {
      * @param member 멤버 객체
      * @return 저장된 멤버 객체, Exception
      */
-    public Member saveMember(Member member) {
+    public Member saveMember(Member member) { 
         Member findMember = memberRepository.findByEmail(member.getEmail());
         if(findMember != null) {
             throw new IllegalStateException("이미 가입된 상태입니다");

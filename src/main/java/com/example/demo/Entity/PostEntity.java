@@ -30,7 +30,7 @@ public class PostEntity {
 //	@JoinColumn(nullable=false, name="email") 
 //	private Member email;
 	
-	@Column(nullable=false)
+	@Column(nullable=false) 
 	private String email;
 	
 	@Column(nullable=true, length = 20) 
