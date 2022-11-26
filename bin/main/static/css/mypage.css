@@ -9,7 +9,7 @@ body{
 }
 
 .profile {
-    width:1000px;
+    width:700px;
     padding: 40px;
     margin:auto;
     box-sizing: border-box;
@@ -21,13 +21,28 @@ body{
     border-radius: 40px;
 }
 
+
 .line1 {
     display: flex;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .profileName {
     margin-left: 40px;
     padding-top: 20px;
+    color : black;
 }
 
+.profileMsg {
+    margin-left: 10px;
+    color : black;
+    padding-top: 20px;
+}
+
+.mypage {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    width:95%;
+    margin: auto;
+}
