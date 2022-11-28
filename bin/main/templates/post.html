@@ -14,6 +14,7 @@
 <script>
 var str = $(location).attr('pathname');
 var post_num = str.substring(str.lastIndexOf('/') + 1);
+var url = "/page/post/" + post_num
 $(document).ready(function () {
 		$.ajax({
 			url: "/post/info",
@@ -23,6 +24,21 @@ $(document).ready(function () {
 			async: false,
 			success: function (data) {
 				$("#image").attr("src", "data:image/png;base64," + data);
+			},
+			error: function (xhr, status, error) {
+				alert("no"+xhr.responseText);
+			},
+			complete: function (xhr, status) { }
+		});
+		
+		$.ajax({
+			url: url,
+			type: "GET",
+			data: {},
+			contentType: "application/json;charset=UTF-8",
+			async: false,
+			success: function (data) {
+				
 			},
 			error: function (xhr, status, error) {
 				alert("no"+xhr.responseText);

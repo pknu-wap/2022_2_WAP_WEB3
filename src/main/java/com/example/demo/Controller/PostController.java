@@ -51,7 +51,7 @@ public class PostController {
 	@PutMapping(value = "/post/{post_num}")
 	public String update(@RequestParam String location, @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date, Principal principal,
-			@PathVariable(name="post_num") Integer post_num,
+			@PathVariable(name="post_num") Integer post_num, 
 			@RequestParam(required=false) MultipartFile file) {
 		
 		PostDTO postdto = new PostDTO.Builder()
@@ -71,7 +71,9 @@ public class PostController {
 	}
 	
 	@GetMapping(value = "/page/post/{post_num}")
-	public String page(@PathVariable(name="post_num") Integer post_num, Model model) {
+	public String page(@PathVariable(name="post_num") Integer post_num, Model model
+			, Principal principal) {
+		postService.getPost(principal.getName(), post_num);
 		model.addAttribute("post_num", post_num);
 		return "post"; 
 	}
