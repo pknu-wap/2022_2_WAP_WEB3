@@ -49,7 +49,7 @@ public class PostService {
 			List<PostEntity> list = postRepository.findAll();
 			PostEntity post = new PostEntity(); 
 			 
-			for(int i = 0; i<list.size(); i++) {
+			for(int i = 0; i<list.size(); i++) { 
 				if(list.get(i).getEmail().equals(email) && list.get(i).getPost_num().equals(post_num)) {
 					post = list.get(i);
 				}
@@ -63,7 +63,7 @@ public class PostService {
 			
 			return postDTO;   
 		} catch (Exception e) { 
-			e.printStackTrace();
+			e.printStackTrace(); 
 			return null;
 		}
 	}  

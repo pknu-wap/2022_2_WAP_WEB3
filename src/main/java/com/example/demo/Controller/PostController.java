@@ -24,40 +24,40 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-	@GetMapping(value = "/post") 
-	@ResponseBody
-	public List<PostDTO> get() {	
-		List<PostDTO> list = postService.get();
-		return list;
-	}
-	
+//	@GetMapping(value = "/list") 
+//	@ResponseBody
+//	public List<PostDTO> get() {	
+//		List<PostDTO> list = postService.get();
+//		return list;
+//	}
+	 
 	@PutMapping(value = "/post")
 	public String put(@RequestParam String location, @RequestParam String content, 
-			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") 
+			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
 			@RequestParam LocalDateTime date, Principal principal,
 			@RequestParam(required=false) MultipartFile file) throws Exception {
-		
+		System.out.println("get@@@@@@@@@@@@");
 		PostDTO postdto = new PostDTO.Builder()
-				.setLocation(location)
+				.setLocation(location) 
 				.setDate(date) 
 				.setContent(content)
 				.build();
 		
 		postService.create(principal.getName(), postdto, file);
 			
-		return "redirect:/page/enroll";
+		return "root2";
 	}
-	
+
 	@PutMapping(value = "/post/{post_num}")
 	public String update(@RequestParam String location, @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date, Principal principal,
 			@PathVariable(name="post_num") Integer post_num, 
-			@RequestParam(required=false) MultipartFile file) {
-		
-		PostDTO postdto = new PostDTO.Builder()
+			@RequestParam(required=false) MultipartFile file) { 
+		 
+		PostDTO postdto = new PostDTO.Builder() 
 				.setPostNum(post_num)
 				.setLocation(location)
-				.setDate(date) 
+				.setDate(date)  
 				.setContent(content)
 				.build();
 		
@@ -65,18 +65,27 @@ public class PostController {
 		return "redirect:/page/"+post_num;
 	}
 
-	@DeleteMapping(value = "/post")
-	public void delete(@RequestParam Integer post_num) {	
+	@DeleteMapping(value = "/post/{post_num}")
+	public String delete(@RequestParam Integer post_num) {	
 		postService.delete(post_num);
+		return "root2";
 	}
+	
+	
+	@GetMapping(value = "/post/{post_num}")
+	public String getUpdatePage(@PathVariable(name="post_num") Integer post_num, Model model
+			, Principal principal) {
+		PostDTO pdto = postService.getPost(principal.getName(), post_num);
+		model.addAttribute("data", pdto);
+		return "modify";
+	} 
 	
 	@GetMapping(value = "/page/post/{post_num}")
 	public String page(@PathVariable(name="post_num") Integer post_num, Model model
 			, Principal principal) {
 		PostDTO pdto = postService.getPost(principal.getName(), post_num);
 		model.addAttribute("data", pdto);
-		model.addAttribute("post_num", post_num);
-		return "post"; 
+		return "post";  
 	}
 	
 }

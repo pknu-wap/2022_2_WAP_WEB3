@@ -42,7 +42,7 @@ public class PostEntity {
 	@Column(nullable=false, columnDefinition = "TEXT")
 	private String content;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime date;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
