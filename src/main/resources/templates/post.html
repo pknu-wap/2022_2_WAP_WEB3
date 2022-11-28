@@ -97,73 +97,34 @@ $(document).ready(function () {
 	<form action="/post" accept-charset="utf-8" method="post" class="board_form" enctype="multipart/form-data">
 		<input type="hidden" name="_method" value="put" />
 		
+		<div th:object="${data}"></div>
 			<div class="board_item2">
 				<label class="board_label">위치</label>
-				<!-- <select class="board_input two" type="text" name="location">
-					<option value="Seomyeon">서면</option>
-					<option value="Nampo">남포동</option>
-					<option value="Gwanganli">광안리 해수욕장</option>
-					<option value="Songjeong">송정 해수욕장</option>
-					<option value="Haeundae">해운대 해수욕장</option>
-					<option value="PKNU BK">부경대학교 백경광장</option>
-					<option value="PKNU grass">부경대학교 잔디광장</option>
-				</select> -->
-				<label class="board_input two">공연 위치 데이터</label>
+				<label class="board_input two" th:text="${data.location}"></label>
 			</div>
 			<div class="board_item2">
 				<label class="board_label">시간</label>
-				<!-- <input class="board_input two" type="datetime-local" name="date"> -->
-				<label class="board_input two">공연 시간 데이터</label>
+				<label class="board_input two" th:text="${data.date}" ></label>
 			</div>
-			<!-- <div class="board_item2">
-				<label class="board_label">포스터</label>
 				
-			</div> -->
+			</div> 
 			<div class="board_item1">
 				<label class="board_label">내용</label>
-				<!-- <textarea class="form-control" name="content" rows="12" cols="4" placeholder="내용" style="resize:none;"></textarea> -->
-				<label class="board_input">공연 내용 데이터</label>
+				<label class="board_input" th:text="${data.content}"></label>
 			</div>
-			<!-- <input type="text" name="location"/><br><br> -->
-			<!-- 내용 : <input type="text" name="infomation" /><br><br>
-			시간 : <input type="datetime-local" name="date" /><br><br> -->
- 
+ 		
 			<div class="board_item1">
 				<label class="board_label">포스터</label>
-				<!-- <label class="btn btn-outline-secondary" for="chooseFile" style="margin-left: 1.5rem;">포스터 업로드</label>
-				<input style="visibility:hidden;" type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-				<p id = "fileName" style="visibility:hidden;"></p>
-				<div class="image-show" id="image-show"></div> -->
 			</div>
 
-			
 			<div class="image_area">
-				<!-- <input type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data"> -->
-				<!-- 이미지가 들어갈 div -->
-				<div class="show_img"><img src=""/></div>
+				<div class="show_img"><img id="show_img" src=""/></div>
 			</div>
-		
-		<!-- 이미지 선택하면 보여주는 부분 -->
-		<!-- <script>
-			$("#file").change(function () {
-				if (this.files && this.files[0]) {
-					var reader = new FileReader;
-					reader.onload = function (data) {
-						$(".show_img img").attr("src", data.target.result).width(500);
-					}
-					reader.readAsDataURL(this.files[0]);
-				}
-			});
-		</script>
-	</div> -->
 		
 		<div class="action_button">
 			<button class="btn btn-outline-secondary" type="modify" value="modify">수정</button>
 		</div>
 		
-		<!-- 
-		<input type="submit" value="submit"/><br><br>
-		<input type="reset" value="reset"/><br><br>-->
 	</form>
 	<br>
 
@@ -193,29 +154,46 @@ $(document).ready(function () {
 </body>
 
 </html>
-<!-- 
-<script>$(document).ready(function () {
+<script>
+var str = $(location).attr('pathname');
+var post_num = str.substring(str.lastIndexOf('/') + 1);
+var url = "/page/post/" + post_num
+$(document).ready(function () {
 		$.ajax({
-			url: "/post",
+			url: "/post/info",
 			type: "GET",
-			data: "",
-			dataType: "json",
+			data: {"post_num" : post_num},
 			contentType: "application/json;charset=UTF-8",
 			async: false,
 			success: function (data) {
-				console.log(data[0]);
-				console.log(data[1]);
-				console.log(data[2]);
+				$("#show_img").attr("src", "data:image/png;base64," + data);
 			},
 			error: function (xhr, status, error) {
-				alert(xhr.responseText);
+				alert("no"+xhr.responseText);
 			},
 			complete: function (xhr, status) { }
 		});
 	});
 
-</script> -->
-<script>
+$(".btn btn-outline-secondary").click(function() {
+	$.ajax({
+			url: url,
+			type: "GET",
+			data: {},
+			contentType: "application/json;charset=UTF-8",
+			async: false,
+			success: function (data) {
+				
+			},
+			error: function (xhr, status, error) {
+				alert("no"+xhr.responseText);
+			},
+			complete: function (xhr, status) { }
+		});	
+});	
+
+	
+	
 $.ajax({
 	url: "/members/loginCheck",
 	type: "GET",

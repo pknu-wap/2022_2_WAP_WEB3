@@ -42,13 +42,13 @@ public class PostService {
 			e.printStackTrace();
 			return null;
 		}
-	}   
-	
+	}     
+	 
 	public PostDTO getPost(String email, Integer post_num) {
 		try {
 			List<PostEntity> list = postRepository.findAll();
 			PostEntity post = new PostEntity(); 
-			
+			 
 			for(int i = 0; i<list.size(); i++) {
 				if(list.get(i).getEmail().equals(email) && list.get(i).getPost_num().equals(post_num)) {
 					post = list.get(i);

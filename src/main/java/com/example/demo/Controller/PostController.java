@@ -33,7 +33,7 @@ public class PostController {
 	
 	@PutMapping(value = "/post")
 	public String put(@RequestParam String location, @RequestParam String content, 
-			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") 
 			@RequestParam LocalDateTime date, Principal principal,
 			@RequestParam(required=false) MultipartFile file) throws Exception {
 		
@@ -73,7 +73,8 @@ public class PostController {
 	@GetMapping(value = "/page/post/{post_num}")
 	public String page(@PathVariable(name="post_num") Integer post_num, Model model
 			, Principal principal) {
-		postService.getPost(principal.getName(), post_num);
+		PostDTO pdto = postService.getPost(principal.getName(), post_num);
+		model.addAttribute("data", pdto);
 		model.addAttribute("post_num", post_num);
 		return "post"; 
 	}

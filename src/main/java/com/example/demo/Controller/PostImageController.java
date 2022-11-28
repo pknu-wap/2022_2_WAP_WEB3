@@ -37,7 +37,7 @@ public class PostImageController {
             		Base64.getEncoder().encodeToString(data), headers, HttpStatus.OK); 
         } catch(Exception e) {      
             e.getMessage();   
-        }  
+        }   
         return result;     
     }
 }

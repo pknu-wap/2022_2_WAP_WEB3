@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .maximumSessions(1);
         http
-            .authorizeHttpRequests()
+            .authorizeHttpRequests() 
                 .mvcMatchers("/", "/members/**").permitAll()
                 .mvcMatchers("/mypage/**").hasRole("USER")
                 .mvcMatchers("/admin/**").hasRole("ADMIN")

@@ -48,13 +48,13 @@
 			<div class="board_item2">
 				<label class="board_label">위치</label>
 				<select class="board_input two" type="text" name="location" id="select" onchange="select_location(this.value)">
-					<option value="Seomyeon">서면</option>
-					<option value="Nampo">남포동</option>
-					<option value="Gwanganli">광안리 해수욕장</option>
-					<option value="Songjeong">송정 해수욕장</option>
-					<option value="Haeundae">해운대 해수욕장</option>
-					<option value="PKNU BK">부경대학교 백경광장</option>
-					<option value="PKNU grass">부경대학교 잔디광장</option>
+					<option value="서면">서면</option>
+					<option value="남포동">남포동</option>
+					<option value="광안리 해수욕장">광안리 해수욕장</option>
+					<option value="송정 해수욕장">송정 해수욕장</option>
+					<option value="해운대 해수욕장">해운대 해수욕장</option>
+					<option value="부경대학교 백경광장">부경대학교 백경광장</option>
+					<option value="부경대학교 잔디광장">부경대학교 잔디광장</option>
 					<option value="">기타</option>
 				</select>
 				
@@ -82,34 +82,16 @@
 				
 				
 			</script>
-			
-			<!-- <div class="board_item2">
-				<label class="board_label">포스터</label>
-				
-			</div> -->
 			<div class="board_item1">
 				<label class="board_label">내용</label>
 				<textarea class="form-control" name="content" rows="12" cols="4" placeholder="내용" style="resize:none;"></textarea>
 			</div>
-			<!-- <input type="text" name="location"/><br><br> -->
-			<!-- 내용 : <input type="text" name="infomation" /><br><br>
-			시간 : <input type="datetime-local" name="date" /><br><br> -->
-			<!--  
-			<div class="board_item1">
-				<label class="board_label">포스터</label>
-				<label class="btn btn-outline-secondary" for="chooseFile" style="margin-left: 1.5rem;">포스터 업로드</label>
-				<input style="visibility:hidden;" type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-				<p id = "fileName" style="visibility:hidden;"></p>
-				<div class="image-show" id="image-show"></div>
-			</div>
-			-->
 			
 		<div class="board_item1">
 			<label class="board_label">포스터</label>
 			<label class="btn btn-outline-secondary" for="file" style="margin-left: 1.5rem;">포스터 업로드</label>
 			<input style="visibility:hidden;" type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
 			<p id = "fileName" style="visibility:hidden;"></p>
-			<!-- <div class="image-show" id="image-show"></div> -->
 			<div class="show_img">
 				<img src=""/>
 			</div>
@@ -129,22 +111,10 @@
 			<button class="btn btn-outline-secondary" type="submit" value="submit">등록</button>
 			<button class="btn btn-outline-secondary" type="reset" value="reset">초기화</button>
 		</div>
-		<!-- 
-		<input type="submit" value="submit"/><br><br>
-		<input type="reset" value="reset"/><br><br>-->
 	</form>
 	<br>
 
 	<div id="list"></div>
-
-	<!-- <form action="/post" accept-charset="utf-8" method="post">
-		<input type="hidden" name="_method" value="delete" />
-		<fieldset style="width:150">
-			<legend>개인 정보 입력</legend>
-			삭제할 예약 번호 : <input type="text" name="num" /><br><br>
-		</fieldset>
-		<input type="submit" value="delete" />
-	</form> -->
 </div>
 	
 	

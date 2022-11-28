@@ -31,7 +31,7 @@ public class MemberService implements UserDetailsService {
     }
 
     /**
-     * 이메일을 받아 중복을 확인
+     * 이메일을 받아 중복을 확인 
      * @param email 이메일
      * @return 중복여부
      */
