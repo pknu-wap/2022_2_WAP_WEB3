@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+// <<<<<<< HEAD
 //package com.example.demo;
 //
 //import java.sql.Connection;
@@ -17,7 +17,7 @@
 //		}
 //	}
 //}
-=======
+// =======
 package com.example.demo;
 
 import java.sql.Connection;

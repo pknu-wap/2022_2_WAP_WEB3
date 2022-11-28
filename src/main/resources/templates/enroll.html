@@ -8,7 +8,7 @@
     <meta name="author" content="" />
     <title>Post</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/img/icon.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/icon.png" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -23,18 +23,17 @@
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-          <a class="navbar-brand" href="/"><img src="assets/img/logo_2.png" alt="..." /></a>
+          <a class="navbar-brand" href="/"><img src="/assets/img/logo_2.png" alt="..." /></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               Menu
               <i class="fas fa-bars ms-1"></i>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="post">공연등록</a></li>
-                <li class="nav-item"><a class="nav-link" href="login">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="join">회원가입</a></li>
-                <li class="nav-item"><a class="nav-link" href="mypage">마이페이지</a></li>
-                <li class="nav-item"><a class="nav-link" href="information">공연정보</a></li>
+                <li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/login" id="login_tab">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/sign_up" id="sign_up_tab">회원가입</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/page/mypage">마이페이지</a></li>
               </ul>
           </div>
       </div>
@@ -48,20 +47,42 @@
 		
 			<div class="board_item2">
 				<label class="board_label">위치</label>
-				<select class="board_input two" type="text" name="location">
-					<option value="su">서면</option>
-					<option>남포동</option>
-					<option>광안리 해수욕장</option>
-					<option>송정 해수욕장</option>
-					<option>해운대 해수욕장</option>
-					<option>부경대학교 백경광장</option>
-					<option>부경대학교 잔디광장</option>
+				<select class="board_input two" type="text" name="location" id="select" onchange="select_location(this.value)">
+					<option value="Seomyeon">서면</option>
+					<option value="Nampo">남포동</option>
+					<option value="Gwanganli">광안리 해수욕장</option>
+					<option value="Songjeong">송정 해수욕장</option>
+					<option value="Haeundae">해운대 해수욕장</option>
+					<option value="PKNU BK">부경대학교 백경광장</option>
+					<option value="PKNU grass">부경대학교 잔디광장</option>
+					<option value="">기타</option>
 				</select>
+				
 			</div>
 			<div class="board_item2">
 				<label class="board_label">시간</label>
 				<input class="board_input two" type="datetime-local" name="date">
 			</div>
+			<div class="board_item2"  id="location" style="display:none;">	<!-- 기타를 누르면 display:block; 으로 바꾸기 -->
+				<input class="board_input two" type="text" name="location" placeholder="위치를 적어주세요.">
+			</div>
+			<script>
+				function select_location(location){
+					var selected_location = location;
+					console.log(selected_location);
+					if(selected_location == ""){
+						document.getElementById('location').style.display='block';
+						
+					}
+					else{
+						document.getElementById('location').style.display='none';
+					}
+				}
+				
+				
+				
+			</script>
+			
 			<!-- <div class="board_item2">
 				<label class="board_label">포스터</label>
 				
@@ -83,25 +104,27 @@
 			</div>
 			-->
 			
-			<div class="image_area">
-		<input type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
-		<!-- 이미지가 들어갈 div -->
-		<div class="show_img"><img src=""/></div>
-		
-		<!-- 이미지 선택하면 보여주는 부분 -->
-		<script>
-			$("#file").change(function () {
-				if (this.files && this.files[0]) {
-					var reader = new FileReader;
-					reader.onload = function (data) {
-						$(".show_img img").attr("src", data.target.result).width(500);
+		<div class="board_item1">
+			<label class="board_label">포스터</label>
+			<label class="btn btn-outline-secondary" for="file" style="margin-left: 1.5rem;">포스터 업로드</label>
+			<input style="visibility:hidden;" type="file" id="file" name="file" accept="image/*" enctype="multipart/form-data">
+			<p id = "fileName" style="visibility:hidden;"></p>
+			<!-- <div class="image-show" id="image-show"></div> -->
+			<div class="show_img">
+				<img src=""/>
+			</div>
+			<script>
+				$("#file").change(function () {
+					if (this.files && this.files[0]) {
+						var reader = new FileReader;
+						reader.onload = function (data) {
+							$(".show_img img").attr("src", data.target.result).width(500);
+						}
+						reader.readAsDataURL(this.files[0]);
 					}
-					reader.readAsDataURL(this.files[0]);
-				}
-			});
-		</script>
-	</div>
-		 
+				});
+			</script>
+		</div>
 		<div class="action_button">
 			<button class="btn btn-outline-secondary" type="submit" value="submit">등록</button>
 			<button class="btn btn-outline-secondary" type="reset" value="reset">초기화</button>
@@ -160,3 +183,26 @@
 	});
 
 </script> -->
+<script>
+$.ajax({
+	url: "/members/loginCheck",
+	type: "GET",
+	
+	success: function (data) {
+		console.log(data.isLogin);
+		if (data.isLogin == null){
+			document.getElementById('login_tab').style.display='block';
+			document.getElementById('sign_up_tab').style.display='block';
+
+		}
+		else{
+			document.getElementById('login_tab').style.display='none';
+			document.getElementById('sign_up_tab').style.display='none';
+		}
+	},
+	error: function (xhr, status, error) {
+		alert(xhr.responseText);
+	},
+	complete: function (xhr, status) { }
+});
+</script>
