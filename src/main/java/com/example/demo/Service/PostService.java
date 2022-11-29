@@ -42,7 +42,7 @@ public class PostService {
 			e.printStackTrace();
 			return null;
 		}
-	}     
+	}      
 	 
 	public PostDTO getPost(String email, Integer post_num) {
 		try {
@@ -52,13 +52,15 @@ public class PostService {
 			for(int i = 0; i<list.size(); i++) { 
 				if(list.get(i).getEmail().equals(email) && list.get(i).getPost_num().equals(post_num)) {
 					post = list.get(i);
-				}
+				} 
 			}
-			
 			PostDTO postDTO = new PostDTO.Builder()
 					.setContent(post.getContent())
 					.setDate(post.getDate())
 					.setLocation(post.getLocation())
+					.setImageId(ImageEntity.builder()
+							.imageName(post.getImageId().getImageName())
+							.build())
 					.build();
 			
 			return postDTO;   
@@ -87,7 +89,7 @@ public class PostService {
 				dtoList.add(PostDTO);
 			}
 		}
-		return dtoList;
+		return dtoList; 
 }
 	public String create(String id, PostDTO rdto, MultipartFile file) {
 		PostEntity postEntity;
@@ -132,24 +134,21 @@ public class PostService {
 		return "create";
 	}
 	
-	public String update(PostDTO rdto, MultipartFile file) {
+	public String update(PostDTO rdto, MultipartFile file, String imageName) {
 		Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
-		String image_name = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyymmdd_hhmmss")) 
-				+ "_" + file.getOriginalFilename() ;
-		String path =  ServerPath.getImagePath() + image_name;
+		String image_name;
 		
-		try {
-			file.transferTo(new File(path));
+		if(file.getOriginalFilename().equals("")) {
+			image_name = imageName;
 			
 			ImageEntity imageEntity = ImageEntity.builder()
 					.imageId(post_entity.get().getImageId().getImageId())
 					.imageName(image_name)
-					.build();
-			
+					.build(); 
+			 
 			PostEntity postEntity = PostEntity.builder()
 					.post_num(rdto.getPostNum())
-					.email(post_entity.get().getEmail())
-					.theme(rdto.getTheme())
+					.email(post_entity.get().getEmail()) 
 					.location(rdto.getLocation())
 					.content(rdto.getContent())
 					.date(rdto.getDate())
@@ -158,11 +157,35 @@ public class PostService {
 			
 			postRepository.save(postEntity);
 			return "update";
-		} catch (Exception e) {
-			// TODO: handle exception
-			return "fail update";
+			
+		} else {
+			image_name = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyymmdd_hhmmss")) 
+					+ "_" + file.getOriginalFilename();
+			
+			String path =  ServerPath.getImagePath() + image_name;
+			try { 
+				file.transferTo(new File(path));
+				
+				ImageEntity imageEntity = ImageEntity.builder()
+						.imageId(post_entity.get().getImageId().getImageId())
+						.imageName(image_name)
+						.build(); 
+				 
+				PostEntity postEntity = PostEntity.builder()
+						.post_num(rdto.getPostNum())
+						.email(post_entity.get().getEmail()) 
+						.location(rdto.getLocation())
+						.content(rdto.getContent())
+						.date(rdto.getDate())
+						.ImageId(imageEntity)
+						.build();
+				
+				postRepository.save(postEntity);
+				return "update";
+			} catch (Exception e) {
+				return "fail update";
+			}
 		}
-		
 	}
 	
 	public String delete(Integer post_num) {

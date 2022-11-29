@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,11 @@ public class PostController {
 //	}
 	 
 	@PutMapping(value = "/post")
-	public String put(@RequestParam String location, @RequestParam String content, 
+	public String put(@RequestParam String location , @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 
 			@RequestParam LocalDateTime date, Principal principal,
 			@RequestParam(required=false) MultipartFile file) throws Exception {
-		System.out.println("get@@@@@@@@@@@@");
+		
 		PostDTO postdto = new PostDTO.Builder()
 				.setLocation(location) 
 				.setDate(date) 
@@ -45,39 +46,40 @@ public class PostController {
 		
 		postService.create(principal.getName(), postdto, file);
 			
-		return "root2";
+		return "redirect:/";
 	}
-
+ 
 	@PutMapping(value = "/post/{post_num}")
 	public String update(@RequestParam String location, @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date, Principal principal,
 			@PathVariable(name="post_num") Integer post_num, 
-			@RequestParam(required=false) MultipartFile file) { 
-		 
+			@RequestParam(required=false) MultipartFile file,
+			@RequestParam(required=false) String imageName) { 
+		
 		PostDTO postdto = new PostDTO.Builder() 
 				.setPostNum(post_num)
-				.setLocation(location)
-				.setDate(date)  
-				.setContent(content)
+				.setLocation(location)  
+				.setDate(date)   
+				.setContent(content) 
 				.build();
 		
-		postService.update(postdto, file);
-		return "redirect:/page/"+post_num;
+		
+		postService.update(postdto, file, imageName);  
+		return "redirect:/page/post/"+post_num;  
 	}
 
 	@DeleteMapping(value = "/post/{post_num}")
-	public String delete(@RequestParam Integer post_num) {	
+	public String delete(@PathVariable(name="post_num") Integer post_num) {	
 		postService.delete(post_num);
-		return "root2";
-	}
-	
-	
+		return "root2";  
+	}  
+	   
 	@GetMapping(value = "/post/{post_num}")
 	public String getUpdatePage(@PathVariable(name="post_num") Integer post_num, Model model
 			, Principal principal) {
 		PostDTO pdto = postService.getPost(principal.getName(), post_num);
-		model.addAttribute("data", pdto);
-		return "modify";
+		model.addAttribute("data", pdto); 
+		return "modify"; 
 	} 
 	
 	@GetMapping(value = "/page/post/{post_num}")
@@ -85,7 +87,7 @@ public class PostController {
 			, Principal principal) {
 		PostDTO pdto = postService.getPost(principal.getName(), post_num);
 		model.addAttribute("data", pdto);
-		return "post";  
+		return "post";   
 	}
 	
 }

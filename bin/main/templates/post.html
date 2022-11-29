@@ -124,26 +124,16 @@ $(document).ready(function () {
 	</div>
 
 	<div class="action_button">
-		<button id="modifyBtn" class="btn btn-outline-secondary" type="modify" value="modify">수정</button>
+		<button id="modifyBtn" class="btn btn-outline-secondary" type="submit" >수정</button>
 	</div>
 
 	<div class="action_button">
-		<button id="deleteBtn" class="btn btn-outline-secondary" type="modify" value="modify">삭제</button>
+		<button id="deleteBtn" class="btn btn-outline-secondary" type="modify" >삭제</button>
 	</div>
 
-	<!-- </form> -->
 	<br>
 
 	<div id="list"></div>
-
-	<!-- <form action="/post" accept-charset="utf-8" method="post">
-		<input type="hidden" name="_method" value="delete" />
-		<fieldset style="width:150">
-			<legend>개인 정보 입력</legend>
-			삭제할 예약 번호 : <input type="text" name="num" /><br><br>
-		</fieldset>
-		<input type="submit" value="delete" />
-	</form> -->
 	</div>
 
 
@@ -181,6 +171,7 @@ $(document).ready(function () {
 		});
 
 		$("#modifyBtn").on("click", function () {
+			$(location).attr('href', '/post/'+post_num)
 			$.ajax({
 				url: url,
 				type: "GET",
@@ -191,13 +182,13 @@ $(document).ready(function () {
 
 				},
 				error: function (xhr, status, error) {
-					alert(+xhr.responseText);
-				},
-				complete: function (xhr, status) { }
+					alert(xhr.responseText);
+				}
 			});
 		});
 
 		$("#deleteBtn").click(function () {
+			$(location).attr('href', '/')
 			$.ajax({
 				url: url,
 				type: "DELETE",
@@ -205,10 +196,10 @@ $(document).ready(function () {
 				contentType: "application/json;charset=UTF-8",
 				async: false,
 				success: function (data) {
-
+					alert("삭제되었습니다")
 				},
 				error: function (xhr, status, error) {
-					alert(+xhr.responseText);
+					alert(xhr.responseText);
 				},
 				complete: function (xhr, status) { }
 			});

@@ -28,8 +28,10 @@ public class PostImageController {
     public ResponseEntity<String> image(@RequestParam(name="post_num", required=false) Integer post_num, Principal principal, Model model) {
     	String imageName = postService.getImage(principal.getName(), post_num);
         ResponseEntity<String> result = null;
+        
         File file = new File("C:\\springboot\\image\\" + imageName);
-        try {
+        
+        try { 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", Files.probeContentType(file.toPath()));
             byte data[] = FileCopyUtils.copyToByteArray(file);
@@ -37,7 +39,8 @@ public class PostImageController {
             		Base64.getEncoder().encodeToString(data), headers, HttpStatus.OK); 
         } catch(Exception e) {      
             e.getMessage();   
-        }   
+        } 
         return result;     
     }
 }
+ 
