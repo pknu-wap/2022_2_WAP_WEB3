@@ -51,7 +51,7 @@ $(document).ready(function () {
 </html>
  -->
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8" />
@@ -84,9 +84,10 @@ $(document).ready(function () {
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
 					<li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
-					<li class="nav-item"><a class="nav-link" href="/members/login" id="login_tab">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="/members/sign_up" id="sign_up_tab">회원가입</a></li>
-					<li class="nav-item"><a class="nav-link" href="/members/page/mypage">마이페이지</a></li>
+	                <li class="nav-item"><a class="nav-link" href="/members/login" id="login_tab">로그인</a></li>
+	                <li class="nav-item"><a class="nav-link" href="/members/join" id="join_tab">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link" href="/members/logout" id="logout_tab">로그아웃</a></li>
+	                <li class="nav-item"><a class="nav-link" href="/mypage">마이페이지</a></li>
 				</ul>
 			</div>
 		</div>
@@ -134,14 +135,14 @@ $(document).ready(function () {
 	<br>
 
 	<div id="list"></div>
-	</div>
+
 
 
 
 	<!-- Bootstrap core JS-->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
-	<script src="js/scripts.js"></script>
+	<script src="/js/scripts.js"></script>
 	<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 	<!-- * *                               SB Forms JS                               * *-->
 	<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
@@ -211,17 +212,22 @@ $(document).ready(function () {
 	$.ajax({
 		url: "/members/loginCheck",
 		type: "GET",
-
+		
 		success: function (data) {
 			console.log(data.isLogin);
-			if (data.isLogin == null) {
-				document.getElementById('login_tab').style.display = 'block';
-				document.getElementById('sign_up_tab').style.display = 'block';
-
+			if (data.isLogin == null){
+				document.getElementById('login_tab').style.display='block';
+				document.getElementById('join_tab').style.display='block';
+				document.getElementById('logout_tab').style.display='none';
+				document.getElementById('modifyBtn').style.display='none';
+				document.getElementById('deleteBtn').style.display='none';
 			}
-			else {
-				document.getElementById('login_tab').style.display = 'none';
-				document.getElementById('sign_up_tab').style.display = 'none';
+			else{
+				document.getElementById('login_tab').style.display='none';
+				document.getElementById('join_tab').style.display='none';
+				document.getElementById('logout_tab').style.display='block';
+				document.getElementById('modifyBtn').style.display='block';
+				document.getElementById('deleteBtn').style.display='block';
 			}
 		},
 		error: function (xhr, status, error) {
@@ -229,4 +235,5 @@ $(document).ready(function () {
 		},
 		complete: function (xhr, status) { }
 	});
+	
 </script>

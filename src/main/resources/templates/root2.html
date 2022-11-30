@@ -30,8 +30,9 @@
               <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
                 <li class="nav-item"><a class="nav-link" href="/members/login" id="login_tab">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/sign_up" id="sign_up_tab">회원가입</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/page/mypage">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/join" id="join_tab">회원가입</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/logout" id="logout_tab">로그아웃</a></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage">마이페이지</a></li>
               </ul>
           </div>
       </div>
@@ -85,12 +86,14 @@ $.ajax({
 		console.log(data.isLogin);
 		if (data.isLogin == null){
 			document.getElementById('login_tab').style.display='block';
-			document.getElementById('sign_up_tab').style.display='block';
+			document.getElementById('join_tab').style.display='block';
+			document.getElementById('logout_tab').style.display='none';
 
 		}
 		else{
 			document.getElementById('login_tab').style.display='none';
-			document.getElementById('sign_up_tab').style.display='none';
+			document.getElementById('join_tab').style.display='none';
+			document.getElementById('logout_tab').style.display='block';
 		}
 	},
 	error: function (xhr, status, error) {

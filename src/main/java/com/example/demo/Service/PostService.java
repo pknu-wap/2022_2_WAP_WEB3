@@ -54,15 +54,18 @@ public class PostService {
 					post = list.get(i);
 				} 
 			}
+			ImageEntity imageEntity = post.getImageId() != null ? 
+		               post.getImageId().builder()
+		               .imageName(post.getImageId().getImageName()).build() 
+		               : (ImageEntity) null;
+			
 			PostDTO postDTO = new PostDTO.Builder()
 					.setContent(post.getContent())
 					.setDate(post.getDate())
 					.setLocation(post.getLocation())
-					.setImageId(ImageEntity.builder()
-							.imageName(post.getImageId().getImageName())
-							.build())
+					.setImageId(imageEntity)
 					.build();
-			
+			System.out.println(post.getLocation());
 			return postDTO;   
 		} catch (Exception e) { 
 			e.printStackTrace(); 

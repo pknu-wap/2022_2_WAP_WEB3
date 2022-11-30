@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.Service.PostService;
 
 @Controller
-public class PostImageController {
+public class PostImageController { 
 	@Autowired
 	private PostService postService;
 	
@@ -29,7 +29,7 @@ public class PostImageController {
     	String imageName = postService.getImage(principal.getName(), post_num);
         ResponseEntity<String> result = null;
         
-        File file = new File("C:\\springboot\\image\\" + imageName);
+        File file = new File("C:\\springboot\\image\\" + imageName); 
         
         try { 
             HttpHeaders headers = new HttpHeaders();
@@ -41,6 +41,6 @@ public class PostImageController {
             e.getMessage();   
         } 
         return result;     
-    }
+    } 
 }
  

@@ -1,4 +1,3 @@
-
 // 모달창에서 입력받은 input값들
 const artistName = document.getElementById('artistName');
 const genre = document.getElementById('genre');
@@ -39,10 +38,9 @@ function print_profile(event) {
     $.ajax({
         url: "/mypage/post",
         type: "POST",
-        async: true,
+        async: false,
         enctype: 'multipart/form-data',
         data: formData,
-        contentType: "application/json; charset=utf-8",
         processData: false,
         contentType: false,
 

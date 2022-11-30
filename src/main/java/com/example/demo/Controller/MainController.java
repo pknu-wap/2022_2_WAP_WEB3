@@ -15,9 +15,9 @@ public class MainController {
 	@Autowired
 	private PostService postService;
 	
-    @GetMapping(value = "/")
+    @GetMapping(value = "/")  
     public String main(Model model) {
-    	List<PostDTO> list = postService.get();
+    	List<PostDTO> list = postService.get();  
 		model.addAttribute("postlist", list);
         return "root2";
     }

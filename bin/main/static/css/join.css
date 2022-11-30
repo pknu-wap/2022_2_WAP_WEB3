@@ -55,3 +55,8 @@ body{
 .ps-fail {
     display: none;
 }
+
+#emailCheckTxt {
+    font-size: small;
+    float: left;
+}

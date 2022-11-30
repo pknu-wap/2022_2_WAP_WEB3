@@ -54,6 +54,16 @@ body{
     text-decoration: none;
 }
 
+.signBtn {
+    margin:auto;
+    margin-top: 25px;
+}
+
+.signBtn a {
+    font-size: 12px;
+    color: gray;
+    text-decoration: none;
+}
 
 .form-text {
     font-size: 12px;

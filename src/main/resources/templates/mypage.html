@@ -18,6 +18,7 @@
 
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="/css/styles.css" rel="stylesheet" />
+  
   <link href="/css/mypage.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -35,10 +36,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-          <li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
+          		<li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
                 <li class="nav-item"><a class="nav-link" href="/members/login" id="login_tab">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/sign_up" id="sign_up_tab">회원가입</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/page/mypage">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link" href="/members/join" id="join_tab">회원가입</a></li>
+				<li class="nav-item"><a class="nav-link" href="/members/logout" id="logout_tab">로그아웃</a></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage">마이페이지</a></li>
         </ul>
       </div>
     </div>
@@ -51,7 +53,7 @@
           <div class="line1">
             <img class="profileImg" name="profileImg"
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
-            <h2 class="profileName" id="topName">Artist Name</h2>
+            <h2 class="profileName" id="topName"></h2>
             <h2 class="profileMsg">님, 반갑습니다!</h2>
           </div>
         </div>
@@ -126,6 +128,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Core theme JS-->
   <script src="/js/scripts.js"></script>
+  
+  <script src="/js/mypage.js"></script>
   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
   <!-- * *                               SB Forms JS                               * *-->
   <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
@@ -143,12 +147,14 @@ $.ajax({
 		console.log(data.isLogin);
 		if (data.isLogin == null){
 			document.getElementById('login_tab').style.display='block';
-			document.getElementById('sign_up_tab').style.display='block';
+			document.getElementById('join_tab').style.display='block';
+			document.getElementById('logout_tab').style.display='none';
 
 		}
 		else{
 			document.getElementById('login_tab').style.display='none';
-			document.getElementById('sign_up_tab').style.display='none';
+			document.getElementById('join_tab').style.display='none';
+			document.getElementById('logout_tab').style.display='block';
 		}
 	},
 	error: function (xhr, status, error) {
