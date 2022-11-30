@@ -23,7 +23,7 @@ public class PostImageController {
 	@Autowired
 	private PostService postService;
 	
-	@ResponseBody
+	@ResponseBody 
     @GetMapping(value = "/post/info")
     public ResponseEntity<String> image(@RequestParam(name="post_num", required=false) Integer post_num, Principal principal, Model model) {
     	String imageName = postService.getImage(post_num);
