@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -15,84 +16,62 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet" />
-</head>
-<body id="page-top">
-  <!-- Navigation-->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-      <div class="container">
-          <a class="navbar-brand" href="/"><img src="/assets/img/logo_2.png" alt="..." /></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              Menu
-              <i class="fas fa-bars ms-1"></i>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-              <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="/page/enroll">공연등록</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/login" id="login_tab">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/sign_up" id="sign_up_tab">회원가입</a></li>
-                <li class="nav-item"><a class="nav-link" href="/members/page/mypage">마이페이지</a></li>
-              </ul>
-          </div>
-      </div>
-  </nav>
-  <!-- Masthead-->
-  <header class="masthead">
-    <div class="container">
-      <div class="login-wrapper">
-            <h2>로그인</h2>
-            <form method="post" action="/members/login" id="login-form">
-                <input type="text" name="email" placeholder="Email" required onchange="test()">
-                <input type="password" name="password" placeholder="Password" required onchange="test()">
+    <link href="/css/login.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-                <div class="link">
-                    <a href="/members/sign_up">회원가입</a>
-                </div>
-                <input type="submit" value="Login">
-            </form>
-            
+</head>
+
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="root.html"><img src="/assets/img/logo_2.png" alt="..." /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="post.html">공연등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="join.html">회원가입</a></li>
+                <li class="nav-item"><a class="nav-link" href="mypage.html">마이페이지</a></li>
+            </ul>
         </div>
     </div>
-  </header>
-  
-  <!-- Bootstrap core JS-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Core theme JS-->
-  <script src="js/scripts.js"></script>
-  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-  <!-- * *                               SB Forms JS                               * *-->
-  <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-  <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-  <script>
-    window.onload = function() {
-        let url = window.location.href;
-        if(url.lastIndexOf("error") !== -1) {
-            alert("아이디 또는 비밀번호를 확인해 주세요");
-        }
-    }
-</script>
-</body>  
-</html>
-<script>
-$.ajax({
-	url: "/members/loginCheck",
-	type: "GET",
-	
-	success: function (data) {
-		console.log(data.isLogin);
-		if (data.isLogin == null){
-			document.getElementById('login_tab').style.display='block';
-			document.getElementById('sign_up_tab').style.display='block';
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="login-wrapper">
+            <h2>로그인</h2>
+            <form method="post" action="/members/login" id="login-form">
+                <h5 class="form-text">이메일</h5>
+                <input type="text" name="email" placeholder="Email" required id="email">
 
-		}
-		else{
-			document.getElementById('login_tab').style.display='none';
-			document.getElementById('sign_up_tab').style.display='none';
-		}
-	},
-	error: function (xhr, status, error) {
-		alert(xhr.responseText);
-	},
-	complete: function (xhr, status) { }
-});
-</script>
+                <h5 class="form-text">비밀번호</h5>
+                <input type="password" name="password" placeholder="Password" required id="password">
+
+                <div class="signBtn" id="signBtn">
+                    <a href="/members/join">회원가입</a>
+                </div>
+                <input type="submit" value="Login" id="submit">
+            </form>
+
+        </div>
+    </div>
+</header>
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+
+</html>
