@@ -17,7 +17,7 @@
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="../static/css/styles.css" rel="stylesheet" />
   <link href="../static/css/join.css" rel="stylesheet" />
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -36,7 +36,6 @@
           <li class="nav-item"><a class="nav-link" href="login.html">로그인</a></li>
           <li class="nav-item"><a class="nav-link" href="join.html">회원가입</a></li>
           <li class="nav-item"><a class="nav-link" href="mypage.html">마이페이지</a></li>
-          <li class="nav-item"><a class="nav-link" href="information.html">공연정보</a></li>
         </ul>
       </div>
     </div>
@@ -44,14 +43,15 @@
   <!-- Masthead-->
   <header class="masthead">
     <div class="container">
-      <div class="join-wrapper">
+      <div class="join-wrapper" id="joinWrapper">
         <h2>회원가입</h2>
-        <form method="post" action="서버의url" id="login-form" name="sign-up">
-          
-          <h5 class="form-text">이메일</h5>
-          <input type="text" name="email" placeholder="busker@example.com" required>
+        <form method="post" action="/members/join" id="login-form" name="sign-up">
 
-          <h5 class="form-text">비밀번호</h5>
+          <h5 class="form-text">이메일</h5>
+          <input type="text" name="email" id="email" placeholder="busker@example.com" required>
+          <p id="emailCheckTxt"></p>
+
+          <h5 class="form-text" id="psTxt">비밀번호</h5>
           <input type="password" name="password" id="password" placeholder="Password" required maxlength="16"
             onchange="psLengthCheck()">
 
@@ -60,7 +60,7 @@
             maxlength="16" onchange="psReCheck()">
 
 
-          <input type="submit" value="Sign up">
+          <input type="submit" value="Sign up" id="submit" name="submit">
         </form>
       </div>
     </div>
@@ -75,17 +75,20 @@
   <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
   <script>
 
     var password = document.getElementById('password');
     var confirmPassword = document.getElementById('confirmPassword');
-    var email = docoument.getElementById('email');
+    
+    var psTxt = document.getElementById('psTxt');
+    var joinWrapper = document.getElementById('joinWrapper');
+    var emailCheckTxt = document.getElementById('emailCheckTxt');
 
     // password와 confirmPassword의 일치 여부 확인
     function psReCheck() {
       if (password.value != confirmPassword.value) {
         confirmPassword.setCustomValidity("비밀번호가 일치하지 않습니다.");
-
       }
       else {
         confirmPassword.setCustomValidity("");
@@ -106,26 +109,62 @@
     password.onkeyup = psLengthCheck();
 
 
-    function postEmail() {
-      var reqURL = emailCheck
-      var emailData = { "email": email }
+    $("#password").on("keydown", function () {
 
-      console.log("[postEmail] : [request Data] : " + JSON.stringify(emailData));
+      var email = document.getElementById('email');
+      $.ajax({
+        url: "/members/emailCheck?email=" + email,
+        type: "GET",
+        async: true
+
+          .done(function (data) {
+
+            email.style.marginBottom = "8px";
+            psTxt.style.marginTop = "40px";
+            joinWrapper.style.height = "480px";
+
+            if (data.isValid == true) { // 이메일 값 중복x
+              emailCheckTxt.style.color = "green";
+              emailCheckTxt.innerHTML = "사용 가능한 이메일입니다.";
+            }
+            else if (data.isValid == false) {  // 이메일 중복일 때
+              emailCheckTxt.style.color = "red";
+              emailCheckTxt.innerHTML = "이미 가입된 이메일입니다.";
+            }
+
+          })
+      });
+    });
+
+
+    $("#submit").on("click", function () {
+
+      var jsonData = {
+        "email": email.value,
+        "password": password.value
+      };
 
       $.ajax({
-        url: reqURL,
-        data: JSON.stringify(emailData),
+        url: "/members/join",
+        data: JSON.stringify(jsonData),
         type: "POST",
         async: true,
         dataType: "JSON",
-        contentType: "application/json; charset=utf-8"
+        contentType: "application/json; charset=utf-8",
 
-      })
-    }
-    password.onkeyup = postEmail();
+        success: function (data) { // 회원가입 성공 -> 로그인 페이지로 이동
+          console.log("Success");
+          url = "/members/login";
+        },
+        error: function (xhr, status, error) { // 회원가입 실패 -> 현재 페이지 유지
+          console.log("Error");
+          location.reload();
+        }
+
+      });
+    });
 
   </script>
-
 </body>
 
 </html>
