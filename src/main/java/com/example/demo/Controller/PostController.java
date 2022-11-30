@@ -69,23 +69,22 @@ public class PostController {
 	}
 
 	@DeleteMapping(value = "/post/{post_num}")
-	public String delete(@PathVariable(name="post_num") Integer post_num) {	
-		postService.delete(post_num);
+	public String delete(@PathVariable(name="post_num") Integer post_num, Principal principal) {	
+		postService.delete(principal.getName(), post_num);
 		return "root2";  
 	}  
 	   
 	@GetMapping(value = "/post/{post_num}")
-	public String getUpdatePage(@PathVariable(name="post_num") Integer post_num, Model model
-			, Principal principal) {
-		PostDTO pdto = postService.getPost(principal.getName(), post_num);
+	public String getUpdatePage(@PathVariable(name="post_num") Integer post_num, Model model) {
+		PostDTO pdto = postService.getPost(post_num);
 		model.addAttribute("data", pdto); 
 		return "modify"; 
 	} 
 	
 	@GetMapping(value = "/page/post/{post_num}")
 	public String page(@PathVariable(name="post_num") Integer post_num, Model model
-			, Principal principal) {
-		PostDTO pdto = postService.getPost(principal.getName(), post_num);
+			) {
+		PostDTO pdto = postService.getPost(post_num);
 		model.addAttribute("data", pdto);
 		return "post";   
 	}

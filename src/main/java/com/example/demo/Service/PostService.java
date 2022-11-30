@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +30,13 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository; 
 	
-	public String getImage(String email, Integer post_num) {
+	public String getImage(Integer post_num) {
 		try {
 			List<PostEntity> list = postRepository.findAll();
 			PostEntity post = new PostEntity(); 
 			
 			for(int i = 0; i<list.size(); i++) {
-				if(list.get(i).getEmail().equals(email) && list.get(i).getPost_num().equals(post_num)) {
+				if(list.get(i).getPost_num().equals(post_num)) {
 					post = list.get(i);
 				}
 			}
@@ -45,13 +47,13 @@ public class PostService {
 		}
 	}      
 	 
-	public PostDTO getPost(String email, Integer post_num) {
+	public PostDTO getPost(Integer post_num) {
 		try {
 			List<PostEntity> list = postRepository.findAll();
 			PostEntity post = new PostEntity(); 
 			 
 			for(int i = 0; i<list.size(); i++) { 
-				if(list.get(i).getEmail().equals(email) && list.get(i).getPost_num().equals(post_num)) {
+				if(list.get(i).getPost_num().equals(post_num)) {
 					post = list.get(i);
 				} 
 			}
@@ -192,8 +194,12 @@ public class PostService {
 		}
 	}
 	
-	public String delete(Integer post_num) {
-		if(postRepository.findById(post_num).isPresent()) {
+	public String delete(String email, Integer post_num) {
+		List<PostEntity> list = postRepository.findAll().stream()
+				.filter((t) -> t.getEmail().equals(email))
+				.collect(Collectors.toList());
+		
+		if(!list.isEmpty()) {
 			postRepository.deleteById(post_num);
 			return "delete";
 		} else return "fail delete";

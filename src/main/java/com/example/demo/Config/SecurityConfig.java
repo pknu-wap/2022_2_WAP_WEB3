@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .maximumSessions(1);
         http
             .authorizeHttpRequests() 
-                .mvcMatchers("/", "/members/**").permitAll()
+                .mvcMatchers("/", "/members/**", "/page/**").permitAll()
                 .mvcMatchers("/mypage/**").hasRole("USER")
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
