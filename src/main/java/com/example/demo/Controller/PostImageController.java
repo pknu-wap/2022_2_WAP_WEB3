@@ -26,7 +26,7 @@ public class PostImageController {
 	@ResponseBody
     @GetMapping(value = "/post/info")
     public ResponseEntity<String> image(@RequestParam(name="post_num", required=false) Integer post_num, Principal principal, Model model) {
-    	String imageName = postService.getImage(principal.getName(), post_num);
+    	String imageName = postService.getImage(post_num);
         ResponseEntity<String> result = null;
         
         File file = new File("C:\\springboot\\image\\" + imageName); 
