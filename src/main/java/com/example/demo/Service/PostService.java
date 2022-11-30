@@ -2,6 +2,7 @@ package com.example.demo.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -54,13 +55,17 @@ public class PostService {
 					post = list.get(i);
 				} 
 			}
+			
+			ImageEntity imageEntity = post.getImageId() != null ? 
+					post.getImageId().builder()
+					.imageName(post.getImageId().getImageName()).build() 
+					: (ImageEntity) null;
+			
 			PostDTO postDTO = new PostDTO.Builder()
 					.setContent(post.getContent())
 					.setDate(post.getDate())
 					.setLocation(post.getLocation())
-					.setImageId(ImageEntity.builder()
-							.imageName(post.getImageId().getImageName())
-							.build())
+					.setImageId(imageEntity)
 					.build();
 			
 			return postDTO;   
@@ -99,37 +104,36 @@ public class PostService {
 		
 		try {	// 같은 이름 파일 처리도 해야함
 			file.transferTo(new File(path));
-			
-			if(file.isEmpty()) {
-				 postEntity = PostEntity.builder()
-						.email(id)
-						.theme(rdto.getTheme())
-						.location(rdto.getLocation())
-						.content(rdto.getContent())
-						.date(rdto.getDate())
-						.build();
-				
-				postRepository.save(postEntity);
-			} else {
-				ImageEntity imageEntity = ImageEntity.builder()
-						.imageId(UUID.randomUUID().toString())
-						.imageName(image_name)
-						.build();
-				
-				postEntity = PostEntity.builder()
-						.email(id)
-						.theme(rdto.getTheme())
-						.location(rdto.getLocation())
-						.content(rdto.getContent())
-						.date(rdto.getDate())
-						.ImageId(imageEntity)
-						.build();
-				
-				postRepository.save(postEntity); 
-			}
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 			return "fail create";
+		}
+		if(file.isEmpty()) {
+			 postEntity = PostEntity.builder()
+					.email(id)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.build();
+			
+			postRepository.save(postEntity);
+		} else {
+			ImageEntity imageEntity = ImageEntity.builder()
+					.imageId(UUID.randomUUID().toString())
+					.imageName(image_name)
+					.build();
+			
+			postEntity = PostEntity.builder()
+					.email(id)
+					.theme(rdto.getTheme())
+					.location(rdto.getLocation())
+					.content(rdto.getContent())
+					.date(rdto.getDate())
+					.ImageId(imageEntity)
+					.build();
+			
+			postRepository.save(postEntity); 
 		}
 		return "create";
 	}
