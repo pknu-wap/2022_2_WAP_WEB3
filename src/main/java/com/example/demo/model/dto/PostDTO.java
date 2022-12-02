@@ -12,6 +12,7 @@ public class PostDTO {
 	public String location;
 	public String content;
 	public LocalDateTime date;
+	public String strdate;
 	public ImageEntity image;
 	public PostDTO() {}
 	
@@ -22,6 +23,7 @@ public class PostDTO {
 		private String location;
 		private String content;
 		private LocalDateTime date;
+		private String strdate;
 		private ImageEntity image;
 		public Builder() {}
 		
@@ -49,6 +51,11 @@ public class PostDTO {
 		
 		public Builder setDate (LocalDateTime date) {
 			this.date = date;
+			return this;
+		} 
+		
+		public Builder setStrDate (String strdate) {
+			this.strdate = strdate;
 			return this;
 		} 
 		
@@ -95,6 +102,9 @@ public class PostDTO {
 		return date;
 	}
 	
+	public String getStrdate() {
+		return strdate;
+	}
 	public ImageEntity getImageId() {
 		return image;
 	}

@@ -28,12 +28,12 @@ public class    MyPageService {
     private final MemberRepository memberRepository;
     private final MemberProfileRepository memberProfileRepository;
     private final ImageRepository imageRepository;
-
+ 
     public MemberProfile saveMemberProfile(MemberProfileDTO memberProfileDTO, String email) {
         MemberProfile memberProfile = memberRepository.findByEmail(email).getMemberProfile();
         memberProfile.updateProfile(memberProfileDTO.getArtistName(), memberProfileDTO.getGenre(), memberProfileDTO.getMessage());
         return memberProfileRepository.save(memberProfile);
-    } 
+    }  
  
     public ImageEntity saveImageEntity(MultipartFile file, String email) {
         ImageEntity imageEntity = memberRepository.findByEmail(email).getMemberProfile().getImageEntity();

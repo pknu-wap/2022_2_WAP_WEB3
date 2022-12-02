@@ -13,7 +13,7 @@ import com.example.demo.model.dto.PostDTO;
 @Controller
 public class MainController {
 	@Autowired
-	private PostService postService;
+	private PostService postService;  
 	
     @GetMapping(value = "/")  
     public String main(Model model) {
@@ -21,14 +21,14 @@ public class MainController {
 		model.addAttribute("postlist", list);
         return "root2";
     }
-    
+       
     @GetMapping(value = "/page/mypage")
-    public String mypage() {
+    public String mypage() { 
         return "mypage";
     }
-    
+     
     @GetMapping(value = "/page/enroll")
 	public String pageEnroll() {	
 		return "enroll";
 	}
-}
+}  

@@ -22,6 +22,7 @@ import com.example.demo.Entity.PostEntity;
 import com.example.demo.Repository.PostRepository;
 import com.example.demo.model.dto.PostDTO;
 
+import groovyjarjarantlr4.v4.parse.ANTLRParser.throwsSpec_return;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -42,7 +43,7 @@ public class PostService {
 			}
 			return post.getImageId().getImageName();   
 		} catch (Exception e) { 
-			e.printStackTrace();
+			e.printStackTrace(); 
 			return null;
 		}
 	}      
@@ -61,11 +62,12 @@ public class PostService {
 			ImageEntity imageEntity = post.getImageId() != null ? 
 					post.getImageId().builder()
 					.imageName(post.getImageId().getImageName()).build() 
-					: (ImageEntity) null;
+					: post.getImageId().builder()
+					.imageName(" ").build();
 			
 			PostDTO postDTO = new PostDTO.Builder()
 					.setContent(post.getContent())
-					.setDate(post.getDate())
+					.setStrDate(post.getDate().format(DateTimeFormatter.ofPattern("yyyy년 mm월 dd일 hh시 mm분")))
 					.setLocation(post.getLocation())
 					.setImageId(imageEntity)
 					.build();
@@ -110,32 +112,37 @@ public class PostService {
 			e.printStackTrace();
 			return "fail create";
 		}
-		if(file.isEmpty()) {
-			 postEntity = PostEntity.builder()
-					.email(id)
-					.theme(rdto.getTheme())
-					.location(rdto.getLocation())
-					.content(rdto.getContent())
-					.date(rdto.getDate())
-					.build();
+		try {
+			if(file.isEmpty()) {
+				postEntity = PostEntity.builder()
+						.email(id)
+						.theme(rdto.getTheme())
+						.location(rdto.getLocation())
+						.content(rdto.getContent())
+						.date(rdto.getDate())
+						.build();
+				
+				postRepository.save(postEntity);
+			} else {
+				ImageEntity imageEntity = ImageEntity.builder()
+						.imageId(UUID.randomUUID().toString())
+						.imageName(image_name)
+						.build();
+				
+				postEntity = PostEntity.builder()
+						.email(id)
+						.theme(rdto.getTheme())
+						.location(rdto.getLocation())
+						.content(rdto.getContent())
+						.date(rdto.getDate())
+						.ImageId(imageEntity)
+						.build();
+				 
+				postRepository.save(postEntity); 
+			}
 			
-			postRepository.save(postEntity);
-		} else {
-			ImageEntity imageEntity = ImageEntity.builder()
-					.imageId(UUID.randomUUID().toString())
-					.imageName(image_name)
-					.build();
-			
-			postEntity = PostEntity.builder()
-					.email(id)
-					.theme(rdto.getTheme())
-					.location(rdto.getLocation())
-					.content(rdto.getContent())
-					.date(rdto.getDate())
-					.ImageId(imageEntity)
-					.build();
-			
-			postRepository.save(postEntity); 
+		} catch (Exception e) {
+			return "fail create";
 		}
 		return "create";
 	}
@@ -144,7 +151,7 @@ public class PostService {
 		Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
 		String image_name;
 		
-		if(file.getOriginalFilename().equals("")) {
+		if(file.getOriginalFilename().equals("") && post_entity.get().getImageId() != null) {
 			image_name = imageName;
 			
 			ImageEntity imageEntity = ImageEntity.builder()
@@ -194,14 +201,27 @@ public class PostService {
 		}
 	}
 	
-	public String delete(String email, Integer post_num) {
-		List<PostEntity> list = postRepository.findAll().stream()
-				.filter((t) -> t.getEmail().equals(email))
-				.collect(Collectors.toList());
-		
-		if(!list.isEmpty()) {
-			postRepository.deleteById(post_num);
-			return "delete";
-		} else return "fail delete";
+	public void delete(String email, Integer post_num) {
+		Optional<PostEntity> postEntity = postRepository.findById(post_num);
+		String postEmail = postEntity.get().getEmail();
+		if(postEntity.isPresent()) {            
+            if(postEmail.equals(email)) {             	
+            	postRepository.deleteById(post_num);
+            }
+        }
+        else {
+            throw new NullPointerException("There is no such imageId");
+        }
+	}
+	
+	public String getPostEmailString(Integer post_num) {
+		Optional<PostEntity> postEntity;
+		try {
+			postEntity = postRepository.findById(post_num);
+			return postEntity.get().getEmail();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		throw new NullPointerException("There is no such post");
 	}
 }

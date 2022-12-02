@@ -6,5 +6,5 @@ import com.example.demo.Entity.PostEntity;
 
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
-	
+	/* PostEntity findByPost_num(Integer post_num); */
 }

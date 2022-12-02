@@ -24,7 +24,7 @@ public class MemberProfile {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "profile_id")
+    @Column(name = "profile_id") 
     private Long id;
 
     private String artistName;
