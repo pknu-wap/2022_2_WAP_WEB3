@@ -147,7 +147,7 @@ public class PostService {
 		Optional<PostEntity> post_entity = postRepository.findById(rdto.getPostNum());
 		String image_name;
 		
-		if(file.getOriginalFilename().equals("") && post_entity.get().getImageId() != null) {
+		if(file.getOriginalFilename().equals("") && post_entity.get().getImageId() == null) {
 			image_name = imageName;
 			
 			ImageEntity imageEntity = ImageEntity.builder()
@@ -160,7 +160,7 @@ public class PostService {
 					.email(post_entity.get().getEmail()) 
 					.location(rdto.getLocation())
 					.content(rdto.getContent())
-					.date(rdto.getDate())
+				 	.date(rdto.getDate())
 					.ImageId(imageEntity)
 					.build(); 
 			
@@ -180,8 +180,6 @@ public class PostService {
 				// TODO: handle exception
 			}
 			try { 
-				
-				System.out.println("!@#!#@!#@!@#");
 				String tmp = post_entity.get().getImageId().getImageId().equals("") ? null : post_entity.get().getImageId().getImageId();
 				ImageEntity imageEntity = ImageEntity.builder()
 						.imageId(tmp)
