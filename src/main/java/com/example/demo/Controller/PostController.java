@@ -24,13 +24,6 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-//	@GetMapping(value = "/list") 
-//	@ResponseBody
-//	public List<PostDTO> get() {	
-//		List<PostDTO> list = postService.get();
-//		return list;
-//	}
-	 
 	@PutMapping(value = "/post")
 	public String put(@RequestParam String location , @RequestParam String content, 
 			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") 

@@ -3,8 +3,6 @@ package com.example.demo.model.dto;
 import java.time.LocalDateTime;
 
 import com.example.demo.Entity.ImageEntity;
-
-import lombok.AllArgsConstructor;
 public class PostDTO {
 	public Integer post_num;
 	public String member_email;
@@ -72,6 +70,7 @@ public class PostDTO {
 			rdto.location = location;
 			rdto.content = content;
 			rdto.date = date;
+			rdto.strdate = strdate;
 			rdto.image = image;
 			
 			return rdto;
@@ -102,7 +101,7 @@ public class PostDTO {
 		return date;
 	}
 	
-	public String getStrdate() {
+	public String getStrDate() {
 		return strdate;
 	}
 	public ImageEntity getImageId() {

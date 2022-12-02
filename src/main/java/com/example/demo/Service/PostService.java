@@ -2,15 +2,12 @@ package com.example.demo.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +19,6 @@ import com.example.demo.Entity.PostEntity;
 import com.example.demo.Repository.PostRepository;
 import com.example.demo.model.dto.PostDTO;
 
-import groovyjarjarantlr4.v4.parse.ANTLRParser.throwsSpec_return;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -67,7 +63,7 @@ public class PostService {
 			
 			PostDTO postDTO = new PostDTO.Builder()
 					.setContent(post.getContent())
-					.setStrDate(post.getDate().format(DateTimeFormatter.ofPattern("yyyy년 mm월 dd일 hh시 mm분")))
+					.setStrDate(post.getDate().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 hh시 mm분")).toString())
 					.setLocation(post.getLocation())
 					.setImageId(imageEntity)
 					.build();
@@ -92,8 +88,8 @@ public class PostService {
 					.setPostNum(entity.getPost_num())
 					.setLocation(entity.getLocation())
 					.setContent(entity.getContent())
-					.setDate(entity.getDate())
-					.build(); 
+					.setStrDate(entity.getDate().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 hh시 mm분")).toString())
+					.build();  
 			
 				dtoList.add(PostDTO);
 			}

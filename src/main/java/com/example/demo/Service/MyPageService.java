@@ -34,11 +34,11 @@ public class    MyPageService {
         memberProfile.updateProfile(memberProfileDTO.getArtistName(), memberProfileDTO.getGenre(), memberProfileDTO.getMessage());
         return memberProfileRepository.save(memberProfile);
     }  
- 
+  
     public ImageEntity saveImageEntity(MultipartFile file, String email) {
         ImageEntity imageEntity = memberRepository.findByEmail(email).getMemberProfile().getImageEntity();
         Path exPath = Paths.get(ServerPath.getImagePath() + imageEntity.getImageName());
-        try {
+        try { 
             Files.delete(exPath);
         } catch(Exception e) {
             e.printStackTrace();
