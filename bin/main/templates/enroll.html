@@ -62,7 +62,7 @@
 			</div>
 			<div class="board_item2">
 				<label class="board_label">시간</label>
-				<input class="board_input two" type="datetime-local" name="date" id="data">
+				<input class="board_input two" type="datetime-local" name="date" id="date">
 			</div>
 			<div class="board_item2"  id="location" style="display:none;">	<!-- 기타를 누르면 display:block; 으로 바꾸기 -->
 				<input class="board_input two" type="text" name="location" placeholder="위치를 적어주세요.">
@@ -79,8 +79,6 @@
 						document.getElementById('location').style.display='none';
 					}
 				}
-				
-				
 				
 			</script>
 			<div class="board_item1">
@@ -134,13 +132,11 @@
 </html>
 <script>
 $("#submitBtn").on("click", function () {
-	if($("#content").val().length == 0 || $("#data").val()== '') {
+	if($("#content").val().length == 0 || $("#date").val()== '') {
 		alert("내용 혹은 날짜를 입력해 주세요")
 	}
-	
-		
-	
 });
+		
 $.ajax({
 	url: "/members/loginCheck",
 	type: "GET",

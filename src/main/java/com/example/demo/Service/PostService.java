@@ -59,7 +59,7 @@ public class PostService {
 					post.getImageId().builder()
 					.imageName(post.getImageId().getImageName()).build() 
 					: post.getImageId().builder()
-					.imageName(" ").build();
+					.imageName("").build();
 			
 			PostDTO postDTO = new PostDTO.Builder()
 					.setContent(post.getContent())
@@ -94,7 +94,7 @@ public class PostService {
 				dtoList.add(PostDTO);
 			}
 		}
-		return dtoList; 
+		return dtoList;  
 }
 	public String create(String id, PostDTO rdto, MultipartFile file) {
 		PostEntity postEntity;
@@ -162,21 +162,29 @@ public class PostService {
 					.content(rdto.getContent())
 					.date(rdto.getDate())
 					.ImageId(imageEntity)
-					.build();
+					.build(); 
 			
+			System.out.println("################"+postEntity.getContent());
+			System.out.println("################"+postEntity.getDate());
+			System.out.println("################"+postEntity.getLocation()); 
 			postRepository.save(postEntity);
 			return "update";
 			
 		} else {
 			image_name = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyymmdd_hhmmss")) 
 					+ "_" + file.getOriginalFilename();
-			
 			String path =  ServerPath.getImagePath() + image_name;
-			try { 
+			try {
 				file.transferTo(new File(path));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			try { 
 				
+				System.out.println("!@#!#@!#@!@#");
+				String tmp = post_entity.get().getImageId().getImageId().equals("") ? null : post_entity.get().getImageId().getImageId();
 				ImageEntity imageEntity = ImageEntity.builder()
-						.imageId(post_entity.get().getImageId().getImageId())
+						.imageId(tmp)
 						.imageName(image_name)
 						.build(); 
 				 
@@ -184,11 +192,13 @@ public class PostService {
 						.post_num(rdto.getPostNum())
 						.email(post_entity.get().getEmail()) 
 						.location(rdto.getLocation())
-						.content(rdto.getContent())
+						.content(rdto.getContent()) 
 						.date(rdto.getDate())
 						.ImageId(imageEntity)
 						.build();
-				
+				System.out.println("###############123#"+postEntity.getContent());
+				System.out.println("###############123#"+postEntity.getDate());
+				System.out.println("###############123#"+postEntity.getLocation()); 
 				postRepository.save(postEntity);
 				return "update";
 			} catch (Exception e) {

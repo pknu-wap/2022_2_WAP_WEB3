@@ -66,11 +66,11 @@
 			</div>
 			<div class="board_item2">
 				<label class="board_label">시간</label>
-				<input class="board_input two" type="datetime-local" name="date" th:value="${data.date}">
+				<input class="board_input two" type="datetime-local" id="date" name="date" th:value="${data.date}">
 			</div>
 			<div class="board_item2" id="location" style="display:none;">
 				<!-- 기타를 누르면 display:block; 으로 바꾸기 -->
-				<input class="board_input two" type="text" name="location" placeholder="위치를 적어주세요.">
+				<input class="board_input two" type="text" id="location" name="location" placeholder="위치를 적어주세요.">
 			</div>
 			<script>
 				function select_location(location) {
@@ -88,7 +88,7 @@
 			</script>
 			<div class="board_item1">
 				<label class="board_label">내용</label>
-				<textarea th:text="${data.content}" class="form-control" name="content" rows="12" cols="4"
+				<textarea th:text="${data.content}" class="form-control" id="content" name="content" rows="12" cols="4"
 					placeholder="내용" style="resize:none;"></textarea>
 			</div>
 
@@ -115,7 +115,7 @@
 				</script>
 			</div>
 			<div class="action_button">
-				<button id="btn" class="btn btn-outline-secondary" type="submit" value="submit">수정</button>
+				<button id="modiftyBtn" class="btn btn-outline-secondary" type="submit" value="submit">수정</button>
 				<button class="btn btn-outline-secondary" type="reset" value="reset">초기화</button>
 			</div>
 		</form>
@@ -139,6 +139,11 @@
 
 </html>
 <script>
+$("#modiftyBtn").on("click", function () {
+	if($("#content").val().length == 0 || $("#date").val()== '') {
+		alert("내용 혹은 날짜를 입력해 주세요")
+	}
+});	
 	var str = $(location).attr('pathname');
 	var post_num = str.substring(str.lastIndexOf('/') + 1);
 	var url = "/post/"+post_num;

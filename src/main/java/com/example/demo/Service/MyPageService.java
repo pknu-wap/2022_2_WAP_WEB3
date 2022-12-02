@@ -58,7 +58,7 @@ public class    MyPageService {
         }
         imageEntity.updateImage(image_name);
         return imageRepository.save(imageEntity);
-    }
+    }  
 
     public MemberProfileDTO getMemberProfileDTO(String email) {
         Member member = memberRepository.findByEmail(email);
@@ -67,9 +67,9 @@ public class    MyPageService {
                 .artistName(memberProfile.getArtistName())
                 .genre(memberProfile.getGenre())
                 .message(memberProfile.getMessage())
-                .imageEntity(memberProfile.getImageEntity())
+                .imageEntity(memberProfile.getImageEntity()) 
                 .build();
-    }
+    } 
 
     public String findImageName(String id) {
         Optional<ImageEntity> optionalImageEntity= imageRepository.findById(id);

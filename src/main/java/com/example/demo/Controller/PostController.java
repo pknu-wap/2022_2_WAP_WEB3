@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,7 +34,7 @@ public class PostController {
 		if(date == null || content.equals("")) return "redirect:/page/enroll"; 
 		else {
 		PostDTO postdto = new PostDTO.Builder()
-				.setLocation(location) 
+				.setLocation(new StringTokenizer(location,",").nextToken().toString()) 
 				.setDate(date) 
 				.setContent(content)
 				.build();
@@ -46,19 +47,19 @@ public class PostController {
  
 	@PutMapping(value = "/post/{post_num}")
 	public String update(@RequestParam String location, @RequestParam String content, 
-			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam LocalDateTime date, Principal principal,
+			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @RequestParam(required=false) LocalDateTime date, Principal principal,
 			@PathVariable(name="post_num") Integer post_num, 
 			@RequestParam(required=false) MultipartFile file,
 			@RequestParam(required=false) String imageName) { 
 		
-		if(date == null || content.equals("")) return "redirect:/page/post/"+post_num; 
-		else {PostDTO postdto = new PostDTO.Builder() 
+		if(date == null || content.equals("")) return "redirect:/post/"+post_num; 
+		else {
+			PostDTO postdto = new PostDTO.Builder() 
 				.setPostNum(post_num)
 				.setLocation(location)  
 				.setDate(date)   
 				.setContent(content)
 				.build();
-		
 		
 		postService.update(postdto, file, imageName);  
 		return "redirect:/page/post/"+post_num;  
