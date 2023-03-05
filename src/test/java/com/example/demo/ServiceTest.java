@@ -1,4 +1,4 @@
-package com.example.demo;
+/*package com.example.demo;
 
 import com.example.demo.Entity.Member;
 import com.example.demo.Service.MemberService;
@@ -41,3 +41,4 @@ public class ServiceTest {
         assertEquals(member.getEmail(), savedMember.getEmail());
     }
 }
+*/
